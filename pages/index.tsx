@@ -1,7 +1,22 @@
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import Head from 'next/head'
+import Link from 'next/link'
+import styles from '../styles/Home.module.css'
+import { getSortedPostsData } from '../lib/posts'
 
-export default function Home() {
+export async function getStaticProps() {
+  const allPostsData = getSortedPostsData()
+  return {
+    props: {
+      allPostsData,
+    },
+  }
+}
+
+export default function Home({
+  allPostsData,
+}: {
+  allPostsData: { date: string; title: string; id: string }[]
+}) {
   return (
     <div className={styles.container}>
       <Head>
@@ -11,7 +26,7 @@ export default function Home() {
 
       <main>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Learn <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
         <p className={styles.description}>
@@ -47,6 +62,20 @@ export default function Home() {
             </p>
           </a>
         </div>
+        <section>
+          <h2>Blog</h2>
+          <ul>
+            {allPostsData.map(({ id, date, title }) => (
+              <Link key={id} href={`/admin/${id}`}>
+                {title}
+                <br />
+                {id}
+                <br />
+                {date}
+              </Link>
+            ))}
+          </ul>
+        </section>
       </main>
 
       <footer>
@@ -127,5 +156,5 @@ export default function Home() {
         }
       `}</style>
     </div>
-  );
+  )
 }
