@@ -15,9 +15,14 @@
     "node": ">=18"
   },
   "devDependencies": {
+    "@next/env": "^14.1.0",
     "@types/node": "^20.11.19",
     "@types/react": "^18.2.55",
+    "@unocss/preset-attributify": "^0.58.5",
+    "@unocss/preset-uno": "^0.58.5",
+    "@unocss/webpack": "^0.58.5",
     "prettier": "3.2.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "unocss": "^0.58.5"
   }
 }
