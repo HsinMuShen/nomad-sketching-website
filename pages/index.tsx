@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { getSortedPostsData } from '../lib/posts'
+import { useEffect } from 'react'
+import { getSortedPostsData } from 'libs/posts'
+// import { createUser } from 'utils/dataHandler/create'
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData()
@@ -16,6 +18,10 @@ export default function Home({
 }: {
   allPostsData: { date: string; title: string; id: string }[]
 }) {
+  useEffect(() => {
+    // createUser()
+  }, [])
+
   return (
     <div>
       <Head>
