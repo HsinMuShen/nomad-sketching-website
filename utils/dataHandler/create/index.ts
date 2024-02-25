@@ -7,7 +7,7 @@ import {
 } from 'firebase/firestore'
 import { db } from 'libs/firebase'
 
-export const useCreateData = () => {
+const useCreateData = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [isError, setIsError] = useState(false)
@@ -40,3 +40,5 @@ export const useCreateData = () => {
     isError,
   }
 }
+
+export default useCreateData

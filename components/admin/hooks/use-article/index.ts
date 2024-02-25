@@ -9,6 +9,7 @@ const useArticle = () => {
   })
 
   const { createArticle: createNewArticle } = useCreateArticle()
+
   const createArticle = useCallback(() => {
     createNewArticle(article)
   }, [article, createNewArticle])

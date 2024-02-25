@@ -1,1 +1,3 @@
-export { useCreateData } from './create'
+import useCreateData from './create'
+
+export { useCreateData }
