@@ -12,9 +12,15 @@ const Article = ({ article }: { article: Article }) => {
 }
 
 const Articles = () => {
-  const { articles } = useArticles()
+  const { articles, fetchArticles } = useArticles()
+
+  const loadArticles = () => {
+    fetchArticles()
+  }
+
   return (
     <div>
+      <button onClick={loadArticles}> load articles </button>
       {articles.map((article) => (
         <Article key={article.id} article={article} />
       ))}

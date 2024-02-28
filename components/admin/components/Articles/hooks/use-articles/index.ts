@@ -1,5 +1,5 @@
 import type { Article } from 'components/admin/types'
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import useGetArticles from './use-get-articles'
 
 const useArticles = () => {
@@ -12,13 +12,10 @@ const useArticles = () => {
     setArticles(data)
   }, [getArticles])
 
-  useEffect(() => {
-    fetchArticles()
-  }, [fetchArticles])
-
   return {
     articles,
     setArticles,
+    fetchArticles,
   }
 }
 
