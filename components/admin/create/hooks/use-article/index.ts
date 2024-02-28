@@ -1,9 +1,9 @@
+import type { CreateArticleType } from 'components/admin/types'
 import { useState, useCallback } from 'react'
-import type { Article } from 'components/admin/types'
 import useCreateArticle from './use-create-article'
 
 const useArticle = () => {
-  const [article, setArticle] = useState<Article>({
+  const [article, setArticle] = useState<CreateArticleType>({
     title: '',
     content: '',
   })
