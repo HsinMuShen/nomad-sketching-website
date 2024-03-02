@@ -1,5 +1,5 @@
 import type { Article } from 'components/admin/types'
-import React from 'react'
+import { useEffect } from 'react'
 import useArticles from './hooks/use-articles'
 
 const Article = ({ article }: { article: Article }) => {
@@ -14,13 +14,12 @@ const Article = ({ article }: { article: Article }) => {
 const Articles = () => {
   const { articles, fetchArticles } = useArticles()
 
-  const loadArticles = () => {
+  useEffect(() => {
     fetchArticles()
-  }
+  }, [fetchArticles])
 
   return (
     <div>
-      <button onClick={loadArticles}> load articles </button>
       {articles.map((article) => (
         <Article key={article.id} article={article} />
       ))}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from 'libs/firebase'
 
@@ -6,7 +6,7 @@ const useReadData = <T>() => {
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
 
-  const readData = async (databaseName: string) => {
+  const readData = useCallback(async (databaseName: string) => {
     try {
       setIsLoading(true)
       const querySnapshot = await getDocs(collection(db, databaseName))
@@ -22,7 +22,7 @@ const useReadData = <T>() => {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [])
 
   return {
     readData,
