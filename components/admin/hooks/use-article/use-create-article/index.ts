@@ -5,12 +5,15 @@ import { useCreateData } from 'utils/dataHandler'
 const useCreateArticle = () => {
   const { createData } = useCreateData()
 
-  const createArticle = useCallback(async (article: CreateArticleType) => {
-    await createData({
-      databaseName: 'articles',
-      data: article,
-    })
-  }, [])
+  const createArticle = useCallback(
+    async (article: CreateArticleType) => {
+      await createData({
+        databaseName: 'articles',
+        data: article,
+      })
+    },
+    [createData],
+  )
 
   return {
     createArticle,
