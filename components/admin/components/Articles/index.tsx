@@ -1,6 +1,6 @@
 import type { Article } from 'components/admin/types'
-import React from 'react'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
+import Link from 'next/link'
 import useArticles from 'components/admin/hooks/use-articles'
 
 type ArticleProps = {
@@ -16,8 +16,12 @@ const Article = ({ article, removeArticle }: ArticleProps) => {
 
   return (
     <div className="mt-2">
-      <h2>{article.title}</h2>
-      <p>{article.content}</p>
+      <Link href={`/admin/update/${article.id}`}>
+        <div className="flex justify-between">
+          <h2>{article.title}</h2>
+          <p>{article.content}</p>
+        </div>
+      </Link>
       <button
         className="mt-1 border-black-solid border-1 cursor-pointer"
         onClick={onDeleteClick}
