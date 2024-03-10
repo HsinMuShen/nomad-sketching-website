@@ -1,7 +1,7 @@
 import type { Article } from 'components/admin/types'
 import React from 'react'
 import { useEffect } from 'react'
-import useArticles from './hooks/use-articles'
+import useArticles from 'components/admin/hooks/use-articles'
 
 type ArticleProps = {
   article: Article

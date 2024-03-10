@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import Link from 'next/link'
-import useArticle from 'components/admin/hooks/use-article'
+import useArticle from '../hooks/use-article'
 
 const CreateArticle = () => {
   const { article, setArticle, createArticle } = useArticle()
