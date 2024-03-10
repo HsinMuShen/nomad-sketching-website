@@ -6,7 +6,7 @@ const Admin = () => {
   return (
     <Layout>
       <Head>
-        <title>First Post</title>
+        <title>Admin</title>
       </Head>
       <AdminComponent />
     </Layout>
