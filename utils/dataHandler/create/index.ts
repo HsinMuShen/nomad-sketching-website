@@ -22,13 +22,13 @@ const useCreateData = () => {
     }) => {
       try {
         setIsLoading(true)
-        console.log('Creating user...')
         const docRef = await addDoc(collection(db, databaseName), data)
         console.log('Document written with ID: ', docRef.id)
         setIsSuccess(true)
       } catch (e) {
         console.error('Error adding document: ', e)
         setIsError(true)
+        throw e
       } finally {
         setIsLoading(false)
       }
