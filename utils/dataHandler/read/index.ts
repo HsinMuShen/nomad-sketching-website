@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore'
 import { db } from 'libs/firebase'
 
 const useReadData = <T>() => {
@@ -31,4 +31,34 @@ const useReadData = <T>() => {
   }
 }
 
-export default useReadData
+const useReadSingleData = <T>() => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
+
+  const readSingleData = useCallback(
+    async (databaseName: string, id: string) => {
+      try {
+        setIsLoading(true)
+        const docRef = doc(db, databaseName, id)
+        const docSnap = await getDoc(docRef)
+        if (!docSnap.exists()) return null
+        return { id: docSnap.id, ...docSnap.data() } as T
+      } catch (e) {
+        console.error('Error reading document: ', e)
+        setIsError(true)
+        throw e
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [],
+  )
+
+  return {
+    readSingleData,
+    isLoading,
+    isError,
+  }
+}
+
+export { useReadData, useReadSingleData }
