@@ -26,6 +26,7 @@
     "baseUrl": "." /* Specify the base directory to resolve non-relative module names. */,
     "paths": {
       "components/*": ["components/*"],
+      "@ui": ["components/common/ui/index.ts"],
       "styles/*": ["styles/*"],
       "libs/*": ["libs/*"],
       "utils/*": ["utils/*"]

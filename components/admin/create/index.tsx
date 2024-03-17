@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import Link from 'next/link'
+import { Button } from '@ui'
 import useArticle from 'components/admin/hooks/use-article'
 
 const CreateArticle = () => {
@@ -38,12 +39,9 @@ const CreateArticle = () => {
         value={article.content}
         onChange={(e) => onArticleChange(e, 'content')}
       />
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-        onClick={onCreateArticle}
-      >
+      <Button color="secondary" onClick={onCreateArticle}>
         Create
-      </button>
+      </Button>
       <div>
         <Link href="/admin">Back to admin</Link>
       </div>
