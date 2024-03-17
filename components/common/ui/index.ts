@@ -1,2 +1,5 @@
 export * from './src/Icon'
 export * from './src/Button'
+export * from './src/Avatar'
+export * from './src/Textarea'
+export * from './src/Input'
