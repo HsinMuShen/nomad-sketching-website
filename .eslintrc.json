@@ -3,14 +3,19 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:react/recommended", 
+    "plugin:react-hooks/recommended"
   ],
   "plugins": [
     "@typescript-eslint",
-    "prettier"
+    "prettier",
+    "react", 
+    "react-hooks"
   ],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "react/react-in-jsx-scope": "off"
   },
   "parserOptions": {
     "ecmaVersion": 2020,

@@ -1,28 +1,52 @@
 import type { Article } from 'components/admin/types'
-import React from 'react'
-import useArticles from './hooks/use-articles'
+import React, { useEffect } from 'react'
+import Link from 'next/link'
+import useArticles from 'components/admin/hooks/use-articles'
 
-const Article = ({ article }: { article: Article }) => {
+type ArticleProps = {
+  article: Article
+  removeArticle: (id: string) => void
+}
+
+const Article = ({ article, removeArticle }: ArticleProps) => {
+  const onDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    removeArticle(article.id)
+  }
+
   return (
-    <div>
-      <h2>{article.title}</h2>
-      <p>{article.content}</p>
+    <div className="mt-2">
+      <Link href={`/admin/update/${article.id}`}>
+        <div className="flex justify-between">
+          <h2>{article.title}</h2>
+          <p>{article.content}</p>
+        </div>
+      </Link>
+      <button
+        className="mt-1 border-black-solid border-1 cursor-pointer"
+        onClick={onDeleteClick}
+      >
+        delete
+      </button>
     </div>
   )
 }
 
 const Articles = () => {
-  const { articles, fetchArticles } = useArticles()
+  const { articles, fetchArticles, removeArticle } = useArticles()
 
-  const loadArticles = () => {
+  useEffect(() => {
     fetchArticles()
-  }
+  }, [fetchArticles])
 
   return (
     <div>
-      <button onClick={loadArticles}> load articles </button>
       {articles.map((article) => (
-        <Article key={article.id} article={article} />
+        <Article
+          key={article.id}
+          article={article}
+          removeArticle={removeArticle}
+        />
       ))}
     </div>
   )

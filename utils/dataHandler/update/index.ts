@@ -1,32 +1,25 @@
 import { useState, useCallback } from 'react'
 import {
-  collection,
-  addDoc,
+  doc,
+  updateDoc,
   DocumentData,
   WithFieldValue,
 } from 'firebase/firestore'
 import { db } from 'libs/firebase'
 
-const useCreateData = () => {
+const useUpdateData = <T extends WithFieldValue<DocumentData>>() => {
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [isError, setIsError] = useState(false)
 
-  const createData = useCallback(
-    async <T extends WithFieldValue<DocumentData>>({
-      databaseName,
-      data,
-    }: {
-      databaseName: string
-      data: T
-    }) => {
+  const updateData = useCallback(
+    async (databaseName: string, id: string, data: T) => {
       try {
         setIsLoading(true)
-        const docRef = await addDoc(collection(db, databaseName), data)
-        console.log('Document written with ID: ', docRef.id)
+        await updateDoc(doc(db, databaseName, id), data)
         setIsSuccess(true)
       } catch (e) {
-        console.error('Error adding document: ', e)
+        console.error('Error updating document: ', e)
         setIsError(true)
         throw e
       } finally {
@@ -37,11 +30,11 @@ const useCreateData = () => {
   )
 
   return {
-    createData,
+    updateData,
     isLoading,
     isSuccess,
     isError,
   }
 }
 
-export default useCreateData
+export default useUpdateData

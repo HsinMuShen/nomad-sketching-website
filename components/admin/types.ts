@@ -1,4 +1,5 @@
 export type CreateArticleType = {
+  id?: string
   title: string
   content: string
 }
