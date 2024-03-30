@@ -1,5 +1,5 @@
 import { InputHTMLAttributes } from 'react'
-import { Icon } from '../Icon'
+import { Icon } from '@ui'
 import { Variant, VARIANT_STYLE_CONFIGS } from './constants'
 
 export type InputProps = {
