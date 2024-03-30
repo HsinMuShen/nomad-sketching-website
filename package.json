@@ -6,6 +6,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@iconify-json/mdi": "^1.1.64",
+    "@unocss/preset-rem-to-px": "^0.58.6",
     "firebase": "^10.8.0",
     "gray-matter": "^4.0.3",
     "next": "latest",
