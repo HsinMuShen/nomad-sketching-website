@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
 import Link from 'next/link'
-import { Button } from '@ui'
+import { Button, ImageUploadButton } from '@ui'
 import useArticle from 'components/admin/hooks/use-article'
+import { uploadAttachment } from 'utils/attachment'
 
 const CreateArticle = () => {
   const { article, setArticle, createArticle } = useArticle()
@@ -25,6 +26,10 @@ const CreateArticle = () => {
     setArticle({ title: '', content: '' })
   }, [createArticle, setArticle])
 
+  const onInput = async (file: File) => {
+    const downloadURL = await uploadAttachment(file)
+    console.log('downloadURL', downloadURL)
+  }
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Create Article</h1>
@@ -42,6 +47,7 @@ const CreateArticle = () => {
       <Button color="secondary" onClick={onCreateArticle}>
         Create
       </Button>
+      <ImageUploadButton onUpload={onInput} />
       <div>
         <Link href="/admin">Back to admin</Link>
       </div>

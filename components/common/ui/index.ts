@@ -1,3 +1,4 @@
+export * from './src/ImageUploadButton'
 export * from './src/Icon'
 export * from './src/Button'
 export * from './src/Avatar'
