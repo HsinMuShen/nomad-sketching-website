@@ -28,6 +28,7 @@ const uploadAttachment = async (file: File) => {
     return downloadURL
   } catch (error) {
     console.log('Error: An unexpected error occurred', error)
+    throw error
   }
 }
 

@@ -14,7 +14,15 @@
     "react-hooks"
   ],
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "tabWidth": 2,
+        "singleQuote": true,
+        "printWidth": 120,
+        "bracketSpacing": true
+      }
+    ],
     "react/react-in-jsx-scope": "off"
   },
   "parserOptions": {
