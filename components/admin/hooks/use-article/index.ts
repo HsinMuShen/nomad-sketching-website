@@ -26,15 +26,15 @@ const useArticle = () => {
   )
 
   const updateArticle = useCallback(
-    (id: string) => {
-      if (!title || !content) return
+    (id: string, newContent: JSONContent) => {
+      if (!title || !newContent) return
       const article: CreateArticleType = {
         title,
-        content,
+        content: newContent,
       }
       updateArticleData(id, article)
     },
-    [updateArticleData, title, content],
+    [updateArticleData, title],
   )
 
   const fetchArticle = useCallback(

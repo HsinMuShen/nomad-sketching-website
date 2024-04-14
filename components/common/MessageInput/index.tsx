@@ -1,7 +1,7 @@
+import type { JSONContent } from '@tiptap/core'
 import { useState, ForwardedRef, forwardRef, useCallback, useImperativeHandle } from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import Dropcursor from '@tiptap/extension-dropcursor'
 import { ImageUploadButton, Button } from '@ui'
 import { uploadAttachment, deleteAttachment } from 'utils/attachment'
 import { ATTACHMENT_UPLOAD_COUNT_LIMIT } from './constants'
@@ -10,14 +10,16 @@ import CustomImage from './Editor/extensions/CustomImage'
 type EditorProps = {
   className?: string
   placeholder?: string
+  content?: JSONContent | null
 }
 
 const MessageInputWrap = (
-  { className = '', placeholder = '' }: EditorProps,
+  { className = '', placeholder = '', content }: EditorProps,
   ref: ForwardedRef<unknown>,
 ): JSX.Element => {
   const [attachmentCount, setAttachmentCount] = useState(0)
   const disableToUploadAttachment = attachmentCount >= ATTACHMENT_UPLOAD_COUNT_LIMIT
+  const defaultContent = content || '<p>Hello World! 🌎️</p>'
 
   const uploadImage = useCallback(async (file: File) => {
     const url = await uploadAttachment(file)
@@ -31,7 +33,6 @@ const MessageInputWrap = (
 
   const extensions = [
     StarterKit,
-    Dropcursor,
     CustomImage.configure({
       onUpload: uploadImage,
       onDelete: deleteImage,
@@ -41,9 +42,9 @@ const MessageInputWrap = (
   const editor = useEditor(
     {
       extensions,
-      content: '<p>Hello World! 🌎️</p>',
+      content: defaultContent,
     },
-    [placeholder],
+    [placeholder, defaultContent],
   )
 
   const getContent = useCallback(() => {

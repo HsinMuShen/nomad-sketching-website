@@ -1,14 +1,9 @@
-import type { JSONContent } from '@tiptap/core'
+import type { MessageInputRef } from 'components/common/MessageInput/types'
 import { useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { Button, Input } from '@ui'
 import MessageInput from 'components/common/MessageInput'
 import useArticle from 'components/admin/hooks/use-article'
-
-type MessageInputRef = {
-  getContent: () => JSONContent | null
-  clearContent: () => void
-}
 
 const CreateArticle = () => {
   const { title, setTitle, createArticle } = useArticle()

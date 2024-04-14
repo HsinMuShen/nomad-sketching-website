@@ -21,18 +21,12 @@ const OUTLINED_STYLE_CONFIG: StyleConfig = {
 
 const TRANSPARENT_STYLE_CONFIG: StyleConfig = {
   input: SHARED_STYLE_CONFIG.input,
-  wrapper: [
-    SHARED_STYLE_CONFIG.wrapper,
-    'px-3 bg-transparent border-transparent',
-  ].join(' '),
+  wrapper: [SHARED_STYLE_CONFIG.wrapper, 'px-3 bg-transparent border-transparent'].join(' '),
 }
 
 const UNDERLINED_STYLE_CONFIG: StyleConfig = {
   input: SHARED_STYLE_CONFIG.input,
-  wrapper: [
-    SHARED_STYLE_CONFIG.wrapper,
-    'border-b-1 border-b-solid border-gray-300',
-  ].join(' '),
+  wrapper: [SHARED_STYLE_CONFIG.wrapper, 'border-b-1 border-b-solid border-gray-300'].join(' '),
 }
 
 export const VARIANT_STYLE_CONFIGS: {
