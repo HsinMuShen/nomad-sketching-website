@@ -9,7 +9,7 @@ export interface ImageOptions {
   allowBase64: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   HTMLAttributes: Record<string, any>
-  onDelete: ((payload: { url: string; sourceAbleToDelete?: boolean }) => Promise<void>) | null
+  onDelete: ((payload: { name: string; url?: string; sourceAbleToDelete?: boolean }) => Promise<void>) | null
   onUpload: ((file: File) => Promise<{ url: string }>) | null
 }
 

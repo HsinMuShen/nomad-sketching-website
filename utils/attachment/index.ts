@@ -1,3 +1,3 @@
-import uploadAttachment from './upload'
+import { uploadAttachment, deleteAttachment } from './upload'
 
-export { uploadAttachment }
+export { uploadAttachment, deleteAttachment }

@@ -3,7 +3,7 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import { ImageUploadButton, Button } from '@ui'
-import { uploadAttachment } from 'utils/attachment'
+import { uploadAttachment, deleteAttachment } from 'utils/attachment'
 import { ATTACHMENT_UPLOAD_COUNT_LIMIT } from './constants'
 import CustomImage from './Editor/extensions/CustomImage'
 
@@ -17,30 +17,25 @@ const MessageInputWrap = (
   ref: ForwardedRef<unknown>,
 ): JSX.Element => {
   const [attachmentCount, setAttachmentCount] = useState(0)
-  const [uploadedFiles, setUploadedFiles] = useState<Map<string, string>>(new Map())
   const disableToUploadAttachment = attachmentCount >= ATTACHMENT_UPLOAD_COUNT_LIMIT
 
-  const getFileIdentifier = (file: File) => `${file.name}-${file.lastModified}`
+  const uploadImage = useCallback(async (file: File) => {
+    const url = await uploadAttachment(file)
+    return { url }
+  }, [])
 
-  const uploadImage = useCallback(
-    async (file: File) => {
-      const fileIdentifier = getFileIdentifier(file)
-      let url = uploadedFiles.get(fileIdentifier)
-      if (url !== undefined) {
-        return { url }
-      }
-      url = await uploadAttachment(file)
-      setUploadedFiles(new Map(uploadedFiles.set(fileIdentifier, url)))
-      return { url }
-    },
-    [uploadedFiles],
-  )
+  const deleteImage = useCallback(async ({ name }: { name: string }) => {
+    console.log('deleteImage', name)
+    await deleteAttachment(name)
+    setAttachmentCount((attachmentCount) => attachmentCount - 1)
+  }, [])
 
   const extensions = [
     StarterKit,
     Dropcursor,
     CustomImage.configure({
       onUpload: uploadImage,
+      onDelete: deleteImage,
     }),
   ]
 

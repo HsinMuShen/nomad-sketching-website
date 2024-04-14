@@ -1,7 +1,7 @@
-import { uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import { uploadBytesResumable, getDownloadURL, getStorage, ref, deleteObject } from 'firebase/storage'
 import { getStorageRef } from 'libs/firebase'
 
-const uploadAttachment = async (file: File) => {
+export const uploadAttachment = async (file: File) => {
   const storageRef = getStorageRef('images/' + file.name)
 
   const metadata = {
@@ -32,4 +32,13 @@ const uploadAttachment = async (file: File) => {
   }
 }
 
-export default uploadAttachment
+export const deleteAttachment = async (fileName: string) => {
+  const storage = getStorage()
+  const storageRef = ref(storage, 'images/' + fileName)
+  try {
+    await deleteObject(storageRef)
+  } catch (error) {
+    console.log('Error: An unexpected error occurred', error)
+    throw error
+  }
+}
