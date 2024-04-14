@@ -1,38 +1,32 @@
-import { useCallback } from 'react'
+import type { JSONContent } from '@tiptap/core'
+import { useCallback, useRef } from 'react'
 import Link from 'next/link'
-import { Button } from '@ui'
+import { Button, Input } from '@ui'
 import MessageInput from 'components/common/MessageInput'
 import useArticle from 'components/admin/hooks/use-article'
 
-const CreateArticle = () => {
-  const { article, setArticle, createArticle } = useArticle()
+type MessageInputRef = {
+  getContent: () => JSONContent | null
+  clearContent: () => void
+}
 
-  const onArticleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
-      const { value } = e.target
-      setArticle((prevArticle) => ({
-        ...prevArticle,
-        [name]: value,
-      }))
-    },
-    [setArticle],
-  )
+const CreateArticle = () => {
+  const { title, setTitle, createArticle } = useArticle()
+  const messageInputRef = useRef<MessageInputRef | null>(null)
 
   const onCreateArticle = useCallback(() => {
-    createArticle()
-    setArticle({ title: '', content: '' })
-  }, [createArticle, setArticle])
+    const content = messageInputRef.current?.getContent()
+    if (!content) return
+    createArticle(content)
+    setTitle('')
+    messageInputRef.current?.clearContent()
+  }, [createArticle, setTitle])
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Create Article</h1>
-      <input
-        className="border border-gray-300 rounded-md px-3 py-2 mb-2 block w-full"
-        type="text"
-        value={article.title}
-        onChange={(e) => onArticleChange(e, 'title')}
-      />
-      <MessageInput />
+      <Input value={title} onValueChange={setTitle} />
+      <MessageInput ref={messageInputRef} />
       <Button color="secondary" onClick={onCreateArticle}>
         Create
       </Button>

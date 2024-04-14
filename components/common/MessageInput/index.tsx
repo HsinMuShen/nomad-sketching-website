@@ -25,7 +25,6 @@ const MessageInputWrap = (
   }, [])
 
   const deleteImage = useCallback(async ({ name }: { name: string }) => {
-    console.log('deleteImage', name)
     await deleteAttachment(name)
     setAttachmentCount((attachmentCount) => attachmentCount - 1)
   }, [])
@@ -74,9 +73,19 @@ const MessageInputWrap = (
     [getContent, clearContent],
   )
 
+  const generateFileWithUniqueName = (file: File) => {
+    const uniqueName = file.name + '_' + Date.now()
+    return new File([file], uniqueName, {
+      type: file.type,
+      lastModified: file.lastModified,
+    })
+  }
+
   const insertImage = useCallback(
     (file: File) => {
       if (!editor) return
+
+      const newFile = generateFileWithUniqueName(file)
 
       editor.commands.insertContent([
         {
@@ -85,9 +94,9 @@ const MessageInputWrap = (
             {
               type: 'image',
               attrs: {
-                file,
+                file: newFile,
                 src: '',
-                name: file.name,
+                name: newFile.name,
               },
             },
           ],

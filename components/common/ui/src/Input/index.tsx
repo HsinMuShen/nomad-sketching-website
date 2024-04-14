@@ -29,25 +29,16 @@ export function Input({
   ...attributes
 }: InputProps) {
   const currentStyleConfig = VARIANT_STYLE_CONFIGS[variant]
-  const inputClassNames = [
-    currentStyleConfig.input,
-    readOnly ? 'cursor-pointer' : '',
-  ].join(' ')
+  const inputClassNames = [currentStyleConfig.input, readOnly ? 'cursor-pointer' : ''].join(' ')
   const wrapperClassNames = [
     currentStyleConfig.wrapper,
-    disabled
-      ? ' bg-light-200 text-neutral-500 cursor-not-allowed'
-      : 'cursor-pointer',
+    disabled ? ' bg-light-200 text-neutral-500 cursor-not-allowed' : 'cursor-pointer',
     className,
   ].join(' ')
 
   const iconColor = disabled ? 'text-neutral-200' : 'text-neutral-700'
-  const prefixIconNode = prefixIcon ? (
-    <Icon icon={prefixIcon} className={`mr-2 ${iconColor}`} />
-  ) : null
-  const suffixIconNode = suffixIcon ? (
-    <Icon icon={suffixIcon} className={iconColor} />
-  ) : null
+  const prefixIconNode = prefixIcon ? <Icon icon={prefixIcon} className={`mr-2 ${iconColor}`} /> : null
+  const suffixIconNode = suffixIcon ? <Icon icon={suffixIcon} className={iconColor} /> : null
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange?.(event)
