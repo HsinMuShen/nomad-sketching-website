@@ -21,7 +21,9 @@ const CreateArticle = () => {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Create Article</h1>
       <Input value={title} onValueChange={setTitle} />
-      <MessageInput ref={messageInputRef} />
+      <div className="border-1 border-neutral-200 rounded border-solid p-2">
+        <MessageInput ref={messageInputRef} className="h-73" />
+      </div>
       <Button color="secondary" onClick={onCreateArticle}>
         Create
       </Button>

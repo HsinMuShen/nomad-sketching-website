@@ -7,10 +7,7 @@ export type ImageUploadButtonProps = {
   onUpload: (file: File) => void
 } & React.HTMLAttributes<HTMLDivElement>
 
-export const ImageUploadButton = ({
-  isDisabled = false,
-  onUpload,
-}: ImageUploadButtonProps) => {
+export const ImageUploadButton = ({ isDisabled = false, onUpload }: ImageUploadButtonProps) => {
   const onInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
     if (!files) return

@@ -43,6 +43,11 @@ const MessageInputWrap = (
     {
       extensions,
       content: defaultContent,
+      editorProps: {
+        attributes: {
+          class: 'w-full h-full mx-auto focus:outline-none',
+        },
+      },
     },
     [placeholder, defaultContent],
   )
@@ -113,8 +118,8 @@ const MessageInputWrap = (
 
   return (
     <div className="flex flex-col gap-4">
-      <div className={`flex overflow-scroll ${className}`}>
-        <div className={'text-sm'}>
+      <div className={`w-full flex overflow-y-auto ${className}`}>
+        <div className={`text-sm w-full h-full`} id="editor">
           <EditorContent editor={editor} />
         </div>
       </div>
