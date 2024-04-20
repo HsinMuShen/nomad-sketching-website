@@ -26,7 +26,7 @@ export const ImageUploadButton = ({ isDisabled = false, onUpload }: ImageUploadB
         aria-label="image-upload"
         icon="i-mdi-image-area"
         size="2xl"
-        variant="plain-text"
+        variant="plain"
         hasPadding={false}
         onClick={onButtonClick}
         disabled={isDisabled}
