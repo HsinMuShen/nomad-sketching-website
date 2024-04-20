@@ -25,28 +25,17 @@ const INDICATOR_SIZE: SizeConfig = {
 }
 
 const DEFAULT_SIZE: Size = 'md'
-const AVATAR_CLASS_NAMES =
-  'w-full h-full object-cover overflow-hidden rounded-full d-block absolute top-0 left-0'
+const AVATAR_CLASS_NAMES = 'w-full h-full object-cover overflow-hidden rounded-full d-block absolute top-0 left-0'
 const INDICATOR_CLASS_NAMES =
   'rounded-full bg-secondary-500 border-1 border-white border-solid absolute bottom-0 right-0'
 const INDICATOR_LABEL = {
   ONLINE: 'Online',
   OFFLINE: 'Offline',
 }
-export const DEFAULT_AVATAR =
-  'https://res.cloudinary.com/amazingtalker/image/upload/icon/no-avatar.png'
+export const DEFAULT_AVATAR = 'https://res.cloudinary.com/amazingtalker/image/upload/icon/no-avatar.png'
 
-export function Avatar({
-  src,
-  className = '',
-  username,
-  online,
-  size,
-  ...attributes
-}: AvatarProps) {
-  const indicatorLabel = online
-    ? INDICATOR_LABEL.ONLINE
-    : INDICATOR_LABEL.OFFLINE
+export function Avatar({ src, className = '', username, online, size, ...attributes }: AvatarProps) {
+  const indicatorLabel = online ? INDICATOR_LABEL.ONLINE : INDICATOR_LABEL.OFFLINE
   const currentSize = size || DEFAULT_SIZE
   const classNames = [className, AVATAR_SIZE[currentSize], 'relative'].join(' ')
   const avatarSrc = src || DEFAULT_AVATAR

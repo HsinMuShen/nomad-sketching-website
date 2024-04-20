@@ -38,16 +38,12 @@ describe('rendering', () => {
 
     it('renders when has minLength value', () => {
       setup({ value: mockValue, minLength })
-      expect(
-        screen.getByText(`${mockValue.length}/${minLength}`),
-      ).toBeInTheDocument()
+      expect(screen.getByText(`${mockValue.length}/${minLength}`)).toBeInTheDocument()
     })
 
     it('renders when has maxLength value', () => {
       setup({ value: mockValue, maxLength })
-      expect(
-        screen.getByText(`${mockValue.length}/${maxLength}`),
-      ).toBeInTheDocument()
+      expect(screen.getByText(`${mockValue.length}/${maxLength}`)).toBeInTheDocument()
     })
 
     it('not renders when has no minLength or maxLength value', () => {

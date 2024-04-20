@@ -7,8 +7,7 @@ type ThemeConfig = {
   }
 }
 
-const SOLID_CLASS_NAMES =
-  'color-white border-transparent disabled:bg-neutral-200'
+const SOLID_CLASS_NAMES = 'color-white border-transparent disabled:bg-neutral-200'
 const OUTLINE_CLASS_NAMES =
   'bg-white hover:color-white hover:border-transparent disabled:color-neutral-200 disabled:border-neutral-200 disabled:bg-white'
 const PLAIN_CLASS_NAMES =

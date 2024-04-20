@@ -1,12 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { Dialog } from '@ui'
-import {
-  Size,
-  MOBILE_FULL_SCREEN,
-  MOBILE_PARTIAL_SCREEN,
-  BACKDROP_BLUR,
-  NO_WRAP,
-} from './constants'
+import { Size, MOBILE_FULL_SCREEN, MOBILE_PARTIAL_SCREEN, BACKDROP_BLUR, NO_WRAP } from './constants'
 
 const TITLE = 'title'
 const CHILDREN = 'content'
@@ -96,9 +90,7 @@ describe('rendering', () => {
     })
     test('with isMobileFullScreen set to false', () => {
       setup({ isMobileFullScreen: false })
-      expect(screen.getByRole('dialog').className).toMatch(
-        MOBILE_PARTIAL_SCREEN,
-      )
+      expect(screen.getByRole('dialog').className).toMatch(MOBILE_PARTIAL_SCREEN)
     })
   })
 
@@ -109,9 +101,7 @@ describe('rendering', () => {
     })
     test('with isBackdropBlur set to false', () => {
       setup({ isBackdropBlur: false })
-      expect(screen.getByRole('presentation').className).not.toMatch(
-        BACKDROP_BLUR,
-      )
+      expect(screen.getByRole('presentation').className).not.toMatch(BACKDROP_BLUR)
     })
   })
 
