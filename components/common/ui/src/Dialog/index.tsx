@@ -1,13 +1,7 @@
 import type { Size } from './constants'
 import type { MouseEvent } from 'react'
 import { IconButton } from '@ui'
-import {
-  SIZE_CONFIG,
-  MOBILE_FULL_SCREEN,
-  MOBILE_PARTIAL_SCREEN,
-  BACKDROP_BLUR,
-  NO_WRAP,
-} from './constants'
+import { SIZE_CONFIG, MOBILE_FULL_SCREEN, MOBILE_PARTIAL_SCREEN, BACKDROP_BLUR, NO_WRAP } from './constants'
 
 export type DialogProps = {
   onClose?: () => void
@@ -34,9 +28,7 @@ export function Dialog({
   isBackdropBlur = true,
   isTitleWrap = false,
 }: DialogProps) {
-  const mobileClass = isMobileFullScreen
-    ? MOBILE_FULL_SCREEN
-    : MOBILE_PARTIAL_SCREEN
+  const mobileClass = isMobileFullScreen ? MOBILE_FULL_SCREEN : MOBILE_PARTIAL_SCREEN
   const dialogClassNames = [SIZE_CONFIG[size], mobileClass, className].join(' ')
   const backdropClassNames = isBackdropBlur ? BACKDROP_BLUR : ''
   const titleClassNames = isTitleWrap ? '' : NO_WRAP
@@ -55,10 +47,7 @@ export function Dialog({
         onClick={onDialogClick}
       >
         {!hideCloseIcon && (
-          <div
-            data-testid="dialog-close-icon"
-            className="absolute right-4 top-3.5 sm:right-5 sm:top-4.5"
-          >
+          <div data-testid="dialog-close-icon" className="absolute right-4 top-3.5 sm:right-5 sm:top-4.5">
             <IconButton
               icon="i-mdi-close"
               size="2xl"
@@ -76,14 +65,8 @@ export function Dialog({
             {title}
           </h2>
         )}
-        {children && (
-          <div className="my-4 flex-1 overflow-y-scroll text-neutral-700 sm:my-5">
-            {children}
-          </div>
-        )}
-        {footer && (
-          <div className="mt-2 h-9 flex items-center sm:mt-3">{footer}</div>
-        )}
+        {children && <div className="my-4 flex-1 overflow-y-scroll text-neutral-700 sm:my-5">{children}</div>}
+        {footer && <div className="mt-2 h-9 flex items-center sm:mt-3">{footer}</div>}
       </dialog>
     </div>
   )

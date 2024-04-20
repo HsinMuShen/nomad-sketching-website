@@ -1,4 +1,4 @@
-import { UserConfig } from 'unocss'
+import { UserConfig, presetTypography } from 'unocss'
 import presetUno from '@unocss/preset-uno'
 import presetUnocssIcons from '@unocss/preset-icons'
 import presetWebFonts from '@unocss/preset-web-fonts'
@@ -6,6 +6,7 @@ import presetRemToPx from '@unocss/preset-rem-to-px'
 import transformerDirective from '@unocss/transformer-directives'
 
 export const PRESET = {
+  TYPOGRAPHY: presetTypography(),
   UNO: presetUno(),
   REM_TO_PX: presetRemToPx(),
   ICON: presetUnocssIcons(),

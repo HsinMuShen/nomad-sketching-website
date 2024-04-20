@@ -1,15 +1,6 @@
 export const COLORS = ['primary', 'secondary'] as const
-export const VARIANTS = [
-  'solid',
-  'outline',
-  'plain',
-  'text',
-  'plain-text',
-] as const
-export const FUNCTIONAL_COLORS = [
-  'functional-light',
-  'functional-dark',
-] as const
+export const VARIANTS = ['solid', 'outline', 'plain', 'text', 'plain-text'] as const
+export const FUNCTIONAL_COLORS = ['functional-light', 'functional-dark'] as const
 export const FUNCTIONAL_VARIANTS = ['text'] as const
 
 export type Color = (typeof COLORS)[number]
@@ -32,14 +23,12 @@ type FunctionalColorThemeConfig = {
 export const BUTTON_BASE_CONFIG =
   'min-h-4 text-3 p-0.25 cursor-pointer appearance-none border rounded border-solid outline-none transition duration-150 ease-in-out disabled:cursor-not-allowed focus:outline-none'
 
-const SOLID_CLASS_NAME =
-  'border-transparent color-white disabled:bg-neutral-200'
+const SOLID_CLASS_NAME = 'border-transparent color-white disabled:bg-neutral-200'
 const OUTLINE_CLASS_NAME =
   'bg-white disabled:border-neutral-200 hover:border-transparent disabled:bg-transparent disabled:color-neutral-200 hover:color-white'
 const PLAIN_CLASS_NAME =
   'border-neutral-200 bg-white color-neutral-700 active:bg-neutral-200 disabled:color-neutral-200'
-const TEXT_CLASS_NAME =
-  'border-transparent bg-transparent disabled:color-neutral-200'
+const TEXT_CLASS_NAME = 'border-transparent bg-transparent disabled:color-neutral-200'
 const PLAIN_TEXT_CLASS_NAME = `color-neutral-700 ${TEXT_CLASS_NAME}`
 
 export const COLOR_THEME_CONFIG: ColorThemeConfig = {

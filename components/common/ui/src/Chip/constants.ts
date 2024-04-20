@@ -1,7 +1,6 @@
 export type ChipTheme = 'primary' | 'secondary' | 'gray'
 
-export const CHIP_CLASS_NAME =
-  'inline-flex flex-items-center h-8 min-w-6 px-3 border-1 border-solid cursor-pointer'
+export const CHIP_CLASS_NAME = 'inline-flex flex-items-center h-8 min-w-6 px-3 border-1 border-solid cursor-pointer'
 
 export const DEFAULT_THEME =
   'bg-white border-neutral-200 text-neutral-700 hover:bg-neutral-900/5 hover:border-neutral-300 active:bg-neutral-900/20 active:border-neutral-400'

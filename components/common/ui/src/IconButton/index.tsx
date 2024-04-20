@@ -1,29 +1,13 @@
-import type {
-  Color,
-  Variant,
-  FunctionalColor,
-  FunctionalVariant,
-} from './constants'
+import type { Color, Variant, FunctionalColor, FunctionalVariant } from './constants'
 import type { Size } from '../Icon'
 import { ButtonHTMLAttributes } from 'react'
 import { Icon, IconProps } from '@ui'
-import {
-  BUTTON_BASE_CONFIG,
-  FUNCTIONAL_COLORS,
-  COLOR_THEME_CONFIG,
-  FUNCTIONAL_COLOR_THEME_CONFIG,
-} from './constants'
+import { BUTTON_BASE_CONFIG, FUNCTIONAL_COLORS, COLOR_THEME_CONFIG, FUNCTIONAL_COLOR_THEME_CONFIG } from './constants'
 
 type LoadingProps = { size: Size }
 
 function Loading({ size }: LoadingProps) {
-  return (
-    <Icon
-      icon="i-mdi-loading"
-      size={size}
-      className="ma-auto rotate-360 animate-spin"
-    />
-  )
+  return <Icon icon="i-mdi-loading" size={size} className="ma-auto rotate-360 animate-spin" />
 }
 
 type IconButtonColor = Color | FunctionalColor
@@ -52,9 +36,7 @@ export function IconButton({
   ...attributes
 }: IconButtonProps) {
   const themeConfig = FUNCTIONAL_COLORS.includes(color as FunctionalColor)
-    ? FUNCTIONAL_COLOR_THEME_CONFIG[color as FunctionalColor][
-        variant as FunctionalVariant
-      ]
+    ? FUNCTIONAL_COLOR_THEME_CONFIG[color as FunctionalColor][variant as FunctionalVariant]
     : COLOR_THEME_CONFIG[color as Color][variant as Variant]
   const classNames = [
     BUTTON_BASE_CONFIG,
@@ -65,11 +47,7 @@ export function IconButton({
   ].join(' ')
   return (
     <button className={classNames} disabled={disabled} {...attributes}>
-      {isLoading ? (
-        <Loading size={size} />
-      ) : (
-        <Icon icon={icon} size={size} className="ma-auto" />
-      )}
+      {isLoading ? <Loading size={size} /> : <Icon icon={icon} size={size} className="ma-auto" />}
     </button>
   )
 }

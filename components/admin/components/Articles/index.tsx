@@ -19,13 +19,9 @@ const Article = ({ article, removeArticle }: ArticleProps) => {
       <Link href={`/admin/update/${article.id}`}>
         <div className="flex justify-between">
           <h2>{article.title}</h2>
-          <p>{article.content}</p>
         </div>
       </Link>
-      <button
-        className="mt-1 border-black-solid border-1 cursor-pointer"
-        onClick={onDeleteClick}
-      >
+      <button className="mt-1 border-black-solid border-1 cursor-pointer" onClick={onDeleteClick}>
         delete
       </button>
     </div>
@@ -42,11 +38,7 @@ const Articles = () => {
   return (
     <div>
       {articles.map((article) => (
-        <Article
-          key={article.id}
-          article={article}
-          removeArticle={removeArticle}
-        />
+        <Article key={article.id} article={article} removeArticle={removeArticle} />
       ))}
     </div>
   )

@@ -1,11 +1,6 @@
 import { useState } from 'react'
 import { Avatar, Icon } from '@ui'
-import {
-  CHIP_CLASS_NAME,
-  DEFAULT_THEME,
-  SELECTED_THEME_CONFIG,
-  ChipTheme,
-} from './constants'
+import { CHIP_CLASS_NAME, DEFAULT_THEME, SELECTED_THEME_CONFIG, ChipTheme } from './constants'
 
 export type ChipProps = {
   avatarSrc?: string
@@ -46,9 +41,7 @@ export function Chip({
     <div className={classNames} {...attributes} onClick={onToggle}>
       {avatarSrc && <Avatar src={avatarSrc} className="mr-2" size="sm" />}
       <div className="text-sm">{children}</div>
-      {closable && (
-        <Icon icon="i-mdi-close-circle" size="base" className="ml-2" />
-      )}
+      {closable && <Icon icon="i-mdi-close-circle" size="base" className="ml-2" />}
     </div>
   )
 }
