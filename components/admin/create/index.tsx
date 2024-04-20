@@ -21,15 +21,18 @@ const CreateArticle = () => {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Create Article</h1>
       <Input value={title} onValueChange={setTitle} />
-      <div className="border-1 border-neutral-200 rounded border-solid p-2">
-        <MessageInput ref={messageInputRef} className="h-73" />
-      </div>
+      <MessageInput ref={messageInputRef} className="h-73" />
       <Button color="secondary" onClick={onCreateArticle}>
         Create
       </Button>
       <div>
         <Link href="/admin">Back to admin</Link>
       </div>
+      <ul>
+        <li>1. Create a new article</li>
+        <li>2. Add content to the article</li>
+        <li>3. Click the create button</li>
+      </ul>
     </div>
   )
 }
