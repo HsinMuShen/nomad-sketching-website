@@ -52,11 +52,10 @@ type HeaderSidebarProps = {
 
 const HeaderSidebar = ({ isSideBar, setIsSideBar }: HeaderSidebarProps) => {
   const sideBarPosition = isSideBar ? 'right-0' : '-right-200'
-  console.log('sidebarPosition', sideBarPosition)
-  console.log('isSideBar', isSideBar)
+
   return (
     <div
-      className={`fixed right-0 top-0 h-screen w-50 bg-black bg-opacity-60 transition-right duration-800 ${sideBarPosition}`}
+      className={`fixed top-0 h-screen w-50 bg-black bg-opacity-60 transition-right duration-800 ${sideBarPosition}`}
     >
       <p className="absolute top-4 left-5 text-white cursor-pointer" onClick={() => setIsSideBar(false)}>
         <Icon icon="i-mdi-close" size="xl" />
