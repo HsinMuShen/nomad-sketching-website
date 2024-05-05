@@ -1,8 +1,6 @@
-import { useState } from 'react'
 import Image from 'next/image'
 import { ImageUploadButton, IconButton } from 'src/components/common/ui'
 import { uploadAttachment, deleteAttachment } from 'src/utils/attachment'
-import DefaultImage from 'public/images/default.png'
 
 type ImageUploaderProps = {
   images: CoverImageType[]
@@ -18,8 +16,7 @@ export type CoverImageType = {
 
 export const DEFAULT_IMAGE_ID = 'default'
 
-export const ImageUploader = ({images, updateImages, singleImage = false, className = '' }: ImageUploaderProps) => {
-
+export const ImageUploader = ({ images, updateImages, singleImage = false, className = '' }: ImageUploaderProps) => {
   const onUpload = async (file: File) => {
     const url = await uploadAttachment(file)
     const image: CoverImageType = {
