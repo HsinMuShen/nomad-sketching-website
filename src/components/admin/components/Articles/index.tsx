@@ -47,7 +47,7 @@ const Articles = () => {
   }, [fetchArticles])
 
   return (
-    <div className="grid gap-2.5 grid-cols-auto-fill-240 justify-center">
+    <div className="grid gap-3 grid-cols-auto-fill-240 justify-center">
       {articles.map((article) => (
         <Article key={article.id} article={article} removeArticle={removeArticle} />
       ))}

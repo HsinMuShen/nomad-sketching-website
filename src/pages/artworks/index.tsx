@@ -21,18 +21,22 @@ export async function getServerSideProps() {
 const Artworks = ({ artworks }: { artworks: Article[] }) => {
   return (
     <Layout>
-      {artworks.map((artwork) => (
-        <div key={artwork.id}>
-          <h2>{artwork.title}</h2>
-          <Image
-            src={artwork.coverImage || DefaultImage}
-            alt={`Image of ${artwork.title}`}
-            width={500}
-            height={300}
-            layout="responsive"
-          />
-        </div>
-      ))}
+      <div className="grid gap-3 grid-cols-auto-fill-240 justify-center">
+        {artworks.map((artwork) => (
+          <div key={artwork.id} className="w-60">
+            <div className="text-4 font-bold">{artwork.title}</div>
+            <div className="relative border-1 h-40 w-full">
+              <Image
+                src={artwork.coverImage?.src || DefaultImage}
+                alt={artwork.title}
+                fill
+                className="object-cover"
+                sizes="auto"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
     </Layout>
   )
 }
