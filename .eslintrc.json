@@ -5,8 +5,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:react/recommended", 
-    "plugin:react-hooks/recommended",
-    "@unocss"
+    "plugin:react-hooks/recommended"
   ],
   "plugins": [
     "@typescript-eslint",
@@ -24,8 +23,7 @@
         "bracketSpacing": true
       }
     ],
-    "react/react-in-jsx-scope": "off",
-    "@unocss/order": "warn"
+    "react/react-in-jsx-scope": "off"
   },
   "parserOptions": {
     "ecmaVersion": 2020,

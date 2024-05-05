@@ -23,6 +23,10 @@ export const PRESET = {
 }
 
 const config = {
+  rules: [
+    ['grid-cols-auto-fit-240', { 'grid-template-columns': 'repeat(auto-fit, 240px)' }],
+    ['grid-cols-auto-fill-240', { 'grid-template-columns': 'repeat(auto-fill, 240px)' }],
+  ],
   presets: Object.values(PRESET),
   transformers: [transformerDirective()],
   theme: {
@@ -50,6 +54,12 @@ const config = {
       default: '0 2px 4px rgba(0, 0, 0, 0.05)',
       hover: '2px 2px 4px rgba(0, 0, 0, 0.20)',
       dialog: '0 0 8px rgba(0, 0, 0, 0.20)',
+    },
+    extend: {
+      gridTemplateColumns: {
+        'auto-fill-100': 'repeat(auto-fill, minmax(100px, 1fr))',
+        'auto-fit-100': 'repeat(auto-fit, minmax(100px, 1fr))',
+      },
     },
   },
 } as UserConfig
