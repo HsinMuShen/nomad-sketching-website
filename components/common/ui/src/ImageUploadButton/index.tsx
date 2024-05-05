@@ -4,16 +4,17 @@ import { IMAGE_ACCEPTABLE_TYPES } from './constants'
 
 export type ImageUploadButtonProps = {
   isDisabled?: boolean
+  singleImage?: boolean
   onUpload: (file: File) => void
 } & React.HTMLAttributes<HTMLDivElement>
 
-export const ImageUploadButton = ({ isDisabled = false, onUpload }: ImageUploadButtonProps) => {
+export const ImageUploadButton = ({ isDisabled = false, singleImage = false, onUpload }: ImageUploadButtonProps) => {
   const onInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
     if (!files) return
     const filesArray = Array.from(files)
-    filesArray.forEach((file) => onUpload(file))
-
+    if (singleImage) onUpload(filesArray[0])
+    if (!singleImage) filesArray.forEach((file) => onUpload(file))
     event.target.value = ''
   }
 
@@ -27,6 +28,7 @@ export const ImageUploadButton = ({ isDisabled = false, onUpload }: ImageUploadB
         icon="i-mdi-image-area"
         size="2xl"
         variant="plain"
+        color="secondary"
         hasPadding={false}
         onClick={onButtonClick}
         disabled={isDisabled}

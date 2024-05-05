@@ -8,6 +8,14 @@ const nextConfig = {
     config.plugins.push(UnoCSS())
     return config
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig

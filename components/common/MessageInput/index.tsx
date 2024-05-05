@@ -2,15 +2,7 @@ import type { JSONContent } from '@tiptap/core'
 import { useState, ForwardedRef, forwardRef, useCallback, useImperativeHandle } from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import Document from '@tiptap/extension-document'
-import Heading from '@tiptap/extension-heading'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
 import Underline from '@tiptap/extension-underline'
-import BulletList from '@tiptap/extension-bullet-list'
-import OrderedList from '@tiptap/extension-ordered-list'
-import ListItem from '@tiptap/extension-list-item'
-import Code from '@tiptap/extension-code'
 import { ImageUploadButton, Button } from '@ui'
 import { uploadAttachment, deleteAttachment } from 'utils/attachment'
 import { ATTACHMENT_UPLOAD_COUNT_LIMIT } from './constants'
@@ -74,18 +66,10 @@ const MessageInputWrap = (
   }, [])
 
   const extensions = [
-    StarterKit,
-    Heading.configure({
-      levels: [1, 2, 3],
+    StarterKit.configure({
+      heading: { levels: [1, 2, 3] },
     }),
-    Document,
-    Paragraph,
-    Text,
     Underline,
-    Code,
-    BulletList,
-    OrderedList,
-    ListItem,
     CustomImage.configure({
       onUpload: uploadImage,
       onDelete: deleteImage,

@@ -1,11 +1,14 @@
 import type { MessageInputRef } from 'components/common/MessageInput/types'
 import { useCallback, useRef } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Button, Input } from '@ui'
 import MessageInput from 'components/common/MessageInput'
+import ImageUploader from 'components/common/ImageUploader'
 import useArticle from 'components/admin/hooks/use-article'
 
 const CreateArticle = () => {
+  const router = useRouter()
   const { title, setTitle, createArticle } = useArticle()
   const messageInputRef = useRef<MessageInputRef | null>(null)
 
@@ -15,12 +18,17 @@ const CreateArticle = () => {
     createArticle(content)
     setTitle('')
     messageInputRef.current?.clearContent()
-  }, [createArticle, setTitle])
+    router.push('/admin')
+  }, [createArticle, setTitle, router])
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Create Article</h1>
+      <div className="text-5 font-bold mb-4">Create Article</div>
+      <div className="font-bold mb-2">Title</div>
       <Input value={title} onValueChange={setTitle} />
+      <div className="font-bold my-2">Cover Image</div>
+      <ImageUploader singleImage className="h-40 w-full " />
+      <div className="font-bold my-2">Content</div>
       <MessageInput ref={messageInputRef} className="h-73" />
       <Button color="secondary" onClick={onCreateArticle}>
         Create
@@ -28,11 +36,6 @@ const CreateArticle = () => {
       <div>
         <Link href="/admin">Back to admin</Link>
       </div>
-      <ul>
-        <li>1. Create a new article</li>
-        <li>2. Add content to the article</li>
-        <li>3. Click the create button</li>
-      </ul>
     </div>
   )
 }

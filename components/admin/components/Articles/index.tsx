@@ -1,6 +1,9 @@
 import type { Article } from 'components/admin/types'
 import React, { useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
+import { Button } from '@ui'
+import DefaultImage from 'public/images/default.png'
 import useArticles from 'components/admin/hooks/use-articles'
 
 type ArticleProps = {
@@ -9,21 +12,23 @@ type ArticleProps = {
 }
 
 const Article = ({ article, removeArticle }: ArticleProps) => {
-  const onDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  const onDeleteClick = () => {
     removeArticle(article.id)
   }
 
   return (
-    <div className="mt-2">
+    <div className="mt-2 w-40">
       <Link href={`/admin/update/${article.id}`}>
-        <div className="flex justify-between">
-          <h2>{article.title}</h2>
+        <div className="flex justify-between items-center mb-1">
+          <div className="text-4 font-bold">{article.title}</div>
+          <Button variant="plain" onClick={onDeleteClick}>
+            Delete
+          </Button>
+        </div>
+        <div className="border-1">
+          <Image src={article.coverImage || DefaultImage} alt={`Image of ${article.title}`} layout="responsive" />
         </div>
       </Link>
-      <button className="mt-1 border-black-solid border-1 cursor-pointer" onClick={onDeleteClick}>
-        delete
-      </button>
     </div>
   )
 }
