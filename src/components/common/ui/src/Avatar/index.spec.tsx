@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { Avatar, DEFAULT_AVATAR } from 'src/components/common/ui'
+import { Avatar, DEFAULT_AVATAR } from '.'
 
 describe('Avatar', () => {
   it('render successfully', () => {

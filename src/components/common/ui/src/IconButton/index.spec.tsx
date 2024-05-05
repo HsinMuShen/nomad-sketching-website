@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { IconButton } from 'src/components/common/ui'
+import { IconButton } from '.'
 
 const MOCK_LOADING_ICON = 'i-mdi-loading'
 

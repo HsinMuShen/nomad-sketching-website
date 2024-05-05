@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Avatar, Icon } from 'src/components/common/ui'
+import { Avatar, Icon } from '@ui'
 import { CHIP_CLASS_NAME, DEFAULT_THEME, SELECTED_THEME_CONFIG, ChipTheme } from './constants'
 
 export type ChipProps = {

@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { IconButton } from 'src/components/common/ui'
+import { IconButton } from '@ui'
 import { IMAGE_ACCEPTABLE_TYPES } from './constants'
 
 export type ImageUploadButtonProps = {

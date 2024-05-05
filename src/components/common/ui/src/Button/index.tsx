@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes } from 'react'
-import { Icon } from 'src/components/common/ui'
+import { Icon } from '@ui'
 import { ColorTheme, Variant, BUTTON_THEME_CONFIG, BUTTON_CLASS_NAMES } from './constants'
 
 export type ButtonProps = {

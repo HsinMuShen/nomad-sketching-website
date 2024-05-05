@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { Icon } from 'src/components/common/ui'
+import { Icon } from '.'
 
 describe('Icon', () => {
   it('render successfully', () => {

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { TextArea, TextAreaProps } from 'src/components/common/ui'
+import { TextArea, TextAreaProps } from '.'
 
 const onValueChange = jest.fn()
 

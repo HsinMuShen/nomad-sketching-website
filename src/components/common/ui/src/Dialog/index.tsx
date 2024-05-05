@@ -1,6 +1,6 @@
 import type { Size } from './constants'
 import type { MouseEvent } from 'react'
-import { IconButton } from 'src/components/common/ui'
+import { IconButton } from '@ui'
 import { SIZE_CONFIG, MOBILE_FULL_SCREEN, MOBILE_PARTIAL_SCREEN, BACKDROP_BLUR, NO_WRAP } from './constants'
 
 export type DialogProps = {

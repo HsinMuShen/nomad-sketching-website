@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import { Dialog } from 'src/components/common/ui'
+import { Dialog } from '.'
 import { Size, MOBILE_FULL_SCREEN, MOBILE_PARTIAL_SCREEN, BACKDROP_BLUR, NO_WRAP } from './constants'
 
 const TITLE = 'title'

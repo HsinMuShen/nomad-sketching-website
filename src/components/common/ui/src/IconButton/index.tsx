@@ -1,7 +1,7 @@
 import type { Color, Variant, FunctionalColor, FunctionalVariant } from './constants'
 import type { Size } from '../Icon'
 import { ButtonHTMLAttributes } from 'react'
-import { Icon, IconProps } from 'src/components/common/ui'
+import { Icon, IconProps } from '@ui'
 import { BUTTON_BASE_CONFIG, FUNCTIONAL_COLORS, COLOR_THEME_CONFIG, FUNCTIONAL_COLOR_THEME_CONFIG } from './constants'
 
 type LoadingProps = { size: Size }

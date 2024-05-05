@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { Chip } from 'src/components/common/ui'
+import { Chip } from '.'
 
 const CONTEXT = 'ChipComponent'
 const MOCK_CLOSE_ICON = 'i-mdi-close-circle'

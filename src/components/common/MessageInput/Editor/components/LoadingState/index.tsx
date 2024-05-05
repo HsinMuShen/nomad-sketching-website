@@ -1,4 +1,4 @@
-import { Icon } from 'src/components/common/ui'
+import { Icon } from '@ui'
 
 const LoadingState = () => {
   return (

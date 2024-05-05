@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { Input } from 'src/components/common/ui'
+import { Input } from '.'
 
 describe('Input', () => {
   it('render successfully', () => {
