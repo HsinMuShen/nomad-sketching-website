@@ -1,0 +1,51 @@
+  .container {
+    max-width:100%!important;
+    width:100%;
+    height:100%;
+    perspective:1000px;
+    -webkit-perspective:1000px;
+    perspective-origin:50% 50%;
+    transform-style:preserve-3d;
+    position:relative;
+    margin:0 auto;
+    overflow:hidden;
+  }
+  
+  .vertical-carousel {
+    position:absolute;
+    backface-visibility: visible;
+    transform-style:preserve-3d;
+    cursor:pointer;
+    left: 25%;
+    top: 50%;
+  }
+  
+  .vertical-carousel-item {
+    width:40vw;
+    height:40vw;
+    position:absolute;
+    backface-visibility: visible;
+    border-radius:60px;
+    background-color:#111;
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center;
+    transition:0.5s all ease-out;
+    opacity: 0.8;
+  }
+  
+  
+  .image-display {
+    position: fixed;
+    cursor: pointer;
+    top: 20%;
+    width: 80vw;
+    height: 40vw;
+    border: 2px solid white;
+    border-radius: 4px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    transition: 0.5s all ease-out;
+    transform: translate(-50%, -50%) scale(0, 0);
+  }
