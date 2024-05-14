@@ -52,7 +52,6 @@ const VerticalCarousel = (props: { imageData: string[] }) => {
     const mouseMoveHandler = (e: MouseEvent) => {
       mouseX = (e.clientX / window.innerWidth - 0.5) * 10
       mouseY = (e.clientY / window.innerHeight - 0.5) * 1.25
-      console.log(mouseX, mouseY)
     }
 
     document.body.addEventListener('mousemove', mouseMoveHandler)
@@ -72,14 +71,14 @@ const VerticalCarousel = (props: { imageData: string[] }) => {
 
   return (
     <div className="w-80vw h-90vh p-2 flex flex-col items-center overflow-hidden">
-      <div className="container">
-        <div className="vertical-carousel" ref={el}>
+      <div className="carousel-container relative w-full max-w-full h-200 mx-auto my-0 overflow-hidden">
+        <div className="vertical-carousel absolute top-1/2 left-1/2 cursor-pointer" ref={el}>
           {props.imageData.map((it, index) => (
             <div
               onClick={() => pickImage(it)}
               key={index}
               style={{ backgroundImage: `url(${it})` }}
-              className="vertical-carousel-item"
+              className="vertical-carousel-item absolute w-75 h-75 top-[-150px] left-[-150px] rounded-15 bg-no-repeat bg-cover bg-center"
             ></div>
           ))}
         </div>
@@ -87,7 +86,7 @@ const VerticalCarousel = (props: { imageData: string[] }) => {
           onClick={() => {
             img.current!.style.transform = 'scale(0.0, 0.0)'
           }}
-          className="image-display"
+          className="image-display w-80vw h-60vh fixed cursor-pointer top-10 border border-white rounded bg-no-repeat bg-cover bg-center"
           ref={img}
         ></div>
       </div>

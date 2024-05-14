@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <title>Nomad Sketching</title>
       </Head>
       <Header isAdmin={true} />
-      <div className="max-w-80vw my-18 mx-auto">{children}</div>
+      <div className="max-w-80vw mt-18 mx-auto">{children}</div>
     </div>
   )
 }
