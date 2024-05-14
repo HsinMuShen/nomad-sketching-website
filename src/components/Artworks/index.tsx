@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const RADIUS = 1400
 const ITEM_SHIFT = 100
@@ -7,6 +7,31 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
   const el = useRef<HTMLDivElement>(null)
   const animId = useRef<number>(0)
   const img = useRef<HTMLDivElement>(null)
+
+  const [isDragging, setIsDragging] = useState(false)
+  const [backgroundPosition, setBackgroundPosition] = useState({ x: '50%', y: '50%' })
+  const [startPosition, setStartPosition] = useState({ x: 0, y: 0 })
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true)
+
+    setStartPosition({
+      x: e.clientX,
+      y: e.clientY,
+    })
+  }
+
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      const newX = `calc(50% + ${e.clientX - startPosition.x}px)`
+      const newY = `calc(50% + ${e.clientY - startPosition.y}px)`
+      setBackgroundPosition({ x: newX, y: newY })
+    }
+  }
+
+  const handleMouseUp = () => {
+    setIsDragging(false)
+  }
 
   let angleUnit: number, rotateAngle: number, viewAngle: number, mouseX: number, mouseY: number
 
@@ -67,32 +92,33 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
   const pickImage = (imgUrl: string) => {
     img.current!.style.backgroundImage = `url(${imgUrl})`
     img.current!.style.transform = 'scale(1, 1)'
+    setBackgroundPosition({ x: '50%', y: '50%' })
   }
 
   return (
     <div className="w-80vw h-90vh p-2 flex flex-col items-center overflow-hidden">
       <div className="carousel-container relative w-full max-w-full h-200 mx-auto my-0 overflow-hidden">
         <div className="vertical-carousel absolute top-1/2 left-1/2 cursor-pointer" ref={el}>
-          {images.map(
-            (it, index) => (
-              console.log('it', it),
-              (
-                <div
-                  onClick={() => pickImage(it)}
-                  key={index}
-                  style={{ backgroundImage: `url(${it})` }}
-                  className="vertical-carousel-item absolute w-75 h-75 top-[-150px] left-[-150px] rounded-15 bg-no-repeat bg-cover bg-center"
-                ></div>
-              )
-            ),
-          )}
+          {images.map((it, index) => (
+            <div
+              onClick={() => pickImage(it)}
+              key={index}
+              style={{ backgroundImage: `url(${it})` }}
+              className="vertical-carousel-item absolute w-75 h-75 top-[-150px] left-[-150px] rounded-15 bg-no-repeat bg-cover bg-center"
+            ></div>
+          ))}
         </div>
         <div
-          onClick={() => {
-            img.current!.style.transform = 'scale(0.0, 0.0)'
-          }}
-          className="image-display w-80vw h-60vh fixed cursor-pointer top-10 border border-white rounded bg-no-repeat bg-cover bg-center"
+          //   onClick={() => {
+          //     img.current!.style.transform = 'scale(0.0, 0.0)'
+          //   }}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseUp}
+          onMouseUp={handleMouseUp}
+          className="image-display bg-white w-80vw h-60vh fixed cursor-pointer top-10 border border-white rounded bg-no-repeat bg-cover bg-center"
           ref={img}
+          style={{ backgroundPosition: `${backgroundPosition.x} ${backgroundPosition.y}` }}
         ></div>
       </div>
     </div>
