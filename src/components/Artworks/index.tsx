@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 const RADIUS = 1400
 const ITEM_SHIFT = 100
 
-const VerticalCarousel = (props: { imageData: string[] }) => {
+const VerticalCarousel = ({ images }: { images: string[] }) => {
   const el = useRef<HTMLDivElement>(null)
   const animId = useRef<number>(0)
   const img = useRef<HTMLDivElement>(null)
@@ -12,7 +12,7 @@ const VerticalCarousel = (props: { imageData: string[] }) => {
 
   useEffect(() => {
     // Initialize parameters
-    angleUnit = 360 / props.imageData.length
+    angleUnit = 360 / images.length
     mouseX = mouseY = 0
     rotateAngle = 0
     viewAngle = 0
@@ -61,7 +61,7 @@ const VerticalCarousel = (props: { imageData: string[] }) => {
       document.body.removeEventListener('mousemove', mouseMoveHandler)
       cancelAnimationFrame(animId.current)
     }
-  }, [props.imageData]) // Dependency array ensures effect only reruns if imageData changes
+  }, [images]) // Dependency array ensures effect only reruns if images changes
 
   // Function to display the image when an item is clicked
   const pickImage = (imgUrl: string) => {
@@ -73,14 +73,19 @@ const VerticalCarousel = (props: { imageData: string[] }) => {
     <div className="w-80vw h-90vh p-2 flex flex-col items-center overflow-hidden">
       <div className="carousel-container relative w-full max-w-full h-200 mx-auto my-0 overflow-hidden">
         <div className="vertical-carousel absolute top-1/2 left-1/2 cursor-pointer" ref={el}>
-          {props.imageData.map((it, index) => (
-            <div
-              onClick={() => pickImage(it)}
-              key={index}
-              style={{ backgroundImage: `url(${it})` }}
-              className="vertical-carousel-item absolute w-75 h-75 top-[-150px] left-[-150px] rounded-15 bg-no-repeat bg-cover bg-center"
-            ></div>
-          ))}
+          {images.map(
+            (it, index) => (
+              console.log('it', it),
+              (
+                <div
+                  onClick={() => pickImage(it)}
+                  key={index}
+                  style={{ backgroundImage: `url(${it})` }}
+                  className="vertical-carousel-item absolute w-75 h-75 top-[-150px] left-[-150px] rounded-15 bg-no-repeat bg-cover bg-center"
+                ></div>
+              )
+            ),
+          )}
         </div>
         <div
           onClick={() => {
