@@ -18,13 +18,16 @@ const Header = ({ isAdmin }: HeaderProps) => {
           <Icon className="mr-2" icon="i-mdi-grease-pencil" size="xl" />
           {'Nomad Sketching'}
         </Link>
-        {NAV_LINKS.map((link) => (
+        {/* {NAV_LINKS.map((link) => (
           <Link key={link.label} href={link.href} className={desktopClass}>
             {link.label}
           </Link>
-        ))}
+        ))} */}
       </div>
-      {isAdmin ? (
+      <Link href="/about" className={`${desktopClass}`}>
+        <Icon icon="i-mdi-heart" size="xl" />
+      </Link>
+      {/* {isAdmin ? (
         <Link href="/admin" className={`${desktopClass}`}>
           <Icon icon="i-mdi-account-tie-hat" size="3xl" />
         </Link>
@@ -32,13 +35,13 @@ const Header = ({ isAdmin }: HeaderProps) => {
         <Link href="/login" className={`${desktopClass}`}>
           <Icon icon="i-mdi-login" size="3xl" />
         </Link>
-      )}
-      <div className={`flex items-center md:hidden`}>
+      )} */}
+      {/* <div className={`flex items-center md:hidden`}>
         <p className="mx-5 text-gray-800 cursor-pointer hover:text-gray-600" onClick={() => setIsSideBar(true)}>
           <Icon icon="i-mdi-menu" size="xl" />
         </p>
       </div>
-      <HeaderSidebar isSideBar={isSideBar} setIsSideBar={setIsSideBar} />
+      <HeaderSidebar isSideBar={isSideBar} setIsSideBar={setIsSideBar} /> */}
     </div>
   )
 }

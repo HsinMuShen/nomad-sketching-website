@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { IconButton } from '@ui'
 
 const RADIUS = 1400
 const ITEM_SHIFT = 100
@@ -11,8 +12,10 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
   const [isDragging, setIsDragging] = useState(false)
   const [backgroundPosition, setBackgroundPosition] = useState({ x: '50%', y: '50%' })
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 })
+  const [isImageCover, setIsImageCover] = useState(false)
+  const backgroundSize = isImageCover ? 'sm:bg-cover' : 'sm:bg-contain'
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true)
 
     setStartPosition({
@@ -21,7 +24,7 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
     })
   }
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isDragging) {
       const newX = `calc(50% + ${e.clientX - startPosition.x}px)`
       const newY = `calc(50% + ${e.clientY - startPosition.y}px)`
@@ -109,17 +112,37 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
           ))}
         </div>
         <div
-          //   onClick={() => {
-          //     img.current!.style.transform = 'scale(0.0, 0.0)'
-          //   }}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseUp}
           onMouseUp={handleMouseUp}
-          className="image-display bg-white w-80vw h-60vh fixed cursor-pointer top-10 border border-white rounded bg-no-repeat bg-cover bg-center"
+          className={`image-display relative bg-white w-80vw h-60vh fixed cursor-pointer top-10 border border-white rounded bg-no-repeat bg-cover ${backgroundSize}`}
           ref={img}
           style={{ backgroundPosition: `${backgroundPosition.x} ${backgroundPosition.y}` }}
-        ></div>
+        >
+          <IconButton
+            size="xl"
+            icon={isImageCover ? 'i-mdi-auto-fix' : 'i-mdi-selection-drag'}
+            color="secondary"
+            variant="plain"
+            hasPadding={false}
+            className="absolute -top-8 right-12 hidden sm:block"
+            onClick={() => {
+              setIsImageCover(!isImageCover)
+            }}
+          />
+          <IconButton
+            size="xl"
+            icon="i-mdi-close"
+            variant="plain"
+            hasPadding={false}
+            className="absolute -top-8 right-4"
+            onClick={() => {
+              img.current!.style.transform = 'scale(0.0, 0.0)'
+            }}
+          />
+          <div className="absolute font-bold -top-7">Title</div>
+        </div>
       </div>
     </div>
   )
