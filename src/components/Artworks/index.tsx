@@ -10,7 +10,7 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
   const img = useRef<HTMLDivElement>(null)
 
   const [isDragging, setIsDragging] = useState(false)
-  const [backgroundPosition, setBackgroundPosition] = useState({ x: '50%', y: '50%' })
+  const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 })
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 })
   const [isImageCover, setIsImageCover] = useState(false)
   const backgroundSize = isImageCover ? 'sm:bg-cover' : 'sm:bg-contain'
@@ -26,10 +26,23 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isDragging) {
-      const newX = `calc(50% + ${e.clientX - startPosition.x}px)`
-      const newY = `calc(50% + ${e.clientY - startPosition.y}px)`
-      setBackgroundPosition({ x: newX, y: newY })
+      const deltaX = e.clientX - startPosition.x
+      const deltaY = e.clientY - startPosition.y
+      setBackgroundPosition((prevPos) => ({
+        x: prevPos.x + deltaX,
+        y: prevPos.y + deltaY,
+      }))
+      setStartPosition({
+        x: e.clientX,
+        y: e.clientY,
+      })
     }
+  }
+
+  const renderBackgroundPosition = () => {
+    const posX = `calc(50% + ${backgroundPosition.x}px)`
+    const posY = `calc(50% + ${backgroundPosition.y}px)`
+    return `${posX} ${posY}`
   }
 
   const handleMouseUp = () => {
@@ -91,11 +104,10 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
     }
   }, [images]) // Dependency array ensures effect only reruns if images changes
 
-  // Function to display the image when an item is clicked
   const pickImage = (imgUrl: string) => {
     img.current!.style.backgroundImage = `url(${imgUrl})`
     img.current!.style.transform = 'scale(1, 1)'
-    setBackgroundPosition({ x: '50%', y: '50%' })
+    setBackgroundPosition({ x: 0, y: 0 })
   }
 
   return (
@@ -116,9 +128,9 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseUp}
           onMouseUp={handleMouseUp}
-          className={`image-display relative bg-white w-80vw h-60vh fixed cursor-pointer top-10 border border-white rounded bg-no-repeat bg-cover ${backgroundSize}`}
+          className={`image-display relative bg-white w-80vw h-60vh fixed cursor-grab top-10 border border-white rounded bg-no-repeat bg-cover ${backgroundSize}`}
           ref={img}
-          style={{ backgroundPosition: `${backgroundPosition.x} ${backgroundPosition.y}` }}
+          style={{ backgroundPosition: `${renderBackgroundPosition()}` }}
         >
           <IconButton
             size="xl"
