@@ -8,8 +8,8 @@ export default function Layout({ children }: { children: ReactNode }) {
       <Head>
         <title>Nomad Sketching</title>
       </Head>
-      <Header isAdmin={true} />
-      <div className="max-w-80vw px-4 my-18 mx-auto">{children}</div>
+      <Header />
+      <div className="max-w-80vw mt-18 mx-auto">{children}</div>
     </div>
   )
 }
