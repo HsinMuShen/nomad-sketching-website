@@ -84,7 +84,7 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
     const updateFrame = () => {
       rotateAngle += mouseY
       viewAngle += (mouseX - viewAngle) * 0.05
-      gallery.style.transform = `translateZ(-1500px) rotateY(${-viewAngle}deg) rotateX(${rotateAngle}deg)`
+      gallery.style.transform = `translateZ(-1500px) rotateY(${viewAngle}deg) rotateX(${-rotateAngle}deg)`
       animId.current = requestAnimationFrame(updateFrame)
     }
     updateFrame()
