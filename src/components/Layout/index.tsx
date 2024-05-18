@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <Head>
         <title>Nomad Sketching</title>
       </Head>
-      <Header isAdmin={true} />
+      <Header />
       <div className="max-w-80vw mt-18 mx-auto">{children}</div>
     </div>
   )
