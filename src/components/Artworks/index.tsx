@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { IconButton } from '@ui'
+import ImageDisplay from './components/ImageDisplay'
 
 const RADIUS = 1400
 const ITEM_SHIFT = 100
@@ -13,7 +13,6 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 })
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 })
   const [isImageCover, setIsImageCover] = useState(false)
-  const backgroundSize = isImageCover ? 'sm:bg-cover' : 'sm:bg-contain'
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true)
@@ -80,29 +79,47 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
 
     const gallery = el.current!
 
-    // Animation function to rotate and animate the gallery
     const updateFrame = () => {
-      rotateAngle += mouseY
+      rotateAngle += 0.08 - mouseY
       viewAngle += (mouseX - viewAngle) * 0.05
       gallery.style.transform = `translateZ(-1500px) rotateY(${viewAngle}deg) rotateX(${-rotateAngle}deg)`
       animId.current = requestAnimationFrame(updateFrame)
     }
     updateFrame()
 
-    // Set up event listeners for mouse movement
     const mouseMoveHandler = (e: MouseEvent) => {
       mouseX = (e.clientX / window.innerWidth - 0.5) * 10
-      mouseY = (e.clientY / window.innerHeight - 0.5) * 1.25
+    }
+
+    const scrollHandler = (e: WheelEvent) => {
+      const deltaY = e.deltaY * 0.1
+      mouseY = deltaY
+    }
+
+    let startY: number
+    const touchStartHandler = (e: TouchEvent) => {
+      const touchY = e.touches[0].clientY
+      startY = touchY
+    }
+
+    const touchMoveHandler = (e: TouchEvent) => {
+      const touchY = e.touches[0].clientY
+      mouseY = -(touchY - startY) * 0.001
     }
 
     document.body.addEventListener('mousemove', mouseMoveHandler)
+    document.body.addEventListener('wheel', scrollHandler)
+    document.body.addEventListener('touchstart', touchStartHandler)
+    document.body.addEventListener('touchmove', touchMoveHandler)
 
-    // Clean up function
     return () => {
       document.body.removeEventListener('mousemove', mouseMoveHandler)
+      document.body.removeEventListener('wheel', scrollHandler)
+      document.body.removeEventListener('touchstart', touchStartHandler)
+      document.body.removeEventListener('touchmove', touchMoveHandler)
       cancelAnimationFrame(animId.current)
     }
-  }, [images]) // Dependency array ensures effect only reruns if images changes
+  }, [images])
 
   const pickImage = (imgUrl: string) => {
     img.current!.style.backgroundImage = `url(${imgUrl})`
@@ -123,38 +140,15 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
             ></div>
           ))}
         </div>
-        <div
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseUp}
-          onMouseUp={handleMouseUp}
-          className={`image-display relative bg-white w-80vw h-60vh fixed cursor-grab top-10 border border-white rounded bg-no-repeat bg-cover ${backgroundSize}`}
-          ref={img}
-          style={{ backgroundPosition: `${renderBackgroundPosition()}` }}
-        >
-          <IconButton
-            size="xl"
-            icon={isImageCover ? 'i-mdi-auto-fix' : 'i-mdi-selection-drag'}
-            color="secondary"
-            variant="plain"
-            hasPadding={false}
-            className="absolute -top-8 right-12 hidden sm:block"
-            onClick={() => {
-              setIsImageCover(!isImageCover)
-            }}
-          />
-          <IconButton
-            size="xl"
-            icon="i-mdi-close"
-            variant="plain"
-            hasPadding={false}
-            className="absolute -top-8 right-4"
-            onClick={() => {
-              img.current!.style.transform = 'scale(0.0, 0.0)'
-            }}
-          />
-          <div className="absolute font-bold -top-7">Title</div>
-        </div>
+        <ImageDisplay
+          handleMouseDown={handleMouseDown}
+          handleMouseMove={handleMouseMove}
+          handleMouseUp={handleMouseUp}
+          isImageCover={isImageCover}
+          setIsImageCover={setIsImageCover}
+          renderBackgroundPosition={renderBackgroundPosition}
+          imgRef={img}
+        />
       </div>
     </div>
   )
