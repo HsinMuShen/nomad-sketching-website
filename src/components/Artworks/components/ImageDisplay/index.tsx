@@ -7,6 +7,7 @@ interface ImageDisplayProps {
   isImageCover: boolean
   setIsImageCover: (value: boolean) => void
   renderBackgroundPosition: () => string
+  setBackgroundPosition: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>
   imgRef: React.RefObject<HTMLDivElement>
   imageTitle: string
 }
@@ -18,10 +19,15 @@ const ImageDisplay = ({
   isImageCover,
   setIsImageCover,
   renderBackgroundPosition,
+  setBackgroundPosition,
   imgRef,
   imageTitle,
 }: ImageDisplayProps) => {
   const backgroundSize = isImageCover ? 'sm:bg-cover' : 'sm:bg-contain'
+  const toggleBgSize = () => {
+    setBackgroundPosition({ x: 0, y: 0 })
+    setIsImageCover(!isImageCover)
+  }
   return (
     <div
       onMouseDown={handleMouseDown}
@@ -39,7 +45,7 @@ const ImageDisplay = ({
         variant="plain"
         hasPadding={false}
         className="absolute -top-8 right-12 hidden sm:block"
-        onClick={() => setIsImageCover(!isImageCover)}
+        onClick={toggleBgSize}
       />
       <IconButton
         size="xl"

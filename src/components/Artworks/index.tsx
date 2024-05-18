@@ -156,6 +156,7 @@ const VerticalCarousel = ({ images }: { images: Images[] }) => {
           isImageCover={isImageCover}
           setIsImageCover={setIsImageCover}
           renderBackgroundPosition={renderBackgroundPosition}
+          setBackgroundPosition={setBackgroundPosition}
           imgRef={img}
           imageTitle={imageTitle}
         />
