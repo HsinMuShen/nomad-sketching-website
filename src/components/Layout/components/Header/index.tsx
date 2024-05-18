@@ -24,9 +24,14 @@ const Header = ({ isAdmin }: HeaderProps) => {
           </Link>
         ))} */}
       </div>
-      <Link href="/about" className={`${desktopClass}`}>
-        <Icon icon="i-mdi-heart" size="xl" />
-      </Link>
+      <div className="flex mx-3">
+        <Link href="/about" className="mx-2 text-gray-800 hover:text-gray-400 ">
+          <Icon icon="i-mdi-information" size="xl" />
+        </Link>
+        <Link href="/special-thanks" className="mx-2 text-gray-800 hover:text-gray-400 ">
+          <Icon icon="i-mdi-heart" size="xl" />
+        </Link>
+      </div>
       {/* {isAdmin ? (
         <Link href="/admin" className={`${desktopClass}`}>
           <Icon icon="i-mdi-account-tie-hat" size="3xl" />
