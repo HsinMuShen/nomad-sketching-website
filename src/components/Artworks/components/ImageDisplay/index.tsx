@@ -8,6 +8,7 @@ interface ImageDisplayProps {
   setIsImageCover: (value: boolean) => void
   renderBackgroundPosition: () => string
   imgRef: React.RefObject<HTMLDivElement>
+  imageTitle: string
 }
 
 const ImageDisplay = ({
@@ -18,6 +19,7 @@ const ImageDisplay = ({
   setIsImageCover,
   renderBackgroundPosition,
   imgRef,
+  imageTitle,
 }: ImageDisplayProps) => {
   const backgroundSize = isImageCover ? 'sm:bg-cover' : 'sm:bg-contain'
   return (
@@ -47,7 +49,7 @@ const ImageDisplay = ({
         className="absolute -top-8 right-4"
         onClick={() => (imgRef.current!.style.transform = 'scale(0.0, 0.0)')}
       />
-      <div className="absolute font-bold -top-7">Title</div>
+      <div className="absolute font-bold -top-7 max-w-50 sm:max-w-md w-full break-words">{imageTitle}</div>
     </div>
   )
 }

@@ -4,7 +4,12 @@ import ImageDisplay from './components/ImageDisplay'
 const RADIUS = 1400
 const ITEM_SHIFT = 100
 
-const VerticalCarousel = ({ images }: { images: string[] }) => {
+type Images = {
+  url: string
+  name: string
+}
+
+const VerticalCarousel = ({ images }: { images: Images[] }) => {
   const el = useRef<HTMLDivElement>(null)
   const animId = useRef<number>(0)
   const img = useRef<HTMLDivElement>(null)
@@ -13,6 +18,7 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 })
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 })
   const [isImageCover, setIsImageCover] = useState(false)
+  const [imageTitle, setImageTitle] = useState('')
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true)
@@ -123,21 +129,22 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
     }
   }, [images])
 
-  const pickImage = (imgUrl: string) => {
+  const pickImage = (imgUrl: string, name: string) => {
     img.current!.style.backgroundImage = `url(${imgUrl})`
     img.current!.style.transform = 'scale(1, 1)'
     setBackgroundPosition({ x: 0, y: 0 })
+    setImageTitle(name)
   }
 
   return (
     <div className="w-80vw h-80vh sm:h-90vh p-2 flex flex-col items-center overflow-hidden">
       <div className="carousel-container relative w-full max-w-full h-200 mx-auto my-0 overflow-hidden">
         <div className="vertical-carousel absolute top-1/2 left-1/2 cursor-pointer" ref={el}>
-          {images.map((it, index) => (
+          {images.map(({ url, name }, index) => (
             <div
-              onClick={() => pickImage(it)}
+              onClick={() => pickImage(url, name)}
               key={index}
-              style={{ backgroundImage: `url(${it})` }}
+              style={{ backgroundImage: `url(${url})` }}
               className="vertical-carousel-item absolute w-75 h-75 top-[-150px] left-[-150px] rounded-15 bg-no-repeat bg-cover bg-center"
             ></div>
           ))}
@@ -150,6 +157,7 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
           setIsImageCover={setIsImageCover}
           renderBackgroundPosition={renderBackgroundPosition}
           imgRef={img}
+          imageTitle={imageTitle}
         />
       </div>
     </div>

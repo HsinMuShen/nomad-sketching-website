@@ -1,26 +1,31 @@
 import type { GetStaticProps } from 'next'
-import fs from 'fs'
-import path from 'path'
+import { readData } from 'src/utils/dataHandler/index'
 import Layout from 'components/Layout'
 import Artworks from 'components/Artworks'
 
-export const getServerSideProps: GetStaticProps = async () => {
-  const imagesDirectory = path.join(process.cwd(), 'public', 'images', 'artworks')
-  const files: string[] = fs.readdirSync(imagesDirectory)
-  const imageFiles = files.filter((file) => /\.(jpg|jpeg|png|gif)$/.test(file))
-  const images = imageFiles.map((file) => `/images/artworks/${file}`)
+type Artworks = {
+  url: string
+  name: string
+}
 
-  return {
-    props: {
-      images,
-    },
+export const getServerSideProps: GetStaticProps = async () => {
+  try {
+    const artworks = await readData<Artworks[]>('artworks')
+    return {
+      props: { artworks },
+    }
+  } catch (error) {
+    console.error('Failed to fetch data:', error)
+    return {
+      props: { artworks: [] },
+    }
   }
 }
 
-export default function Home({ images }: { images: string[] }) {
+export default function Home({ artworks }: { artworks: Artworks[] }) {
   return (
     <Layout>
-      <Artworks images={images} />
+      <Artworks images={artworks} />
     </Layout>
   )
 }
