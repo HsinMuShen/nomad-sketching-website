@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import CarouselItem from './components/CarouselItem'
 import ImageDisplay from './components/ImageDisplay'
 
 const RADIUS = 1400
@@ -140,13 +141,8 @@ const VerticalCarousel = ({ images }: { images: Images[] }) => {
     <div className="w-80vw h-80vh sm:h-90vh p-2 flex flex-col items-center overflow-hidden">
       <div className="carousel-container relative w-full max-w-full h-200 mx-auto my-0 overflow-hidden">
         <div className="vertical-carousel absolute top-1/2 left-1/2 cursor-pointer" ref={el}>
-          {images.map(({ url, name }, index) => (
-            <div
-              onClick={() => pickImage(url, name)}
-              key={index}
-              style={{ backgroundImage: `url(${url})` }}
-              className="vertical-carousel-item absolute w-75 h-75 top-[-150px] left-[-150px] rounded-15 bg-no-repeat bg-cover bg-center"
-            ></div>
+          {images.map(({ url, name }) => (
+            <CarouselItem key={url} url={url} name={name} onClick={pickImage} />
           ))}
         </div>
         <ImageDisplay
