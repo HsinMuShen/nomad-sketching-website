@@ -7,6 +7,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className="w-full">
       <Head>
         <title>Nomad Sketching</title>
+        <link rel="icon" href="/favicon.svg" />
       </Head>
       <Header />
       <div className="max-w-80vw mt-18 mx-auto">{children}</div>

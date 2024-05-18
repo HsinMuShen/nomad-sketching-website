@@ -53,7 +53,8 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
   useEffect(() => {
     // Initialize parameters
     angleUnit = 360 / images.length
-    mouseX = mouseY = 0
+    mouseX = 0.1
+    mouseY = 0
     rotateAngle = 0
     viewAngle = 0
 
@@ -100,6 +101,7 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
     const touchStartHandler = (e: TouchEvent) => {
       const touchY = e.touches[0].clientY
       startY = touchY
+      mouseY = 0
     }
 
     const touchMoveHandler = (e: TouchEvent) => {
@@ -128,7 +130,7 @@ const VerticalCarousel = ({ images }: { images: string[] }) => {
   }
 
   return (
-    <div className="w-80vw h-90vh p-2 flex flex-col items-center overflow-hidden">
+    <div className="w-80vw h-80vh sm:h-90vh p-2 flex flex-col items-center overflow-hidden">
       <div className="carousel-container relative w-full max-w-full h-200 mx-auto my-0 overflow-hidden">
         <div className="vertical-carousel absolute top-1/2 left-1/2 cursor-pointer" ref={el}>
           {images.map((it, index) => (

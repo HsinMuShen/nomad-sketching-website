@@ -1,10 +1,10 @@
-import type { GetServerSideProps } from 'next'
+import type { GetStaticProps } from 'next'
 import fs from 'fs'
 import path from 'path'
 import Layout from 'components/Layout'
 import Artworks from 'components/Artworks'
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetStaticProps = async () => {
   const imagesDirectory = path.join(process.cwd(), 'public', 'images', 'artworks')
   const files: string[] = fs.readdirSync(imagesDirectory)
   const imageFiles = files.filter((file) => /\.(jpg|jpeg|png|gif)$/.test(file))
