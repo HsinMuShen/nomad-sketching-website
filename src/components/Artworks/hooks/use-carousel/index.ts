@@ -45,7 +45,7 @@ const useCarousel = (images: Image[]) => {
     const gallery = el.current!
 
     const updateFrame = () => {
-      rotateAngle += 0.08 - mouseY
+      rotateAngle += 0.04 - mouseY
       viewAngle += (mouseX - viewAngle) * 0.05
       gallery.style.transform = `translateZ(-1500px) rotateY(${viewAngle}deg) rotateX(${-rotateAngle}deg)`
       animId.current = requestAnimationFrame(updateFrame)
