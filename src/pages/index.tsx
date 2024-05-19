@@ -4,6 +4,7 @@ import Layout from 'components/Layout'
 import Artworks from 'components/Artworks'
 
 type Artworks = {
+  id: string
   url: string
   name: string
 }
