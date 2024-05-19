@@ -46,7 +46,7 @@ const About = ({ item }: { item: AboutItem }) => {
           </div>
         </div>
         <div className="text-4 font-bold mt-8 mb-5">{item.otherInfo.title}</div>
-        <div className="flex flex-col mb-2">
+        <div className="flex flex-col mb-8">
           {item.otherInfo.links.map(({ name, url }) => (
             <div key={name} className="mb-2 text-sm underline font-bold">
               <Link href={url}>{name}</Link>

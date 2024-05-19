@@ -1,4 +1,3 @@
-import type { GetStaticProps } from 'next'
 import { readData } from 'src/utils/dataHandler/index'
 import Layout from 'components/Layout'
 import Artworks from 'components/Artworks'
@@ -9,7 +8,7 @@ type Artworks = {
   name: string
 }
 
-export const getServerSideProps: GetStaticProps = async () => {
+export async function getStaticProps() {
   try {
     const artworks = await readData<Artworks[]>('artworks')
     return {
