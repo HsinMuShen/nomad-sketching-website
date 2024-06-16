@@ -1,6 +1,7 @@
 import { initializeApp, getApp, getApps } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 import { getStorage, ref } from 'firebase/storage'
+import { Analytics, getAnalytics, logEvent } from 'firebase/analytics'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -13,9 +14,13 @@ const firebaseConfig = {
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
 
+let analytics: Analytics
+if (app.name && typeof window !== 'undefined') {
+  analytics = getAnalytics(app)
+}
 const db = getFirestore(app)
 
 const storage = getStorage()
 const getStorageRef = (path: string) => ref(storage, path)
 
-export { db, getStorageRef }
+export { db, getStorageRef, analytics, logEvent }

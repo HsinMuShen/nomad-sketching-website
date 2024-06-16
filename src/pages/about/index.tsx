@@ -1,7 +1,9 @@
-import { readData } from 'src/utils/dataHandler/index'
+import { useEffect } from 'react'
+import { logEvent } from 'libs/event-logger'
+import { readData } from 'utils/dataHandler/index'
 import Image from 'next/image'
 import Link from 'next/link'
-import Layout from 'src/components/Layout'
+import Layout from 'components/Layout'
 import aboutImage from 'public/images/michael.png'
 
 type AboutItem = {
@@ -29,6 +31,10 @@ export async function getServerSideProps() {
 }
 
 const About = ({ item }: { item: AboutItem }) => {
+  useEffect(() => {
+    logEvent('about_page_view')
+  }, [])
+
   return (
     <Layout>
       <div className="flex flex-col">

@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { logEvent } from 'libs/event-logger'
 import { readData } from 'src/utils/dataHandler/index'
 import Layout from 'src/components/Layout'
 
@@ -21,6 +23,10 @@ export async function getServerSideProps() {
 }
 
 const SpecialThanks = ({ items }: { items: Item[] }) => {
+  useEffect(() => {
+    logEvent('special_thanks_page_view')
+  }, [])
+
   return (
     <Layout>
       <>
