@@ -1,4 +1,6 @@
-import { readData } from 'src/utils/dataHandler/index'
+import { useEffect } from 'react'
+import { logEvent } from 'libs/event-logger'
+import { readData } from 'utils/dataHandler/index'
 import Layout from 'components/Layout'
 import Artworks from 'components/Artworks'
 
@@ -23,6 +25,10 @@ export async function getStaticProps() {
 }
 
 export default function Home({ artworks }: { artworks: Artworks[] }) {
+  useEffect(() => {
+    logEvent('index_page_view')
+  }, [])
+
   return (
     <Layout>
       <Artworks images={artworks} />
