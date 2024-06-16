@@ -1,4 +1,5 @@
 // import { useState } from 'react'
+import { sendGTMEvent } from '@next/third-parties/google'
 import Link from 'next/link'
 import { Icon } from 'src/components/common/ui'
 // import { NAV_LINKS, SIDEBAR_LINKS } from './constants'
@@ -12,10 +13,23 @@ const Header = () => {
   // const [isSideBar, setIsSideBar] = useState(false)
   // const desktopClass = 'mx-5 text-gray-800 hover:text-gray-400 hidden md:block'
 
+  const onLinkClick = (value: string) => {
+    sendGTMEvent({
+      event: 'header-click',
+      value,
+    })
+  }
+
   return (
     <div className="fixed w-full h-15 bg-white flex justify-between items-center border-b-2 top-0 z-10">
       <div className="flex items-center">
-        <Link href="/" className="flex items-center mx-5 text-gray-800 hover:text-gray-400 font-800">
+        <Link
+          href="/"
+          className="flex items-center mx-5 text-gray-800 hover:text-gray-400 font-800"
+          onClick={() => {
+            onLinkClick('index')
+          }}
+        >
           <Icon className="mr-2" icon="i-mdi-grease-pencil" size="xl" />
           {'Nomad Sketching'}
         </Link>
@@ -26,10 +40,22 @@ const Header = () => {
         ))} */}
       </div>
       <div className="flex mx-3">
-        <Link href="/about" className="mx-2 text-gray-800 hover:text-gray-400 ">
+        <Link
+          href="/about"
+          className="mx-2 text-gray-800 hover:text-gray-400"
+          onClick={() => {
+            onLinkClick('about')
+          }}
+        >
           <Icon icon="i-mdi-information" size="xl" />
         </Link>
-        <Link href="/special-thanks" className="mx-2 text-gray-800 hover:text-gray-400 ">
+        <Link
+          href="/special-thanks"
+          className="mx-2 text-gray-800 hover:text-gray-400"
+          onClick={() => {
+            onLinkClick('special-thanks')
+          }}
+        >
           <Icon icon="i-mdi-heart" size="xl" />
         </Link>
       </div>

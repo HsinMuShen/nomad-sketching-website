@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@iconify-json/mdi": "^1.1.64",
+    "@next/third-parties": "^14.2.4",
     "@testing-library/user-event": "^14.5.2",
     "@tiptap/extension-image": "^2.2.6",
     "@tiptap/extension-underline": "^2.3.0",
@@ -17,7 +18,7 @@
     "@unocss/preset-rem-to-px": "^0.58.6",
     "firebase": "^10.8.0",
     "gray-matter": "^4.0.3",
-    "next": "latest",
+    "next": "^14.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
