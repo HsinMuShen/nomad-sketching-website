@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <Header />
-      <GoogleTagManager gtmId="G-YLFNGZKCCV" />
+      <GoogleTagManager gtmId="GTM-P6TKNQ87" />
       <div className="max-w-80vw mt-18 mx-auto">{children}</div>
     </div>
   )
