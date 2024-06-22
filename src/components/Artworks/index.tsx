@@ -11,8 +11,14 @@ const Artworks = ({ artworks }: { artworks: Artwork[] }) => {
           <Link href={`/artwork/${id}`} key={id}>
             <div className="w-60 my-2">
               <div className="text-4 font-bold mb-1">{name}</div>
-              <div className="relative border-1 h-40 w-full">
-                <Image src={mainImageUrl || DefaultImage} alt={name} fill className="object-cover" sizes="auto" />
+              <div className="relative border-1 h-40 w-full overflow-hidden">
+                <Image
+                  src={mainImageUrl || DefaultImage}
+                  alt={name}
+                  fill
+                  className="object-cover transition-transform duration-300 scale-100 hover:scale-120"
+                  sizes="auto"
+                />
               </div>
             </div>
           </Link>
