@@ -3,8 +3,9 @@ import { useState, ForwardedRef, forwardRef, useCallback, useImperativeHandle } 
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
-import { ImageUploadButton, Button } from 'src/components/common/ui'
-import { uploadAttachment, deleteAttachment } from 'src/utils/attachment'
+import { ImageUploadButton, IconButton } from 'components/common/ui'
+import { uploadAttachment, deleteAttachment } from 'utils/attachment'
+import { generateFileWithUniqueName } from 'utils/generateFileWithUniqueName'
 import { ATTACHMENT_UPLOAD_COUNT_LIMIT } from './constants'
 import CustomImage from './Editor/extensions/CustomImage'
 import Menu from './Menu'
@@ -116,14 +117,6 @@ const MessageInputWrap = (
     [getContent, clearContent],
   )
 
-  const generateFileWithUniqueName = (file: File) => {
-    const uniqueName = file.name + '_' + Date.now()
-    return new File([file], uniqueName, {
-      type: file.type,
-      lastModified: file.lastModified,
-    })
-  }
-
   const insertImage = useCallback(
     (file: File) => {
       if (!editor) return
@@ -166,9 +159,15 @@ const MessageInputWrap = (
         <div className="h-9 flex items-center justify-between">
           <div className="flex">
             <ImageUploadButton isDisabled={disableToUploadAttachment} onUpload={insertImage} />
-            <Button className="ml-2" onClick={getContent}>
-              getJSON
-            </Button>
+            <IconButton
+              icon="i-mdi-code-json"
+              size="2xl"
+              variant="plain"
+              color="secondary"
+              className="ml-2"
+              hasPadding={false}
+              onClick={getContent}
+            />
           </div>
         </div>
       </div>

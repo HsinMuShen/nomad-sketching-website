@@ -1,8 +1,7 @@
 import type { MessageInputRef } from 'components/common/MessageInput/types'
 import { useEffect, useCallback, useRef } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Input } from 'components/common/ui'
+import { Input, Button } from 'components/common/ui'
 import ImageUploader, { CoverImageType, DEFAULT_IMAGE_ID } from 'components/common/ImageUploader'
 import useArticle from 'components/admin/hooks/use-article'
 import MessageInput from 'components/common/MessageInput'
@@ -34,20 +33,28 @@ const Update = () => {
   }, [fetchArticle, id])
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Update Article</h1>
-      <div className="font-bold mb-2">Title</div>
-      <Input value={title} onValueChange={setTitle} />
-      <div className="font-bold my-2">Cover Image</div>
-      <ImageUploader singleImage className="h-40 w-full" images={images} updateImages={updateCoverImage} />
-      <div className="font-bold my-2">Content</div>
-      <MessageInput ref={messageInputRef} content={content} />
-      <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onClick={onUpdateArticle}>
-        Update
-      </button>
-      <div>
-        <Link href="/admin">Back to admin</Link>
+    <div className="p-4 mb-10">
+      <div className="flex w-full justify-between items-center">
+        <h1 className="text-6 font-bold mb-4">Update Article</h1>
+        <Button variant="plain" color="secondary" onClick={onUpdateArticle}>
+          Update
+        </Button>
       </div>
+      <div className="py-3">
+        <div className="text-4 font-bold mb-2">Title</div>
+        <Input value={title} onValueChange={setTitle} />
+      </div>
+      <div className="py-3">
+        <div className="text-4 font-bold my-2">Cover Image</div>
+        <ImageUploader singleImage className="h-40 w-full" images={images} updateImages={updateCoverImage} />
+      </div>
+      <div className="py-3">
+        <div className="text-4 font-bold my-2">Content</div>
+        <MessageInput ref={messageInputRef} content={content} />
+      </div>
+      <Button variant="plain" color="secondary" onClick={() => router.push('/admin')}>
+        Back to admin
+      </Button>
     </div>
   )
 }
