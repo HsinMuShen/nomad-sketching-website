@@ -1,14 +1,9 @@
+import type { Artworks } from 'types/artworks'
 import { useEffect } from 'react'
 import { logEvent } from 'libs/event-logger'
 import { readData } from 'utils/dataHandler/index'
 import Layout from 'components/Layout'
-import Artworks from 'components/Artworks'
-
-type Artworks = {
-  id: string
-  url: string
-  name: string
-}
+import CarouselArtworks from 'components/CarouselArtworks'
 
 export async function getStaticProps() {
   try {
@@ -31,7 +26,7 @@ export default function Home({ artworks }: { artworks: Artworks[] }) {
 
   return (
     <Layout>
-      <Artworks images={artworks} />
+      <CarouselArtworks images={artworks} />
     </Layout>
   )
 }

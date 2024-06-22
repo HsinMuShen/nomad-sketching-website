@@ -4,7 +4,7 @@ import CarouselItem from './components/CarouselItem'
 import ImageDisplay from './components/ImageDisplay'
 import useCarousel from './hooks/use-carousel'
 
-const VerticalCarousel = ({ images }: { images: Image[] }) => {
+const CarouselArtworks = ({ images }: { images: Image[] }) => {
   const [isDragging, setIsDragging] = useState(false)
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 })
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 })
@@ -78,4 +78,4 @@ const VerticalCarousel = ({ images }: { images: Image[] }) => {
   )
 }
 
-export default VerticalCarousel
+export default CarouselArtworks
