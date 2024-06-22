@@ -1,10 +1,10 @@
-import type { Image } from './hooks/use-carousel'
+import type { Artwork } from 'types/artworks'
 import { useState } from 'react'
 import CarouselItem from './components/CarouselItem'
 import ImageDisplay from './components/ImageDisplay'
 import useCarousel from './hooks/use-carousel'
 
-const CarouselArtworks = ({ images }: { images: Image[] }) => {
+const CarouselArtworks = ({ images }: { images: Artwork[] }) => {
   const [isDragging, setIsDragging] = useState(false)
   const [backgroundPosition, setBackgroundPosition] = useState({ x: 0, y: 0 })
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 })
@@ -58,8 +58,8 @@ const CarouselArtworks = ({ images }: { images: Image[] }) => {
     <div className="w-80vw h-80vh sm:h-90vh p-2 flex flex-col items-center overflow-hidden">
       <div className="carousel-container relative w-full max-w-full h-200 mx-auto my-0 overflow-hidden">
         <div className="vertical-carousel absolute top-1/2 left-1/2 cursor-pointer" ref={el}>
-          {images.map(({ mainImageUrl, name }) => (
-            <CarouselItem key={mainImageUrl} url={mainImageUrl} name={name} onClick={pickImage} />
+          {images.map(({ mainImage, name }) => (
+            <CarouselItem key={mainImage?.id} url={mainImage?.src || ''} name={name} onClick={pickImage} />
           ))}
         </div>
         <ImageDisplay
