@@ -58,8 +58,8 @@ const CarouselArtworks = ({ images }: { images: Image[] }) => {
     <div className="w-80vw h-80vh sm:h-90vh p-2 flex flex-col items-center overflow-hidden">
       <div className="carousel-container relative w-full max-w-full h-200 mx-auto my-0 overflow-hidden">
         <div className="vertical-carousel absolute top-1/2 left-1/2 cursor-pointer" ref={el}>
-          {images.map(({ url, name }) => (
-            <CarouselItem key={url} url={url} name={name} onClick={pickImage} />
+          {images.map(({ mainImageUrl, name }) => (
+            <CarouselItem key={mainImageUrl} url={mainImageUrl} name={name} onClick={pickImage} />
           ))}
         </div>
         <ImageDisplay

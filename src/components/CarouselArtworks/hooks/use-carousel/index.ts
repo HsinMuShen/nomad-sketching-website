@@ -4,7 +4,7 @@ const RADIUS = 1400
 const ITEM_SHIFT = 100
 
 export type Image = {
-  url: string
+  mainImageUrl: string
   name: string
 }
 
