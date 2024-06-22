@@ -1,14 +1,15 @@
-import type { CreateArticleType } from 'src/components/admin/types'
+import type { CreateArtworkType } from 'types/artworks'
 import { useCallback } from 'react'
-import { useCreateData } from 'src/utils/dataHandler'
+import { useCreateData } from 'utils/dataHandler'
+import { DATA_BASE_NAMES } from 'constants/database'
 
 const useCreateArticle = () => {
   const { createData } = useCreateData()
 
   const createArticle = useCallback(
-    async (article: CreateArticleType) => {
+    async (article: CreateArtworkType) => {
       await createData({
-        databaseName: 'articles',
+        databaseName: DATA_BASE_NAMES.ARTWORKS,
         data: article,
       })
     },

@@ -1,5 +1,5 @@
 import type { JSONContent } from '@tiptap/core'
-import type { CreateArticleType } from 'src/components/admin/types'
+import type { CreateArtworkType } from 'types/artworks'
 import { CoverImageType } from 'components/common/ImageUploader'
 import { useState, useCallback } from 'react'
 import useCreateArticle from './use-create-article'
@@ -18,9 +18,9 @@ const useArticle = () => {
   const createArticle = useCallback(
     (newContent: JSONContent) => {
       if (!title || !newContent) return
-      const article: CreateArticleType = {
+      const article: CreateArtworkType = {
         title,
-        coverImage: coverImage,
+        mainImage: coverImage,
         content: newContent,
       }
       createNewArticle(article)
@@ -31,9 +31,9 @@ const useArticle = () => {
   const updateArticle = useCallback(
     (id: string, newContent: JSONContent) => {
       if (!title || !newContent) return
-      const article: CreateArticleType = {
+      const article: CreateArtworkType = {
         title,
-        coverImage,
+        mainImage: coverImage,
         content: newContent,
       }
       updateArticleData(id, article)
@@ -45,9 +45,9 @@ const useArticle = () => {
     async (id: string) => {
       const data = await getArticle(id)
       if (!data) return
-      const { title, content, coverImage } = data
-      setTitle(title)
-      setCoverImage(coverImage)
+      const { name, content, mainImage } = data
+      setTitle(name)
+      setCoverImage(mainImage)
       setContent(content)
     },
     [getArticle],

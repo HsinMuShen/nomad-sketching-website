@@ -2,6 +2,7 @@ import type { Artwork } from 'types/artworks'
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import DefaultImage from 'public/images/default.png'
 import { Button } from 'components/common/ui'
 import useGetArtwork from './hooks/use-get-artwork'
 import Content from './components/Content'
@@ -33,7 +34,13 @@ const ArtworkComponent = () => {
         <div className="my-5">
           <div className="font-bold mt-2 my-6 text-6">{artwork.name}</div>
           <div className="relative border-1 h-80 w-full">
-            <Image src={artwork.mainImageUrl} alt={artwork.name} fill className="object-cover" sizes="auto" />
+            <Image
+              src={artwork.mainImage?.src || DefaultImage}
+              alt={artwork.name}
+              fill
+              className="object-cover"
+              sizes="auto"
+            />
           </div>
           <Content content={artwork.content} />
         </div>

@@ -1,10 +1,10 @@
-import type { Article } from 'src/components/admin/types'
+import type { Artwork } from 'types/artworks'
 import { useState, useCallback } from 'react'
 import useGetArticles from './use-get-articles'
 import useDeleteArticle from './use-delete-article'
 
 const useArticles = () => {
-  const [articles, setArticles] = useState<Article[]>([])
+  const [articles, setArticles] = useState<Artwork[]>([])
 
   const { getArticles } = useGetArticles()
   const { deleteArticle } = useDeleteArticle()
