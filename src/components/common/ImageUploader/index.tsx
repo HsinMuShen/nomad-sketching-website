@@ -42,7 +42,7 @@ export const ImageUploader = ({ images, updateImages, singleImage = false, class
         {images.map((image) => (
           <div key={image.id} className={`w-full mt-1`}>
             <div className={`relative border-1 mb-1 ${className} `}>
-              <Image src={image.src} alt={image.id} fill className="object-cover" sizes="auto" />
+              <Image src={image.src} alt={image.id} fill priority className="object-cover" sizes="auto" />
             </div>
             {image.id !== DEFAULT_IMAGE_ID && (
               <IconButton

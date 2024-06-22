@@ -83,7 +83,8 @@ const MessageInputWrap = (
       content: defaultContent,
       editorProps: {
         attributes: {
-          class: 'mx-2 prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none',
+          class:
+            'w-full px-2 prose dark:prose-invert !max-w-none prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none',
         },
       },
     },

@@ -19,7 +19,7 @@ const useArticle = () => {
     (newContent: JSONContent) => {
       if (!title || !newContent) return
       const article: CreateArtworkType = {
-        title,
+        name: title,
         mainImage: coverImage,
         content: newContent,
       }
@@ -32,7 +32,7 @@ const useArticle = () => {
     (id: string, newContent: JSONContent) => {
       if (!title || !newContent) return
       const article: CreateArtworkType = {
-        title,
+        name: title,
         mainImage: coverImage,
         content: newContent,
       }

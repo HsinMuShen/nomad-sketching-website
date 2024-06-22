@@ -28,9 +28,11 @@ const Content = ({ className = '', content }: EditorProps): JSX.Element => {
     {
       extensions,
       content: defaultContent,
+      editable: false,
       editorProps: {
         attributes: {
-          class: 'mx-2 prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none',
+          class:
+            'px-2 prose dark:prose-invert !max-w-none prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none',
         },
       },
     },

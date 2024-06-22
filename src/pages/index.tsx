@@ -4,10 +4,11 @@ import { logEvent } from 'libs/event-logger'
 import { readData } from 'utils/dataHandler/index'
 import Layout from 'components/Layout'
 import CarouselArtworks from 'components/CarouselArtworks'
+import { DATA_BASE_NAMES } from 'constants/database'
 
 export async function getStaticProps() {
   try {
-    const artworks = await readData<Artwork[]>('artworks')
+    const artworks = await readData<Artwork[]>(DATA_BASE_NAMES.ARTWORKS)
     return {
       props: { artworks },
     }

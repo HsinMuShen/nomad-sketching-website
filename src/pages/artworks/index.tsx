@@ -2,10 +2,11 @@ import type { Artwork } from 'types/artworks'
 import { readData } from 'utils/dataHandler/index'
 import Layout from 'components/Layout'
 import ArtworksComponent from 'components/Artworks'
+import { DATA_BASE_NAMES } from 'constants/database'
 
 export async function getServerSideProps() {
   try {
-    const artworks = await readData<Artwork[]>('artworks')
+    const artworks = await readData<Artwork[]>(DATA_BASE_NAMES.ARTWORKS)
     return {
       props: { artworks },
     }

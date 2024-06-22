@@ -4,7 +4,7 @@ import type { CoverImageType } from 'components/common/ImageUploader'
 export type CreateArtworkType = {
   id?: string
   mainImage: CoverImageType | null
-  title: string
+  name: string
   content: JSONContent
 }
 
