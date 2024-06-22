@@ -1,14 +1,13 @@
 import type { Artwork } from 'types/artworks'
-import type { MessageInputRef } from 'components/common/MessageInput/types'
-import { useRef, useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
-import { Input } from 'components/common/ui'
-import MessageInput from 'components/common/MessageInput'
+import Image from 'next/image'
+import { Button } from 'components/common/ui'
 import useGetArtwork from './hooks/use-get-artwork'
+import Content from './components/Content'
 
 const ArtworkComponent = () => {
   const [artwork, setArtwork] = useState<Artwork | null>(null)
-  const messageInputRef = useRef<MessageInputRef | null>(null)
   const { getArtwork } = useGetArtwork()
   const router = useRouter()
   const { id } = router.query
@@ -29,14 +28,19 @@ const ArtworkComponent = () => {
   }, [fetchArticle, id])
 
   return (
-    <div className="p-4">
+    <div className="mb-20">
       {artwork && (
-        <div>
-          <Input value={artwork.name} />
-          <div className="font-bold my-2">Content</div>
-          <MessageInput ref={messageInputRef} content={artwork.content} />
+        <div className="my-5">
+          <div className="font-bold mt-2 my-6 text-6">{artwork.name}</div>
+          <div className="relative border-1 h-80 w-full">
+            <Image src={artwork.mainImageUrl} alt={artwork.name} fill className="object-cover" sizes="auto" />
+          </div>
+          <Content content={artwork.content} />
         </div>
       )}
+      <Button variant="plain" color="secondary" onClick={() => router.push('/artworks')}>
+        Back to artworks
+      </Button>
     </div>
   )
 }
