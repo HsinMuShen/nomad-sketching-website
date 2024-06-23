@@ -10,6 +10,7 @@ const CarouselArtworks = ({ images }: { images: Artwork[] }) => {
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 })
   const [isImageCover, setIsImageCover] = useState(false)
   const [imageTitle, setImageTitle] = useState('')
+  const [selectedArtworkId, setSelectedArtworkId] = useState('')
 
   const { el, img } = useCarousel(images)
 
@@ -47,19 +48,20 @@ const CarouselArtworks = ({ images }: { images: Artwork[] }) => {
     setIsDragging(false)
   }
 
-  const pickImage = (imgUrl: string, name: string) => {
+  const pickImage = (imgUrl: string, name: string, id: string) => {
     img.current!.style.backgroundImage = `url(${imgUrl})`
     img.current!.style.transform = 'scale(1, 1)'
     setBackgroundPosition({ x: 0, y: 0 })
     setImageTitle(name)
+    setSelectedArtworkId(id)
   }
 
   return (
     <div className="w-80vw h-80vh sm:h-90vh p-2 flex flex-col items-center overflow-hidden">
       <div className="carousel-container relative w-full max-w-full h-200 mx-auto my-0 overflow-hidden">
         <div className="vertical-carousel absolute top-1/2 left-1/2 cursor-pointer" ref={el}>
-          {images.map(({ mainImage, name }) => (
-            <CarouselItem key={mainImage?.id} url={mainImage?.src || ''} name={name} onClick={pickImage} />
+          {images.map(({ mainImage, name, id }) => (
+            <CarouselItem key={id} url={mainImage?.src || ''} name={name} id={id} onClick={pickImage} />
           ))}
         </div>
         <ImageDisplay
@@ -72,6 +74,7 @@ const CarouselArtworks = ({ images }: { images: Artwork[] }) => {
           setBackgroundPosition={setBackgroundPosition}
           imgRef={img}
           imageTitle={imageTitle}
+          id={selectedArtworkId}
         />
       </div>
     </div>
