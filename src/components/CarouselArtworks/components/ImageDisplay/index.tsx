@@ -53,7 +53,7 @@ const ImageDisplay = ({
         color="secondary"
         variant="plain"
         hasPadding={false}
-        className="absolute -top-8 right-20 hidden sm:block"
+        className="absolute -top-8 right-12 sm:right-20"
         onClick={navigateToArtwork}
       />
       <IconButton
