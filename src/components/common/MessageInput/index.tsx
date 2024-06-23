@@ -3,8 +3,9 @@ import { useState, ForwardedRef, forwardRef, useCallback, useImperativeHandle } 
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
-import { ImageUploadButton, Button } from 'src/components/common/ui'
-import { uploadAttachment, deleteAttachment } from 'src/utils/attachment'
+import { ImageUploadButton, IconButton } from 'components/common/ui'
+import { uploadAttachment, deleteAttachment } from 'utils/attachment'
+import { generateFileWithUniqueName } from 'utils/generateFileWithUniqueName'
 import { ATTACHMENT_UPLOAD_COUNT_LIMIT } from './constants'
 import CustomImage from './Editor/extensions/CustomImage'
 import Menu from './Menu'
@@ -24,35 +25,9 @@ const MessageInputWrap = (
   const defaultContent =
     content ||
     `
-    <h2>
-      Hi there,
-    </h2>
-    <p><code>This is code.</code></p>
     <p>
-      this is a basic <em>basic</em> example of <strong>tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
+      Start typing here...
     </p>
-    <ul>
-      <li>
-        That’s a bullet list with one …
-      </li>
-      <li>
-        … or two list items.
-      </li>
-    </ul>
-    <p>
-      Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-    </p>
-<pre><code class="language-css">body {
-  display: none;
-}</code></pre>
-    <p>
-      I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-    </p>
-    <blockquote>
-      Wow, that’s amazing. Good work, boy! 👏
-      <br />
-      — Mom
-    </blockquote>
   `
 
   const uploadImage = useCallback(async (file: File) => {
@@ -82,7 +57,8 @@ const MessageInputWrap = (
       content: defaultContent,
       editorProps: {
         attributes: {
-          class: 'mx-2 prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none',
+          class:
+            'w-full px-2 prose dark:prose-invert !max-w-none prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none',
         },
       },
     },
@@ -115,14 +91,6 @@ const MessageInputWrap = (
     }),
     [getContent, clearContent],
   )
-
-  const generateFileWithUniqueName = (file: File) => {
-    const uniqueName = file.name + '_' + Date.now()
-    return new File([file], uniqueName, {
-      type: file.type,
-      lastModified: file.lastModified,
-    })
-  }
 
   const insertImage = useCallback(
     (file: File) => {
@@ -166,9 +134,15 @@ const MessageInputWrap = (
         <div className="h-9 flex items-center justify-between">
           <div className="flex">
             <ImageUploadButton isDisabled={disableToUploadAttachment} onUpload={insertImage} />
-            <Button className="ml-2" onClick={getContent}>
-              getJSON
-            </Button>
+            <IconButton
+              icon="i-mdi-code-json"
+              size="2xl"
+              variant="plain"
+              color="secondary"
+              className="ml-2"
+              hasPadding={false}
+              onClick={getContent}
+            />
           </div>
         </div>
       </div>

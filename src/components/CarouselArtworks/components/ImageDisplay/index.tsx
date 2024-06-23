@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { IconButton } from '@ui'
 
 interface ImageDisplayProps {
@@ -10,6 +11,7 @@ interface ImageDisplayProps {
   setBackgroundPosition: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>
   imgRef: React.RefObject<HTMLDivElement>
   imageTitle: string
+  id: string
 }
 
 const ImageDisplay = ({
@@ -22,12 +24,19 @@ const ImageDisplay = ({
   setBackgroundPosition,
   imgRef,
   imageTitle,
+  id,
 }: ImageDisplayProps) => {
+  const router = useRouter()
+
   const backgroundSize = isImageCover ? 'sm:bg-cover' : 'sm:bg-contain'
   const toggleBgSize = () => {
     setBackgroundPosition({ x: 0, y: 0 })
     setIsImageCover(!isImageCover)
   }
+  const navigateToArtwork = () => {
+    router.push(`/artwork/${id}`)
+  }
+
   return (
     <div
       onMouseDown={handleMouseDown}
@@ -38,6 +47,15 @@ const ImageDisplay = ({
       ref={imgRef}
       style={{ backgroundPosition: renderBackgroundPosition() }}
     >
+      <IconButton
+        size="xl"
+        icon="i-mdi-book-open"
+        color="secondary"
+        variant="plain"
+        hasPadding={false}
+        className="absolute -top-8 right-20 hidden sm:block"
+        onClick={navigateToArtwork}
+      />
       <IconButton
         size="xl"
         icon={isImageCover ? 'i-mdi-auto-fix' : 'i-mdi-selection-drag'}

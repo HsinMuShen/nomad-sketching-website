@@ -1,6 +1,7 @@
 import Image from 'next/image'
-import { ImageUploadButton, IconButton } from 'src/components/common/ui'
-import { uploadAttachment, deleteAttachment } from 'src/utils/attachment'
+import { ImageUploadButton, IconButton } from 'components/common/ui'
+import { uploadAttachment, deleteAttachment } from 'utils/attachment'
+import { generateFileWithUniqueName } from 'utils/generateFileWithUniqueName'
 
 type ImageUploaderProps = {
   images: CoverImageType[]
@@ -18,7 +19,8 @@ export const DEFAULT_IMAGE_ID = 'default'
 
 export const ImageUploader = ({ images, updateImages, singleImage = false, className = '' }: ImageUploaderProps) => {
   const onUpload = async (file: File) => {
-    const url = await uploadAttachment(file)
+    const updatedFile = generateFileWithUniqueName(file)
+    const url = await uploadAttachment(updatedFile)
     const image: CoverImageType = {
       id: file.name,
       src: url,
@@ -40,13 +42,13 @@ export const ImageUploader = ({ images, updateImages, singleImage = false, class
         {images.map((image) => (
           <div key={image.id} className={`w-full mt-1`}>
             <div className={`relative border-1 mb-1 ${className} `}>
-              <Image src={image.src} alt={image.id} fill className="object-cover" sizes="auto" />
+              <Image src={image.src} alt={image.id} fill priority className="object-cover" sizes="auto" />
             </div>
             {image.id !== DEFAULT_IMAGE_ID && (
               <IconButton
                 aria-label="image-delete"
                 icon="i-mdi-trash-can"
-                size="xl"
+                size="2xl"
                 variant="plain"
                 hasPadding={false}
                 onClick={() => handleDelete(image.id)}

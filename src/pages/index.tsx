@@ -1,18 +1,14 @@
+import type { Artwork } from 'types/artworks'
 import { useEffect } from 'react'
 import { logEvent } from 'libs/event-logger'
 import { readData } from 'utils/dataHandler/index'
 import Layout from 'components/Layout'
-import Artworks from 'components/Artworks'
-
-type Artworks = {
-  id: string
-  url: string
-  name: string
-}
+import CarouselArtworks from 'components/CarouselArtworks'
+import { DATA_BASE_NAMES } from 'constants/database'
 
 export async function getStaticProps() {
   try {
-    const artworks = await readData<Artworks[]>('artworks')
+    const artworks = await readData<Artwork[]>(DATA_BASE_NAMES.ARTWORKS)
     return {
       props: { artworks },
     }
@@ -24,14 +20,14 @@ export async function getStaticProps() {
   }
 }
 
-export default function Home({ artworks }: { artworks: Artworks[] }) {
+export default function Home({ artworks }: { artworks: Artwork[] }) {
   useEffect(() => {
     logEvent('index_page_view')
   }, [])
 
   return (
     <Layout>
-      <Artworks images={artworks} />
+      <CarouselArtworks images={artworks} />
     </Layout>
   )
 }

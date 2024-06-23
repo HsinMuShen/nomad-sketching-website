@@ -1,12 +1,13 @@
-import type { Article } from 'src/components/admin/types'
+import type { Artwork } from 'types/artworks'
 import { useCallback } from 'react'
-import { useReadData } from 'src/utils/dataHandler'
+import { useReadData } from 'utils/dataHandler'
+import { DATA_BASE_NAMES } from 'constants/database'
 
 const useGetArticles = () => {
-  const { readData } = useReadData<Article[]>()
+  const { readData } = useReadData<Artwork[]>()
 
   const getArticles = useCallback(async () => {
-    const data = await readData('articles')
+    const data = await readData(DATA_BASE_NAMES.ARTWORKS)
     return data
   }, [readData])
 

@@ -1,14 +1,10 @@
+import type { Artwork } from 'types/artworks'
 import { useRef, useEffect } from 'react'
 
 const RADIUS = 1400
 const ITEM_SHIFT = 100
 
-export type Image = {
-  url: string
-  name: string
-}
-
-const useCarousel = (images: Image[]) => {
+const useCarousel = (images: Artwork[]) => {
   const el = useRef<HTMLDivElement>(null)
   const animId = useRef<number>(0)
   const img = useRef<HTMLDivElement>(null)
