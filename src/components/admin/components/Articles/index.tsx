@@ -35,6 +35,7 @@ const Article = ({ article, removeArticle }: ArticleProps) => {
             src={article.mainImage?.src || DefaultImage}
             alt={article.name}
             fill
+            priority
             className="object-cover"
             sizes="auto"
           />

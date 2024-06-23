@@ -6,6 +6,8 @@ export type CreateArtworkType = {
   mainImage: CoverImageType | null
   name: string
   content: JSONContent
+  createdAt?: string
+  updatedAt?: string
 }
 
 export type Artwork = {
@@ -13,4 +15,6 @@ export type Artwork = {
   mainImage: CoverImageType | null
   name: string
   content: JSONContent
+  createdAt?: string
+  updatedAt?: string
 }

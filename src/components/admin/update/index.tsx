@@ -20,7 +20,9 @@ const Update = () => {
     if (!content) return
     if (typeof id !== 'string') return
     updateArticle(id, content)
-  }, [updateArticle, id])
+    alert('Article updated successfully')
+    router.push('/admin')
+  }, [updateArticle, id, router])
 
   const updateCoverImage = (images: CoverImageType[]) => {
     if (images.length === 0) return

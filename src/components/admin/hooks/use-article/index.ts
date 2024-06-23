@@ -7,6 +7,7 @@ import useUpdateArticle from './use-update-article'
 import useGetArticle from './use-get-article'
 
 const useArticle = () => {
+  const [artwork, setArtwork] = useState<CreateArtworkType | null>(null)
   const [title, setTitle] = useState<string>('')
   const [coverImage, setCoverImage] = useState<CoverImageType | null>(null)
   const [content, setContent] = useState<JSONContent | null>(null)
@@ -19,26 +20,30 @@ const useArticle = () => {
     (newContent: JSONContent) => {
       if (!title || !newContent) return
       const article: CreateArtworkType = {
+        ...artwork,
         name: title,
         mainImage: coverImage,
         content: newContent,
+        createdAt: new Date().toISOString(),
       }
       createNewArticle(article)
     },
-    [createNewArticle, title, coverImage],
+    [createNewArticle, title, coverImage, artwork],
   )
 
   const updateArticle = useCallback(
     (id: string, newContent: JSONContent) => {
       if (!title || !newContent) return
       const article: CreateArtworkType = {
+        ...artwork,
         name: title,
         mainImage: coverImage,
         content: newContent,
+        updatedAt: new Date().toISOString(),
       }
       updateArticleData(id, article)
     },
-    [updateArticleData, title, coverImage],
+    [updateArticleData, title, coverImage, artwork],
   )
 
   const fetchArticle = useCallback(
@@ -49,6 +54,7 @@ const useArticle = () => {
       setTitle(name)
       setCoverImage(mainImage)
       setContent(content)
+      setArtwork(data)
     },
     [getArticle],
   )

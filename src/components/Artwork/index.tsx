@@ -38,6 +38,7 @@ const ArtworkComponent = () => {
               src={artwork.mainImage?.src || DefaultImage}
               alt={artwork.name}
               fill
+              priority
               className="object-cover"
               sizes="auto"
             />
