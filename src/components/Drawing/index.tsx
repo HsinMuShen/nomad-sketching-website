@@ -77,6 +77,7 @@ const DrawingPanel: React.FC = () => {
         setBrushWidth={setBrushWidth}
         undo={undo}
         redo={redo}
+        redoDisabled={redoStack.length <= 0}
       />
     </div>
   )

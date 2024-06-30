@@ -7,9 +7,10 @@ type DashboardProps = {
   setBrushWidth: React.Dispatch<React.SetStateAction<number>>
   undo: () => void
   redo: () => void
+  redoDisabled: boolean
 }
 
-const Dashboard = ({ fabricCanvasRef, brushWidth, setBrushWidth, undo, redo }: DashboardProps) => {
+const Dashboard = ({ fabricCanvasRef, brushWidth, setBrushWidth, undo, redo, redoDisabled }: DashboardProps) => {
   const clearCanvas = () => {
     if (!fabricCanvasRef.current) return
     fabricCanvasRef.current.clear()
@@ -18,6 +19,13 @@ const Dashboard = ({ fabricCanvasRef, brushWidth, setBrushWidth, undo, redo }: D
   const changeBrushWidth = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBrushWidth(parseInt(e.target.value, 10))
   }
+
+  const getUndoDisabled = () => {
+    if (!fabricCanvasRef.current) return true
+    return fabricCanvasRef.current._objects.length <= 0
+  }
+
+  const undoDisabled = getUndoDisabled()
 
   return (
     <div className="flex items-center">
@@ -40,6 +48,7 @@ const Dashboard = ({ fabricCanvasRef, brushWidth, setBrushWidth, undo, redo }: D
         variant="plain"
         hasPadding={false}
         onClick={undo}
+        disabled={undoDisabled}
       />
       <IconButton
         aria-label="redo"
@@ -48,6 +57,7 @@ const Dashboard = ({ fabricCanvasRef, brushWidth, setBrushWidth, undo, redo }: D
         variant="plain"
         hasPadding={false}
         onClick={redo}
+        disabled={redoDisabled}
       />
     </div>
   )
