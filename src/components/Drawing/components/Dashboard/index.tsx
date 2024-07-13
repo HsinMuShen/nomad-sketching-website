@@ -5,12 +5,23 @@ type DashboardProps = {
   fabricCanvasRef: React.MutableRefObject<fabric.Canvas | null>
   brushWidth: number
   setBrushWidth: React.Dispatch<React.SetStateAction<number>>
+  isEraser: boolean
+  setIsEraser: React.Dispatch<React.SetStateAction<boolean>>
   undo: () => void
   redo: () => void
   redoDisabled: boolean
 }
 
-const Dashboard = ({ fabricCanvasRef, brushWidth, setBrushWidth, undo, redo, redoDisabled }: DashboardProps) => {
+const Dashboard = ({
+  fabricCanvasRef,
+  brushWidth,
+  setBrushWidth,
+  isEraser,
+  setIsEraser,
+  undo,
+  redo,
+  redoDisabled,
+}: DashboardProps) => {
   const clearCanvas = () => {
     if (!fabricCanvasRef.current) return
     fabricCanvasRef.current.clear()
@@ -58,6 +69,26 @@ const Dashboard = ({ fabricCanvasRef, brushWidth, setBrushWidth, undo, redo, red
         hasPadding={false}
         onClick={redo}
         disabled={redoDisabled}
+      />
+      <IconButton
+        aria-label="eraser"
+        icon="i-mdi-eraser"
+        color="secondary"
+        size="2xl"
+        variant="plain"
+        hasPadding={false}
+        onClick={() => setIsEraser(true)}
+        disabled={isEraser}
+      />
+      <IconButton
+        aria-label="draw"
+        icon="i-mdi-draw"
+        color="secondary"
+        size="2xl"
+        variant="plain"
+        hasPadding={false}
+        onClick={() => setIsEraser(false)}
+        disabled={!isEraser}
       />
     </div>
   )

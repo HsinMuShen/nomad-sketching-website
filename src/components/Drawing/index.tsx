@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import * as fabric from 'fabric'
 import Dashboard from './components/Dashboard'
-
-const DEFAULT_BRUSH_WIDTH = 2
+import { DEFAULT_BRUSH_WIDTH, DEFAULT_BRUSH_COLOR, DEFAULT_ERASER_COLOR } from './constants'
 
 const DrawingPanel: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null)
   const [brushWidth, setBrushWidth] = useState(DEFAULT_BRUSH_WIDTH)
   const [redoStack, setRedoStack] = useState<fabric.Object[]>([])
+  const [isEraser, setIsEraser] = useState(false)
 
   const updateCanvasHistory = useCallback(() => {
     if (!fabricCanvasRef.current) return
@@ -47,9 +47,10 @@ const DrawingPanel: React.FC = () => {
     fabricCanvasRef.current = canvas
 
     const brush = new fabric.PencilBrush(canvas)
-    brush.color = 'black'
+    brush.color = DEFAULT_BRUSH_COLOR
     brush.width = DEFAULT_BRUSH_WIDTH
     canvas.freeDrawingBrush = brush
+    canvas.backgroundColor = DEFAULT_ERASER_COLOR
 
     return () => {
       if (!fabricCanvasRef.current) return
@@ -66,7 +67,10 @@ const DrawingPanel: React.FC = () => {
   useEffect(() => {
     if (!fabricCanvasRef.current || !fabricCanvasRef.current.freeDrawingBrush) return
     fabricCanvasRef.current.freeDrawingBrush.width = brushWidth
-  }, [brushWidth])
+
+    if (isEraser) fabricCanvasRef.current.freeDrawingBrush.color = DEFAULT_ERASER_COLOR
+    if (!isEraser) fabricCanvasRef.current.freeDrawingBrush.color = DEFAULT_BRUSH_COLOR
+  }, [brushWidth, isEraser])
 
   return (
     <div>
@@ -78,6 +82,8 @@ const DrawingPanel: React.FC = () => {
         undo={undo}
         redo={redo}
         redoDisabled={redoStack.length <= 0}
+        isEraser={isEraser}
+        setIsEraser={setIsEraser}
       />
     </div>
   )
