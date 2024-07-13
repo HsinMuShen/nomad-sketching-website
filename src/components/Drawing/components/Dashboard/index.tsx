@@ -11,6 +11,7 @@ type DashboardProps = {
   redo: () => void
   redoDisabled: boolean
   clearCanvas: () => void
+  downloadImage: () => void
 }
 
 const Dashboard = ({
@@ -23,6 +24,7 @@ const Dashboard = ({
   redo,
   redoDisabled,
   clearCanvas,
+  downloadImage,
 }: DashboardProps) => {
   const changeBrushWidth = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBrushWidth(parseInt(e.target.value, 10))
@@ -86,6 +88,15 @@ const Dashboard = ({
         hasPadding={false}
         onClick={() => setIsEraser(false)}
         disabled={!isEraser}
+      />
+      <IconButton
+        aria-label="download-image"
+        icon="i-mdi-download"
+        color="secondary"
+        size="2xl"
+        variant="plain"
+        hasPadding={false}
+        onClick={downloadImage}
       />
     </div>
   )

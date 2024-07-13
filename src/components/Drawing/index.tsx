@@ -13,6 +13,7 @@ const DrawingPanel: React.FC = () => {
     isEraser,
     setIsEraser,
     clearCanvas,
+    downloadImage,
   } = useCanvas()
 
   return (
@@ -28,6 +29,7 @@ const DrawingPanel: React.FC = () => {
         redo={redo}
         redoDisabled={redoStack.length <= 0}
         clearCanvas={clearCanvas}
+        downloadImage={downloadImage}
       />
     </div>
   )

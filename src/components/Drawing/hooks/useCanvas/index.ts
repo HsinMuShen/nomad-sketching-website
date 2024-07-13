@@ -44,6 +44,24 @@ const useCanvas = () => {
     fabricCanvasRef.current.add(newState)
   }
 
+  const downloadImage = () => {
+    if (!fabricCanvasRef.current) return
+
+    const dataURL = fabricCanvasRef.current.toDataURL({
+      format: 'jpeg',
+      quality: 1,
+      multiplier: 1,
+      enableRetinaScaling: true,
+    })
+
+    const link = document.createElement('a')
+    link.download = 'canvas-image.jpg'
+    link.href = dataURL
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   useEffect(() => {
     if (!canvasRef.current) return
     if (fabricCanvasRef.current) return
@@ -89,6 +107,7 @@ const useCanvas = () => {
     undo,
     redo,
     redoStack,
+    downloadImage,
   }
 }
 
