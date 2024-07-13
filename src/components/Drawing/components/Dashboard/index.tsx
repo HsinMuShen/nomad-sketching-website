@@ -10,6 +10,7 @@ type DashboardProps = {
   undo: () => void
   redo: () => void
   redoDisabled: boolean
+  clearCanvas: () => void
 }
 
 const Dashboard = ({
@@ -21,12 +22,8 @@ const Dashboard = ({
   undo,
   redo,
   redoDisabled,
+  clearCanvas,
 }: DashboardProps) => {
-  const clearCanvas = () => {
-    if (!fabricCanvasRef.current) return
-    fabricCanvasRef.current.clear()
-  }
-
   const changeBrushWidth = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBrushWidth(parseInt(e.target.value, 10))
   }
