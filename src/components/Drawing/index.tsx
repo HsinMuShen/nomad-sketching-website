@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import * as fabric from 'fabric'
-import { IconButton } from '@ui'
+import Dashboard from './components/Dashboard'
 
 const DEFAULT_BRUSH_WIDTH = 2
 
@@ -8,10 +8,34 @@ const DrawingPanel: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null)
   const [brushWidth, setBrushWidth] = useState(DEFAULT_BRUSH_WIDTH)
+  const [redoStack, setRedoStack] = useState<fabric.Object[]>([])
 
-  const clearCanvas = () => {
+  const updateCanvasHistory = useCallback(() => {
     if (!fabricCanvasRef.current) return
-    fabricCanvasRef.current.clear()
+    setRedoStack([])
+  }, [])
+
+  const undo = () => {
+    if (!fabricCanvasRef.current) return
+    if (fabricCanvasRef.current._objects.length <= 0) return
+
+    const newestState = fabricCanvasRef.current._objects.pop()
+    if (!newestState) return
+
+    setRedoStack((prev) => [...prev, newestState])
+    fabricCanvasRef.current.renderAll()
+  }
+
+  const redo = () => {
+    if (!fabricCanvasRef.current) return
+    if (redoStack.length <= 0) return
+
+    const tempRedoStack = redoStack
+    const newState = tempRedoStack.pop()
+    if (!newState) return
+
+    setRedoStack([...tempRedoStack])
+    fabricCanvasRef.current.add(newState)
   }
 
   useEffect(() => {
@@ -35,6 +59,11 @@ const DrawingPanel: React.FC = () => {
   }, [])
 
   useEffect(() => {
+    if (!fabricCanvasRef.current) return
+    fabricCanvasRef.current.on('path:created', updateCanvasHistory)
+  }, [updateCanvasHistory])
+
+  useEffect(() => {
     if (!fabricCanvasRef.current || !fabricCanvasRef.current.freeDrawingBrush) return
     fabricCanvasRef.current.freeDrawingBrush.width = brushWidth
   }, [brushWidth])
@@ -42,27 +71,13 @@ const DrawingPanel: React.FC = () => {
   return (
     <div>
       <canvas ref={canvasRef} width={300} height={600} className="border-2 border-solid border-gray-500"></canvas>
-      <div className="flex items-center">
-        <IconButton
-          aria-label="image-delete"
-          icon="i-mdi-trash-can"
-          size="2xl"
-          variant="plain"
-          hasPadding={false}
-          onClick={clearCanvas}
-        />
-        <div className="flex items-center mx-2">
-          <div className="mr-2">Brush width: {brushWidth}</div>
-          <input
-            type="range"
-            min="1"
-            max="10"
-            value={brushWidth}
-            onChange={(e) => setBrushWidth(parseInt(e.target.value, 10))}
-            className="mt-2 mb-2"
-          />
-        </div>
-      </div>
+      <Dashboard
+        fabricCanvasRef={fabricCanvasRef}
+        brushWidth={brushWidth}
+        setBrushWidth={setBrushWidth}
+        undo={undo}
+        redo={redo}
+      />
     </div>
   )
 }
