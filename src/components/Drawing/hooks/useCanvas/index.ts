@@ -5,16 +5,18 @@ import { DEFAULT_BRUSH_WIDTH, DEFAULT_BRUSH_COLOR, DEFAULT_ERASER_COLOR } from '
 const useCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null)
+  const [canvasWidth, setCanvasWidth] = useState(0)
+  const [canvasHeight, setCanvasHeight] = useState(0)
   const [brushWidth, setBrushWidth] = useState<number>(DEFAULT_BRUSH_WIDTH)
   const [isEraser, setIsEraser] = useState<boolean>(false)
   const [redoStack, setRedoStack] = useState<fabric.Object[]>([])
 
-  const clearCanvas = () => {
+  const updateCanvasSize = useCallback(() => {
     if (!fabricCanvasRef.current) return
-    fabricCanvasRef.current.clear()
-    setRedoStack([])
-    fabricCanvasRef.current.backgroundColor = DEFAULT_ERASER_COLOR
-  }
+    fabricCanvasRef.current.setWidth(canvasWidth)
+    fabricCanvasRef.current.setHeight(canvasHeight)
+    fabricCanvasRef.current.calcOffset()
+  }, [canvasWidth, canvasHeight])
 
   const updateCanvasHistory = useCallback(() => {
     if (!fabricCanvasRef.current) return
@@ -62,9 +64,20 @@ const useCanvas = () => {
     document.body.removeChild(link)
   }
 
+  const clearCanvas = () => {
+    if (!fabricCanvasRef.current) return
+    fabricCanvasRef.current.clear()
+    setRedoStack([])
+    fabricCanvasRef.current.backgroundColor = DEFAULT_ERASER_COLOR
+  }
+
   useEffect(() => {
     if (!canvasRef.current) return
     if (fabricCanvasRef.current) return
+
+    setCanvasWidth(window.innerWidth * 0.7)
+    setCanvasHeight(window.innerHeight * 0.8)
+
     const canvas = new fabric.Canvas(canvasRef.current, {
       isDrawingMode: true,
     })
@@ -82,6 +95,10 @@ const useCanvas = () => {
       fabricCanvasRef.current = null
     }
   }, [])
+
+  useEffect(() => {
+    updateCanvasSize()
+  }, [updateCanvasSize])
 
   useEffect(() => {
     if (!fabricCanvasRef.current) return

@@ -18,19 +18,23 @@ const DrawingPanel: React.FC = () => {
 
   return (
     <div>
-      <canvas ref={canvasRef} width={300} height={600} className="border-2 border-solid border-gray-500"></canvas>
-      <Dashboard
-        fabricCanvasRef={fabricCanvasRef}
-        brushWidth={brushWidth}
-        setBrushWidth={setBrushWidth}
-        isEraser={isEraser}
-        setIsEraser={setIsEraser}
-        undo={undo}
-        redo={redo}
-        redoDisabled={redoStack.length <= 0}
-        clearCanvas={clearCanvas}
-        downloadImage={downloadImage}
-      />
+      <div className="flex flex-col items-center">
+        <div className={`w-70vw h-80vh`}>
+          <canvas ref={canvasRef} width={0} height={0} className="border-2 border-solid border-gray-500" />
+        </div>
+        <Dashboard
+          fabricCanvasRef={fabricCanvasRef}
+          brushWidth={brushWidth}
+          setBrushWidth={setBrushWidth}
+          isEraser={isEraser}
+          setIsEraser={setIsEraser}
+          undo={undo}
+          redo={redo}
+          redoDisabled={redoStack.length <= 0}
+          clearCanvas={clearCanvas}
+          downloadImage={downloadImage}
+        />
+      </div>
     </div>
   )
 }
