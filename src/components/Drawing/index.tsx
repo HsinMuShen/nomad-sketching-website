@@ -18,8 +18,8 @@ const DrawingPanel: React.FC = () => {
 
   return (
     <div>
-      <div className="flex flex-col items-center">
-        <div className={`w-70vw h-80vh`}>
+      <div className="flex items-start">
+        <div className="w-70vw h-80vh mr-4">
           <canvas ref={canvasRef} width={0} height={0} className="border-2 border-solid border-gray-500" />
         </div>
         <Dashboard
