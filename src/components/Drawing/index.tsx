@@ -1,4 +1,5 @@
 import Dashboard from './components/Dashboard'
+import Proportion from './components/Proportion'
 import useCanvas from './hooks/useCanvas'
 
 const DrawingPanel: React.FC = () => {
@@ -7,6 +8,8 @@ const DrawingPanel: React.FC = () => {
     fabricCanvasRef,
     brushWidth,
     setBrushWidth,
+    setCanvasWidth,
+    setCanvasHeight,
     undo,
     redo,
     redoStack,
@@ -19,21 +22,24 @@ const DrawingPanel: React.FC = () => {
   return (
     <div>
       <div className="flex items-start">
-        <div className="w-70vw h-80vh mr-4">
+        <div className="mr-4">
           <canvas ref={canvasRef} width={0} height={0} className="border-2 border-solid border-gray-500" />
         </div>
-        <Dashboard
-          fabricCanvasRef={fabricCanvasRef}
-          brushWidth={brushWidth}
-          setBrushWidth={setBrushWidth}
-          isEraser={isEraser}
-          setIsEraser={setIsEraser}
-          undo={undo}
-          redo={redo}
-          redoDisabled={redoStack.length <= 0}
-          clearCanvas={clearCanvas}
-          downloadImage={downloadImage}
-        />
+        <div className="flex flex-col items-center px-2">
+          <Dashboard
+            fabricCanvasRef={fabricCanvasRef}
+            brushWidth={brushWidth}
+            setBrushWidth={setBrushWidth}
+            isEraser={isEraser}
+            setIsEraser={setIsEraser}
+            undo={undo}
+            redo={redo}
+            redoDisabled={redoStack.length <= 0}
+            clearCanvas={clearCanvas}
+            downloadImage={downloadImage}
+          />
+          <Proportion setCanvasHeight={setCanvasHeight} setCanvasWidth={setCanvasWidth} />
+        </div>
       </div>
     </div>
   )

@@ -39,6 +39,7 @@ input[type=range] {
   height: 160px;
   width: 5px;
   -webkit-appearance: none;
+  appearance: none;
 }
 input[type=range]:focus {
   outline: none;

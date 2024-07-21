@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import * as fabric from 'fabric'
 import { DEFAULT_BRUSH_WIDTH, DEFAULT_BRUSH_COLOR, DEFAULT_ERASER_COLOR } from './constants'
+import { DEFAULT_PROPORTION_BY_WINDOW } from 'components/Drawing/components/Proportion/constants'
 
 const useCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -75,8 +76,8 @@ const useCanvas = () => {
     if (!canvasRef.current) return
     if (fabricCanvasRef.current) return
 
-    setCanvasWidth(window.innerWidth * 0.7)
-    setCanvasHeight(window.innerHeight * 0.8)
+    setCanvasWidth(window.innerWidth * DEFAULT_PROPORTION_BY_WINDOW.width)
+    setCanvasHeight(window.innerHeight * DEFAULT_PROPORTION_BY_WINDOW.height)
 
     const canvas = new fabric.Canvas(canvasRef.current, {
       isDrawingMode: true,
@@ -118,6 +119,8 @@ const useCanvas = () => {
     fabricCanvasRef,
     brushWidth,
     setBrushWidth,
+    setCanvasWidth,
+    setCanvasHeight,
     isEraser,
     setIsEraser,
     clearCanvas,
