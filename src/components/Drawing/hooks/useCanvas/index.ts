@@ -72,6 +72,18 @@ const useCanvas = () => {
     fabricCanvasRef.current.backgroundColor = DEFAULT_ERASER_COLOR
   }
 
+  const saveCanvasAsJson = () => {
+    if (!fabricCanvasRef.current) return
+    const json = fabricCanvasRef.current.toJSON()
+    localStorage.setItem('canvasState', JSON.stringify(json))
+  }
+
+  const loadCanvasFromJson = () => {
+    const savedState = localStorage.getItem('canvasState')
+    if (!savedState || !fabricCanvasRef.current) return
+    fabricCanvasRef.current.loadFromJSON(savedState, () => fabricCanvasRef.current?.renderAll())
+  }
+
   useEffect(() => {
     if (!canvasRef.current) return
     if (fabricCanvasRef.current) return
@@ -112,6 +124,8 @@ const useCanvas = () => {
 
     if (isEraser) fabricCanvasRef.current.freeDrawingBrush.color = DEFAULT_ERASER_COLOR
     if (!isEraser) fabricCanvasRef.current.freeDrawingBrush.color = DEFAULT_BRUSH_COLOR
+
+    loadCanvasFromJson()
   }, [brushWidth, isEraser])
 
   return {
@@ -128,6 +142,8 @@ const useCanvas = () => {
     redo,
     redoStack,
     downloadImage,
+    saveCanvasAsJson,
+    loadCanvasFromJson,
   }
 }
 

@@ -17,6 +17,7 @@ const DrawingPanel: React.FC = () => {
     setIsEraser,
     clearCanvas,
     downloadImage,
+    saveCanvasAsJson,
   } = useCanvas()
 
   return (
@@ -37,6 +38,7 @@ const DrawingPanel: React.FC = () => {
             redoDisabled={redoStack.length <= 0}
             clearCanvas={clearCanvas}
             downloadImage={downloadImage}
+            saveCanvasAsJson={saveCanvasAsJson}
           />
           <Proportion setCanvasHeight={setCanvasHeight} setCanvasWidth={setCanvasWidth} />
         </div>

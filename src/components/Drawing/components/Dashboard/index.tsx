@@ -12,6 +12,7 @@ type DashboardProps = {
   redoDisabled: boolean
   clearCanvas: () => void
   downloadImage: () => void
+  saveCanvasAsJson: () => void
 }
 
 const Dashboard = ({
@@ -25,6 +26,7 @@ const Dashboard = ({
   redoDisabled,
   clearCanvas,
   downloadImage,
+  saveCanvasAsJson,
 }: DashboardProps) => {
   const iconClass = 'mt-1'
   const iconBlockClass = 'flex'
@@ -111,6 +113,18 @@ const Dashboard = ({
           variant="plain"
           hasPadding={false}
           onClick={clearCanvas}
+        />
+      </div>
+      <div className={`${iconBlockClass}`}>
+        <IconButton
+          aria-label="save-json"
+          className={`${iconClass} mr-7`}
+          icon="i-mdi-content-save"
+          color="secondary"
+          size="2xl"
+          variant="plain"
+          hasPadding={false}
+          onClick={saveCanvasAsJson}
         />
       </div>
     </div>
