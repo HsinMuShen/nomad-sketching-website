@@ -1,3 +1,4 @@
+import { ForwardedRef, forwardRef, useImperativeHandle } from 'react'
 import Dashboard from './components/Dashboard'
 import Proportion from './components/Proportion'
 import useCanvas from './hooks/useCanvas'
@@ -6,7 +7,7 @@ type DrawingPanelProps = {
   updateJsonString: (JsonString: string) => void
 }
 
-const DrawingPanel = ({ updateJsonString }: DrawingPanelProps) => {
+const DrawingPanelWrap = ({ updateJsonString }: DrawingPanelProps, ref: ForwardedRef<unknown>) => {
   const {
     canvasRef,
     fabricCanvasRef,
@@ -22,7 +23,12 @@ const DrawingPanel = ({ updateJsonString }: DrawingPanelProps) => {
     clearCanvas,
     downloadImage,
     saveCanvasAsJson,
+    getImageFile,
   } = useCanvas(updateJsonString)
+
+  useImperativeHandle(ref, () => ({
+    getImageFile,
+  }))
 
   return (
     <div className="w-full flex items-center justify-center">
@@ -48,5 +54,7 @@ const DrawingPanel = ({ updateJsonString }: DrawingPanelProps) => {
     </div>
   )
 }
+
+const DrawingPanel = forwardRef(DrawingPanelWrap)
 
 export default DrawingPanel

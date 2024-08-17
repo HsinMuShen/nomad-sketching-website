@@ -50,6 +50,22 @@ const useCanvas = (updateJsonString: (jsonString: string) => void) => {
     fabricCanvasRef.current.add(newState)
   }
 
+  const getImageFile = async () => {
+    if (!fabricCanvasRef.current) return null
+
+    const dataURL = fabricCanvasRef.current.toDataURL({
+      format: 'jpeg',
+      quality: 1,
+      multiplier: 1,
+      enableRetinaScaling: true,
+    })
+
+    const response = await fetch(dataURL)
+    const blob = await response.blob()
+
+    return new File([blob], 'canvas-image.jpeg', { type: 'image/jpeg' })
+  }
+
   const downloadImage = () => {
     if (!fabricCanvasRef.current) return
 
@@ -147,6 +163,7 @@ const useCanvas = (updateJsonString: (jsonString: string) => void) => {
     downloadImage,
     saveCanvasAsJson,
     loadCanvasFromJson,
+    getImageFile,
   }
 }
 
