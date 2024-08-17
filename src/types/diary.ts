@@ -7,3 +7,7 @@ export type CreateDiaryType = {
   drawingJsonString: string
   drawingImage: ImageData
 }
+
+export type DiaryType = CreateDiaryType & {
+  id: string
+}

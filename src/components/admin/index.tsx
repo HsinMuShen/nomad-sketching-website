@@ -9,13 +9,22 @@ const Admin = () => {
     router.push('/admin/create')
   }
 
+  const onDiaryClick = async () => {
+    router.push('/admin/diary')
+  }
+
   return (
     <div>
-      <div className="flex justify-between items-center border-b-1 mb-4     ">
+      <div className="flex justify-between items-center border-b-1 mb-4">
         <div className="text-5 font-bold">Artworks</div>
-        <Button className="mb-2" color="secondary" variant="plain" onClick={onCreateClick}>
-          Create Artwork
-        </Button>
+        <div>
+          <Button className="mb-2 mr-2" color="secondary" variant="plain" onClick={onDiaryClick}>
+            Diary
+          </Button>
+          <Button className="mb-2" color="secondary" variant="plain" onClick={onCreateClick}>
+            Create Artwork
+          </Button>
+        </div>
       </div>
       <Articles />
     </div>
