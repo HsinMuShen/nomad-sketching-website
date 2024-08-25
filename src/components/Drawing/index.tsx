@@ -4,7 +4,7 @@ import Proportion from './components/Proportion'
 import useCanvas from './hooks/useCanvas'
 
 type DrawingPanelProps = {
-  updateJsonString: (JsonString: string) => void
+  updateJsonString?: (JsonString: string) => void
 }
 
 const DrawingPanelWrap = ({ updateJsonString }: DrawingPanelProps, ref: ForwardedRef<unknown>) => {

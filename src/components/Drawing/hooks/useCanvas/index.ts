@@ -3,7 +3,7 @@ import * as fabric from 'fabric'
 import { DEFAULT_BRUSH_WIDTH, DEFAULT_BRUSH_COLOR, DEFAULT_ERASER_COLOR } from './constants'
 import { DEFAULT_PROPORTION_BY_WINDOW } from 'components/Drawing/components/Proportion/constants'
 
-const useCanvas = (updateJsonString: (jsonString: string) => void) => {
+const useCanvas = (updateJsonString?: (jsonString: string) => void) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null)
   const [canvasWidth, setCanvasWidth] = useState(0)
@@ -24,6 +24,8 @@ const useCanvas = (updateJsonString: (jsonString: string) => void) => {
     setRedoStack([])
 
     const json = fabricCanvasRef.current.toJSON()
+
+    if (!updateJsonString) return
     updateJsonString(JSON.stringify(json))
   }, [updateJsonString])
 
