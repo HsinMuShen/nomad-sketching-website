@@ -3,7 +3,7 @@ import * as fabric from 'fabric'
 import { DEFAULT_BRUSH_WIDTH, DEFAULT_BRUSH_COLOR, DEFAULT_ERASER_COLOR } from './constants'
 import { DEFAULT_PROPORTION_BY_WINDOW } from 'components/Drawing/components/Proportion/constants'
 
-const useCanvas = () => {
+const useCanvas = (updateJsonString?: (jsonString: string) => void) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null)
   const [canvasWidth, setCanvasWidth] = useState(0)
@@ -22,7 +22,12 @@ const useCanvas = () => {
   const updateCanvasHistory = useCallback(() => {
     if (!fabricCanvasRef.current) return
     setRedoStack([])
-  }, [])
+
+    const json = fabricCanvasRef.current.toJSON()
+
+    if (!updateJsonString) return
+    updateJsonString(JSON.stringify(json))
+  }, [updateJsonString])
 
   const undo = () => {
     if (!fabricCanvasRef.current) return
@@ -45,6 +50,22 @@ const useCanvas = () => {
 
     setRedoStack([...tempRedoStack])
     fabricCanvasRef.current.add(newState)
+  }
+
+  const getImageFile = async () => {
+    if (!fabricCanvasRef.current) return null
+
+    const dataURL = fabricCanvasRef.current.toDataURL({
+      format: 'jpeg',
+      quality: 1,
+      multiplier: 1,
+      enableRetinaScaling: true,
+    })
+
+    const response = await fetch(dataURL)
+    const blob = await response.blob()
+
+    return new File([blob], 'canvas-image.jpeg', { type: 'image/jpeg' })
   }
 
   const downloadImage = () => {
@@ -144,6 +165,7 @@ const useCanvas = () => {
     downloadImage,
     saveCanvasAsJson,
     loadCanvasFromJson,
+    getImageFile,
   }
 }
 

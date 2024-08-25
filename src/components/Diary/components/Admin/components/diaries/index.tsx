@@ -1,0 +1,52 @@
+import type { DiaryType } from 'types/diary'
+import Image from 'next/image'
+import Link from 'next/link'
+
+type DiariesProps = {
+  diaries: DiaryType[]
+}
+
+const Diaries = ({ diaries }: DiariesProps) => {
+  return (
+    <div className="grid gap-5 grid-cols-auto-fill-240 justify-center">
+      {diaries.map((diary) => (
+        <Diary key={diary.id} diary={diary} />
+      ))}
+    </div>
+  )
+}
+
+export default Diaries
+
+type DiaryProps = {
+  diary: DiaryType
+}
+
+const Diary = ({ diary }: DiaryProps) => {
+  const { id, title, drawingImage, createdAt } = diary
+
+  const getCreatedTime = (createTime: number) => {
+    const date = new Date(createTime)
+    return date.toLocaleDateString()
+  }
+
+  return (
+    <Link href={`/diary/${id}`} key={id}>
+      <div className="w-60 my-2">
+        <div className="flex justify-between items-end mb-1">
+          <div className="text-4 font-bold">{title}</div>
+          <div className="text-3">{createdAt && getCreatedTime(createdAt)}</div>
+        </div>
+        <div className="relative border-1 h-40 w-full overflow-hidden">
+          <Image
+            src={drawingImage.src}
+            alt={title}
+            fill
+            className="object-cover transition-transform duration-300 scale-100 hover:scale-120"
+            sizes="auto"
+          />
+        </div>
+      </div>
+    </Link>
+  )
+}

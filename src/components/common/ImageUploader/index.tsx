@@ -22,7 +22,7 @@ export const ImageUploader = ({ images, updateImages, singleImage = false, class
     const updatedFile = generateFileWithUniqueName(file)
     const url = await uploadAttachment(updatedFile)
     const image: CoverImageType = {
-      id: file.name,
+      id: updatedFile.name,
       src: url,
     }
     if (!singleImage) return updateImages([...images, image])

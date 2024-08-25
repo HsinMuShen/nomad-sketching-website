@@ -122,7 +122,7 @@ const MessageInputWrap = (
   )
 
   return (
-    <>
+    <div>
       <Menu editor={editor} />
       <div className="flex flex-col gap-4 p-2 border-1 border-neutral-200 border-solid">
         <div className={`w-full flex overflow-y-auto ${className}`}>
@@ -146,7 +146,7 @@ const MessageInputWrap = (
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
