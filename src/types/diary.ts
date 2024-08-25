@@ -6,6 +6,7 @@ export type CreateDiaryType = {
   content: JSONContent | null
   drawingJsonString: string
   drawingImage: ImageData
+  createdAt: number | null
 }
 
 export type DiaryType = CreateDiaryType & {
