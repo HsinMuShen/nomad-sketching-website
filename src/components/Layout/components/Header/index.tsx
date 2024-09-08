@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { sendGTMEvent } from '@next/third-parties/google'
 import Link from 'next/link'
 import { useBoundStore } from '@stores'
@@ -8,10 +9,18 @@ import LoginPanel from 'components/common/LoginPanel'
 import Sidebar from './components/SideBar'
 import { NAV_LINKS } from './constants'
 
-const Header = () => {
+type HeaderProps = {
+  isAdminPage?: boolean
+}
+
+const Header = ({ isAdminPage }: HeaderProps) => {
   const [isSideBar, setIsSideBar] = useState(false)
   const [showLoginPanel, setShowLoginPanel] = useState(false)
-  const { isLogin, setUser } = useBoundStore((state) => ({ isLogin: state.getIsLogin(), setUser: state.setUser }))
+  const { isLogin, setUser, hasInitialized, setHasInitialized } = useBoundStore((state) => ({
+    isLogin: state.getIsLogin(),
+    ...state,
+  }))
+  const router = useRouter()
 
   const desktopClass = 'mx-5 text-gray-800 hover:text-gray-400 hidden md:block'
 
@@ -31,8 +40,14 @@ const Header = () => {
   }
 
   useEffect(() => {
-    checkIsAlreadyLogin(setUser)
-  }, [setUser])
+    checkIsAlreadyLogin(setUser, setHasInitialized)
+  }, [setUser, setHasInitialized])
+
+  useEffect(() => {
+    if (!hasInitialized) return
+    if (!isAdminPage || isLogin) return
+    router.push('/')
+  }, [hasInitialized, isAdminPage, isLogin, router])
 
   return (
     <div className="fixed w-full h-15 bg-white flex justify-between items-center border-b-2 top-0 z-10">

@@ -1,5 +1,5 @@
-import Layout from 'src/components/Layout'
-import AdminComponent from 'src/components/admin'
+import Layout from 'components/Layout/AdminLayout'
+import AdminComponent from 'components/admin'
 
 const Admin = () => {
   return (

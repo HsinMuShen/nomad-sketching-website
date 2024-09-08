@@ -7,13 +7,18 @@ type AuthError = {
   message: string
 }
 
-export const checkIsAlreadyLogin = (setUser: (user: User) => void) => {
+export const checkIsAlreadyLogin = (
+  setUser: (user: User) => void,
+  setHasInitialized: (hasInitialized: boolean) => void,
+) => {
   onAuthStateChanged(auth, (user) => {
-    if (!user) return
+    if (!user) return setHasInitialized(true)
+
     const { email, uid } = user
-    if (!email || !uid) return
+    if (!email || !uid) return setHasInitialized(true)
 
     setUser({ email, uid })
+    setHasInitialized(true)
   })
 }
 

@@ -1,5 +1,5 @@
 import AdminDiaryComponent from 'components/Diary/components/Admin'
-import Layout from 'components/Layout'
+import Layout from 'components/Layout/AdminLayout'
 
 const AdminDiaryCreate: React.FC = () => {
   return (
