@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import { Dialog, Button, Input } from '@ui'
 import { useBoundStore } from '@stores'
 import { signIn } from 'libs/auth'
@@ -12,6 +13,8 @@ const LoginPanel = ({ closePanel }: LoginPanelProps) => {
   const [password, setPassword] = useState('')
   const setUser = useBoundStore((state) => state.setUser)
 
+  const router = useRouter()
+
   const title = 'Login to the admin page'
 
   const isSignInButtonEnabled = Boolean(email && password)
@@ -21,6 +24,7 @@ const LoginPanel = ({ closePanel }: LoginPanelProps) => {
       const user = await signIn(email, password)
       setUser(user)
       closePanel()
+      router.push('/admin')
     } catch (error) {
       console.error(error)
       alert((error as Error).message)

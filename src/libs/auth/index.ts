@@ -1,9 +1,20 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 import { auth } from 'libs/firebase'
+import type { User } from 'types/user'
 
 type AuthError = {
   code: string
   message: string
+}
+
+export const checkIsAlreadyLogin = (setUser: (user: User) => void) => {
+  onAuthStateChanged(auth, (user) => {
+    if (!user) return
+    const { email, uid } = user
+    if (!email || !uid) return
+
+    setUser({ email, uid })
+  })
 }
 
 export const signUp = async (inputEmail: string, password: string) => {

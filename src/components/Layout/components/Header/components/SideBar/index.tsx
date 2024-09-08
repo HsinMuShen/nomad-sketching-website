@@ -27,12 +27,9 @@ const Sidebar = ({ isSideBar, setIsSideBar, isLogin, openLoginPanel }: HeaderSid
           </Link>
         ))}
         {isLogin ? (
-          <>
-            <Link href="/admin" className={`${sidebarTextClass}`}>
-              Admin
-            </Link>
-            <div className={`cursor-pointer ${sidebarTextClass}`}>Logout</div>
-          </>
+          <Link href="/admin" className={`${sidebarTextClass}`}>
+            Admin
+          </Link>
         ) : (
           <div
             className={`cursor-pointer ${sidebarTextClass}`}

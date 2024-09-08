@@ -1,9 +1,5 @@
 import type { StateCreator } from 'zustand'
-
-export type User = {
-  uid: string
-  email: string
-}
+import type { User } from 'types/user'
 
 export type UserState = {
   user: User | null

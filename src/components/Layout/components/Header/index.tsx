@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { sendGTMEvent } from '@next/third-parties/google'
 import Link from 'next/link'
 import { useBoundStore } from '@stores'
 import { Icon } from '@ui'
+import { checkIsAlreadyLogin } from 'libs/auth'
 import LoginPanel from 'components/common/LoginPanel'
 import Sidebar from './components/SideBar'
 import { NAV_LINKS } from './constants'
@@ -10,7 +11,7 @@ import { NAV_LINKS } from './constants'
 const Header = () => {
   const [isSideBar, setIsSideBar] = useState(false)
   const [showLoginPanel, setShowLoginPanel] = useState(false)
-  const isLogin = useBoundStore((state) => state.getIsLogin())
+  const { isLogin, setUser } = useBoundStore((state) => ({ isLogin: state.getIsLogin(), setUser: state.setUser }))
 
   const desktopClass = 'mx-5 text-gray-800 hover:text-gray-400 hidden md:block'
 
@@ -28,6 +29,10 @@ const Header = () => {
   const openLoginPanel = () => {
     setShowLoginPanel(true)
   }
+
+  useEffect(() => {
+    checkIsAlreadyLogin(setUser)
+  }, [setUser])
 
   return (
     <div className="fixed w-full h-15 bg-white flex justify-between items-center border-b-2 top-0 z-10">
