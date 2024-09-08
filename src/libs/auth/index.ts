@@ -6,19 +6,23 @@ type AuthError = {
   message: string
 }
 
-export const signUp = async (email: string, password: string) => {
+export const signUp = async (inputEmail: string, password: string) => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-    return userCredential.user
+    const userCredential = await createUserWithEmailAndPassword(auth, inputEmail, password)
+    const { email, uid } = userCredential.user
+    if (!email || !uid) throw new Error('Failed to create user')
+    return { email, uid }
   } catch (error) {
     throw new Error((error as AuthError).message)
   }
 }
 
-export const signIn = async (email: string, password: string) => {
+export const signIn = async (inputEmail: string, password: string) => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password)
-    return userCredential.user
+    const userCredential = await signInWithEmailAndPassword(auth, inputEmail, password)
+    const { email, uid } = userCredential.user
+    if (!email || !uid) throw new Error('Failed to create user')
+    return { email, uid }
   } catch (error) {
     throw new Error((error as AuthError).message)
   }

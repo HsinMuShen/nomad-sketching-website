@@ -1,8 +1,8 @@
 import type { StateCreator } from 'zustand'
 
 export type User = {
-  id: string
-  name: string
+  uid: string
+  email: string
 }
 
 export type UserState = {
