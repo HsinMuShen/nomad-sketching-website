@@ -1,7 +1,7 @@
 import type { ImageData } from 'types/image'
-import { useState } from 'react'
 import type { JSONContent } from '@tiptap/core'
 import type { CreateDiaryType } from 'types/diary'
+import { useState } from 'react'
 import useCreateDiary from './use-create-diary'
 import { DEFAULT_DIARY } from './constants'
 
