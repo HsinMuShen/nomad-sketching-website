@@ -1,5 +1,5 @@
-import Layout from 'src/components/Layout'
-import Update from 'src/components/admin/update'
+import Layout from 'components/Layout/AdminLayout'
+import Update from 'components/admin/update'
 
 export default function Post() {
   return (
