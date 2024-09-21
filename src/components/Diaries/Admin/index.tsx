@@ -1,10 +1,9 @@
 import type { DiaryType } from 'types/diary'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { readData } from 'utils/dataHandler'
 import { Button } from 'components/common/ui'
-import { DATA_BASE_NAMES } from 'constants/database'
 import Diaries from './components/diaries'
+import { fetchDiaries } from './utils/fetch-diaries'
 
 const AdminDiaryComponent = () => {
   const [diaries, setDiaries] = useState<DiaryType[]>([])
@@ -18,12 +17,13 @@ const AdminDiaryComponent = () => {
     router.push('/admin')
   }
 
+  const updateDiaries = async () => {
+    const diaries = await fetchDiaries()
+    setDiaries(diaries)
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
-      const diaries = await readData<DiaryType>(DATA_BASE_NAMES.DIARY)
-      setDiaries(diaries)
-    }
-    fetchData()
+    updateDiaries()
   }, [])
 
   return (
@@ -39,7 +39,7 @@ const AdminDiaryComponent = () => {
           </Button>
         </div>
       </div>
-      <Diaries diaries={diaries} />
+      <Diaries diaries={diaries} updateDiaries={updateDiaries} />
     </div>
   )
 }
