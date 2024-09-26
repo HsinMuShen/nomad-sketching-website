@@ -2,8 +2,8 @@ import type { DiaryType } from 'types/diary'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Button } from 'components/common/ui'
+import { fetchDiaries } from 'components/Diaries/utils/fetch-diaries'
 import Diaries from './components/diaries'
-import { fetchDiaries } from './utils/fetch-diaries'
 
 const AdminDiaryComponent = () => {
   const [diaries, setDiaries] = useState<DiaryType[]>([])
@@ -29,7 +29,7 @@ const AdminDiaryComponent = () => {
   return (
     <div className="mb-10">
       <div className="flex justify-between items-center border-b-1 mb-4">
-        <div className="text-5 font-bold">Artworks</div>
+        <div className="text-5 font-bold">Diaries</div>
         <div>
           <Button className="mb-2 mr-2" color="secondary" variant="plain" onClick={onDiaryClick}>
             Admin

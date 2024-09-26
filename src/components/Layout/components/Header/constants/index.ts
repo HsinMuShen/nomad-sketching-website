@@ -1,4 +1,7 @@
-export const NAV_LINKS = [{ href: '/artworks', label: 'Artworks' }]
+export const NAV_LINKS = [
+  { href: '/artworks', label: 'Artworks' },
+  { href: '/diaries', label: 'Diaries' },
+]
 
 export const SIDEBAR_LINKS = [
   ...NAV_LINKS,
