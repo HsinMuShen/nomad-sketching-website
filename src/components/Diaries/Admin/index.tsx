@@ -13,7 +13,7 @@ const AdminDiaryComponent = () => {
     router.push('/admin/diary/create')
   }
 
-  const onDiaryClick = async () => {
+  const onAdminButtonClick = async () => {
     router.push('/admin')
   }
 
@@ -31,8 +31,8 @@ const AdminDiaryComponent = () => {
       <div className="flex justify-between items-center border-b-1 mb-4">
         <div className="text-5 font-bold">Diaries</div>
         <div>
-          <Button className="mb-2 mr-2" color="secondary" variant="plain" onClick={onDiaryClick}>
-            Admin
+          <Button className="mb-2 mr-2" color="secondary" variant="plain" onClick={onAdminButtonClick}>
+            Admin Page
           </Button>
           <Button className="mb-2" color="secondary" variant="plain" onClick={onCreateClick}>
             Create Diary

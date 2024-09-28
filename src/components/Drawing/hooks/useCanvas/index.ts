@@ -3,7 +3,7 @@ import * as fabric from 'fabric'
 import { DEFAULT_BRUSH_WIDTH, DEFAULT_BRUSH_COLOR, DEFAULT_ERASER_COLOR } from './constants'
 import { DEFAULT_PROPORTION_BY_WINDOW } from 'components/Drawing/components/Proportion/constants'
 
-const useCanvas = (updateJsonString?: (jsonString: string) => void) => {
+const useCanvas = (updateJsonString?: (jsonString: string) => void, loadedJson?: string) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null)
   const [canvasWidth, setCanvasWidth] = useState(0)
@@ -99,11 +99,14 @@ const useCanvas = (updateJsonString?: (jsonString: string) => void) => {
     localStorage.setItem('canvasState', JSON.stringify(json))
   }
 
-  const loadCanvasFromJson = () => {
-    const savedState = localStorage.getItem('canvasState')
-    if (!savedState || !fabricCanvasRef.current) return
-    fabricCanvasRef.current.loadFromJSON(savedState, () => fabricCanvasRef.current?.renderAll())
-  }
+  const loadCanvasFromJson = useCallback(() => {
+    if (!fabricCanvasRef.current) return
+    if (!loadedJson) return
+
+    fabricCanvasRef.current.loadFromJSON(loadedJson, () => {
+      fabricCanvasRef.current?.renderAll()
+    })
+  }, [loadedJson])
 
   useEffect(() => {
     if (!canvasRef.current) return
@@ -147,7 +150,7 @@ const useCanvas = (updateJsonString?: (jsonString: string) => void) => {
     if (!isEraser) fabricCanvasRef.current.freeDrawingBrush.color = DEFAULT_BRUSH_COLOR
 
     loadCanvasFromJson()
-  }, [brushWidth, isEraser])
+  }, [brushWidth, isEraser, loadCanvasFromJson])
 
   return {
     canvasRef,

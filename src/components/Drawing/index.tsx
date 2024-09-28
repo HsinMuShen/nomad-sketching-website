@@ -5,9 +5,10 @@ import useCanvas from './hooks/useCanvas'
 
 type DrawingPanelProps = {
   updateJsonString?: (JsonString: string) => void
+  loadedJson?: string
 }
 
-const DrawingPanelWrap = ({ updateJsonString }: DrawingPanelProps, ref: ForwardedRef<unknown>) => {
+const DrawingPanelWrap = ({ updateJsonString, loadedJson }: DrawingPanelProps, ref: ForwardedRef<unknown>) => {
   const {
     canvasRef,
     fabricCanvasRef,
@@ -24,7 +25,7 @@ const DrawingPanelWrap = ({ updateJsonString }: DrawingPanelProps, ref: Forwarde
     downloadImage,
     saveCanvasAsJson,
     getImageFile,
-  } = useCanvas(updateJsonString)
+  } = useCanvas(updateJsonString, loadedJson)
 
   useImperativeHandle(ref, () => ({
     getImageFile,

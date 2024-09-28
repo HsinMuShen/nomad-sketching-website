@@ -44,7 +44,7 @@ const Diary = ({ diary, updateDiaries }: DiaryProps) => {
   return (
     <div className="w-60 my-2" key={id}>
       <div className="flex justify-between items-end mb-1">
-        <Link href={`/diary/${id}`}>
+        <Link href={`/admin/diary/update/${id}`}>
           <div className="text-4 font-bold">{title}</div>
         </Link>
         <div className="flex items-end">
@@ -59,7 +59,7 @@ const Diary = ({ diary, updateDiaries }: DiaryProps) => {
           />
         </div>
       </div>
-      <Link href={`/diary/${id}`}>
+      <Link href={`/admin/diary/update/${id}`}>
         <div className="relative border-1 h-40 w-full overflow-hidden">
           <Image
             src={drawingImage.src}
