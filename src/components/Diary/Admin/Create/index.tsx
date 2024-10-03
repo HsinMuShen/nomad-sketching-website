@@ -11,7 +11,9 @@ import useDiary from './hooks/use-diary'
 const DiaryCreateComponent: React.FC = () => {
   const router = useRouter()
   const messageInputRef = useRef<MessageInputRef | null>(null)
-  const drawingRef = useRef<{ getImageFile: () => Promise<File | null> }>(null)
+  const drawingRef = useRef<{ getImageFile: () => Promise<File | null>; getCanvasJson: () => Promise<string | null> }>(
+    null,
+  )
   const { diary, setDiary, onCreateDiary } = useDiary()
   const { title } = diary
 
@@ -22,25 +24,22 @@ const DiaryCreateComponent: React.FC = () => {
   const createNewDiary = async () => {
     const content = messageInputRef.current?.getContent()
     const imageFile = await drawingRef.current?.getImageFile()
-    if (!imageFile || !content) return
+    const canvasJson = await drawingRef.current?.getCanvasJson()
+    if (!imageFile || !content || !canvasJson) return
 
     const drawingImage = await getImageFileUrl(imageFile)
-    setDiary({ ...diary, content, drawingImage })
+    const createdDiary = { ...diary, content, drawingImage, drawingJsonString: canvasJson }
 
-    onCreateDiary(content, drawingImage)
+    onCreateDiary(createdDiary)
     alert('Diary created!')
     router.push('/admin/diary')
-  }
-
-  const updateJsonString = (newJsonString: string) => {
-    setDiary({ ...diary, drawingJsonString: newJsonString })
   }
 
   return (
     <div className="mb-10">
       <div className="flex flex-col gap-5 mb-5">
         <TitleInput title={title} setTitle={updateTitle} />
-        <Drawing ref={drawingRef} updateJsonString={updateJsonString} />
+        <Drawing ref={drawingRef} />
         <MessageInput ref={messageInputRef} className="h-73" />
       </div>
       <Button variant="plain" color="secondary" onClick={createNewDiary}>

@@ -7,4 +7,5 @@ export const DEFAULT_DIARY = {
     src: '',
   },
   createdAt: null,
+  updatedAt: null,
 }

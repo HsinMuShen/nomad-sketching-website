@@ -1,5 +1,3 @@
-import type { ImageData } from 'types/image'
-import type { JSONContent } from '@tiptap/core'
 import type { CreateDiaryType } from 'types/diary'
 import { useState } from 'react'
 import useCreateDiary from './use-create-diary'
@@ -10,16 +8,13 @@ const useDiary = () => {
 
   const { createDiary } = useCreateDiary()
 
-  const onCreateDiary = (content: JSONContent, drawingImage: ImageData) => {
-    const { title, drawingJsonString } = diary
-    if (!title || !drawingJsonString) return
-    if (!content) return
+  const onCreateDiary = (createdDiary: CreateDiaryType) => {
+    const { title, drawingJsonString, content } = createdDiary
+    if (!title || !drawingJsonString || !content) return alert('Please fill in all fields')
     const createdAt = Date.now()
 
     const updatedDiary: CreateDiaryType = {
-      ...diary,
-      content,
-      drawingImage,
+      ...createdDiary,
       createdAt,
     }
 
