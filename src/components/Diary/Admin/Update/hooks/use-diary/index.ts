@@ -6,6 +6,7 @@ import { DEFAULT_DIARY } from './constants'
 
 const useDiary = () => {
   const [diary, setDiary] = useState<DiaryType>(DEFAULT_DIARY)
+  const [originJsonString, setOriginJsonString] = useState<string>('')
 
   const { getDiary } = useGetDiary()
   const { updateDiary: updateDiaryData } = useUpdateDiary()
@@ -15,15 +16,17 @@ const useDiary = () => {
       const data = await getDiary(id)
       if (!data) return
       setDiary(data)
+      setOriginJsonString(data.drawingJsonString)
     },
     [getDiary],
   )
 
-  const updateDiary = async () => {
-    await updateDiaryData(diary.id, diary)
+  const updateDiary = async (updatedDiary: DiaryType) => {
+    const newDiary = { ...updatedDiary, updatedAt: Date.now() }
+    await updateDiaryData(diary.id, newDiary)
   }
 
-  return { diary, setDiary, fetchDiary, updateDiary }
+  return { diary, setDiary, fetchDiary, updateDiary, originJsonString }
 }
 
 export default useDiary

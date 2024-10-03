@@ -1,21 +1,18 @@
 import { ForwardedRef, forwardRef, useImperativeHandle } from 'react'
 import Dashboard from './components/Dashboard'
-import Proportion from './components/Proportion'
+// import Proportion from './components/Proportion'
 import useCanvas from './hooks/useCanvas'
 
 type DrawingPanelProps = {
-  updateJsonString?: (JsonString: string) => void
   loadedJson?: string
 }
 
-const DrawingPanelWrap = ({ updateJsonString, loadedJson }: DrawingPanelProps, ref: ForwardedRef<unknown>) => {
+const DrawingPanelWrap = ({ loadedJson }: DrawingPanelProps, ref: ForwardedRef<unknown>) => {
   const {
     canvasRef,
     fabricCanvasRef,
     brushWidth,
     setBrushWidth,
-    setCanvasWidth,
-    setCanvasHeight,
     undo,
     redo,
     redoStack,
@@ -25,16 +22,18 @@ const DrawingPanelWrap = ({ updateJsonString, loadedJson }: DrawingPanelProps, r
     downloadImage,
     saveCanvasAsJson,
     getImageFile,
-  } = useCanvas(updateJsonString, loadedJson)
+    getCanvasJson,
+  } = useCanvas({ loadedJson })
 
   useImperativeHandle(ref, () => ({
+    getCanvasJson,
     getImageFile,
   }))
 
   return (
     <div className="w-full flex items-center justify-center">
       <div className="mr-4">
-        <canvas ref={canvasRef} width={0} height={0} className="border-2 border-solid border-gray-500" />
+        <canvas ref={canvasRef} className="border-2 border-solid border-gray-500" />
       </div>
       <div className="flex flex-col items-center px-2">
         <Dashboard
@@ -50,7 +49,7 @@ const DrawingPanelWrap = ({ updateJsonString, loadedJson }: DrawingPanelProps, r
           downloadImage={downloadImage}
           saveCanvasAsJson={saveCanvasAsJson}
         />
-        <Proportion setCanvasHeight={setCanvasHeight} setCanvasWidth={setCanvasWidth} />
+        {/* <Proportion setCanvasHeight={setCanvasHeight} setCanvasWidth={setCanvasWidth} /> */}
       </div>
     </div>
   )
