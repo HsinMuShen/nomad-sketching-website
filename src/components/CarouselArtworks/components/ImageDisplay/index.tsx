@@ -47,32 +47,46 @@ const ImageDisplay = ({
       ref={imgRef}
       style={{ backgroundPosition: renderBackgroundPosition() }}
     >
-      <IconButton
-        size="xl"
-        icon="i-mdi-book-open"
-        color="secondary"
-        variant="plain"
-        hasPadding={false}
-        className="absolute -top-8 right-12 sm:right-20"
-        onClick={navigateToArtwork}
-      />
-      <IconButton
-        size="xl"
-        icon={isImageCover ? 'i-mdi-auto-fix' : 'i-mdi-selection-drag'}
-        color="secondary"
-        variant="plain"
-        hasPadding={false}
-        className="absolute -top-8 right-12 hidden sm:block"
-        onClick={toggleBgSize}
-      />
-      <IconButton
-        size="xl"
-        icon="i-mdi-close"
-        variant="plain"
-        hasPadding={false}
-        className="absolute -top-8 right-4"
-        onClick={() => (imgRef.current!.style.transform = 'scale(0.0, 0.0)')}
-      />
+      <div className="flex ml-auto">
+        <div className="relative group mr-1">
+          <IconButton
+            size="xl"
+            icon="i-mdi-close"
+            variant="plain"
+            hasPadding={false}
+            onClick={() => (imgRef.current!.style.transform = 'scale(0.0, 0.0)')}
+          />
+          <div className="z-3 absolute whitespace-nowrap top-full mt-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2">
+            Close image
+          </div>
+        </div>
+        <div className="relative group mr-1">
+          <IconButton
+            size="xl"
+            icon={isImageCover ? 'i-mdi-auto-fix' : 'i-mdi-selection-drag'}
+            color="secondary"
+            variant="plain"
+            hasPadding={false}
+            onClick={toggleBgSize}
+          />
+          <div className="z-3 absolute whitespace-nowrap top-full mt-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2">
+            Change background size
+          </div>
+        </div>
+        <div className="relative group mr-1">
+          <IconButton
+            size="xl"
+            icon="i-mdi-book-open"
+            color="secondary"
+            variant="plain"
+            hasPadding={false}
+            onClick={navigateToArtwork}
+          />
+          <div className="z-3 absolute whitespace-nowrap top-full mt-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2">
+            View artwork details
+          </div>
+        </div>
+      </div>
       <div className="absolute font-bold -top-7 max-w-50 sm:max-w-md w-full break-words">{imageTitle}</div>
     </div>
   )
