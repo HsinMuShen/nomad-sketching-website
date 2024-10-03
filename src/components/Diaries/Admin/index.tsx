@@ -1,9 +1,8 @@
 import type { DiaryType } from 'types/diary'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { readData } from 'utils/dataHandler'
 import { Button } from 'components/common/ui'
-import { DATA_BASE_NAMES } from 'constants/database'
+import { fetchDiaries } from 'components/Diaries/utils/fetch-diaries'
 import Diaries from './components/diaries'
 
 const AdminDiaryComponent = () => {
@@ -14,32 +13,33 @@ const AdminDiaryComponent = () => {
     router.push('/admin/diary/create')
   }
 
-  const onDiaryClick = async () => {
+  const onAdminButtonClick = async () => {
     router.push('/admin')
   }
 
+  const updateDiaries = async () => {
+    const diaries = await fetchDiaries()
+    setDiaries(diaries)
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
-      const diaries = await readData<DiaryType>(DATA_BASE_NAMES.DIARY)
-      setDiaries(diaries)
-    }
-    fetchData()
+    updateDiaries()
   }, [])
 
   return (
     <div className="mb-10">
       <div className="flex justify-between items-center border-b-1 mb-4">
-        <div className="text-5 font-bold">Artworks</div>
+        <div className="text-5 font-bold">Diaries</div>
         <div>
-          <Button className="mb-2 mr-2" color="secondary" variant="plain" onClick={onDiaryClick}>
-            Admin
+          <Button className="mb-2 mr-2" color="secondary" variant="plain" onClick={onAdminButtonClick}>
+            Admin Page
           </Button>
           <Button className="mb-2" color="secondary" variant="plain" onClick={onCreateClick}>
             Create Diary
           </Button>
         </div>
       </div>
-      <Diaries diaries={diaries} />
+      <Diaries diaries={diaries} updateDiaries={updateDiaries} />
     </div>
   )
 }
