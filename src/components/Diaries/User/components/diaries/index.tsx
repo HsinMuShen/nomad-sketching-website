@@ -7,9 +7,10 @@ type DiariesProps = {
 }
 
 const Diaries = ({ diaries }: DiariesProps) => {
+  const sortedDiaries = diaries.sort((a, b) => Number(b.id) - Number(a.id))
   return (
     <div className="grid gap-5 grid-cols-auto-fill-240 justify-center">
-      {diaries.map((diary) => (
+      {sortedDiaries.map((diary) => (
         <Diary key={diary.id} diary={diary} />
       ))}
     </div>
