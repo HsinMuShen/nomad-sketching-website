@@ -60,7 +60,7 @@ export function Dialog({
         )}
         {title && (
           <h2
-            className={`m-0 mr-9 flex overflow-hidden pb-2 text-base text-neutral-700 sm:pb-3 sm:text-lg ${titleClassNames}`}
+            className={`m-0 mr-9 flex overflow-hidden pb-2 text-base font-bold text-neutral-700 sm:pb-3 sm:text-lg ${titleClassNames}`}
           >
             {title}
           </h2>
