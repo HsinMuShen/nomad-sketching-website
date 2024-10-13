@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { IconButton } from '@ui'
+import { IconButton, SimpleTooltip } from '@ui'
 
 interface ImageDisplayProps {
   handleMouseDown: (e: React.MouseEvent<HTMLDivElement>) => void
@@ -47,32 +47,37 @@ const ImageDisplay = ({
       ref={imgRef}
       style={{ backgroundPosition: renderBackgroundPosition() }}
     >
-      <IconButton
-        size="xl"
-        icon="i-mdi-book-open"
-        color="secondary"
-        variant="plain"
-        hasPadding={false}
-        className="absolute -top-8 right-12 sm:right-20"
-        onClick={navigateToArtwork}
-      />
-      <IconButton
-        size="xl"
-        icon={isImageCover ? 'i-mdi-auto-fix' : 'i-mdi-selection-drag'}
-        color="secondary"
-        variant="plain"
-        hasPadding={false}
-        className="absolute -top-8 right-12 hidden sm:block"
-        onClick={toggleBgSize}
-      />
-      <IconButton
-        size="xl"
-        icon="i-mdi-close"
-        variant="plain"
-        hasPadding={false}
-        className="absolute -top-8 right-4"
-        onClick={() => (imgRef.current!.style.transform = 'scale(0.0, 0.0)')}
-      />
+      <div className="flex ml-auto">
+        <SimpleTooltip message="Close image" className="mr-1">
+          <IconButton
+            size="xl"
+            icon="i-mdi-close"
+            variant="plain"
+            hasPadding={false}
+            onClick={() => (imgRef.current!.style.transform = 'scale(0.0, 0.0)')}
+          />
+        </SimpleTooltip>
+        <SimpleTooltip message="Change background size" className="mr-1">
+          <IconButton
+            size="xl"
+            icon={isImageCover ? 'i-mdi-auto-fix' : 'i-mdi-selection-drag'}
+            color="secondary"
+            variant="plain"
+            hasPadding={false}
+            onClick={toggleBgSize}
+          />
+        </SimpleTooltip>
+        <SimpleTooltip message="View artwork details" className="mr-1">
+          <IconButton
+            size="xl"
+            icon="i-mdi-book-open"
+            color="secondary"
+            variant="plain"
+            hasPadding={false}
+            onClick={navigateToArtwork}
+          />
+        </SimpleTooltip>
+      </div>
       <div className="absolute font-bold -top-7 max-w-50 sm:max-w-md w-full break-words">{imageTitle}</div>
     </div>
   )

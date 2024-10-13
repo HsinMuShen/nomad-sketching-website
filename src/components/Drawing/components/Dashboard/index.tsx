@@ -1,5 +1,5 @@
 import * as fabric from 'fabric'
-import { IconButton } from '@ui'
+import { IconButton, SimpleTooltip } from '@ui'
 
 type DashboardProps = {
   fabricCanvasRef: React.MutableRefObject<fabric.Canvas | null>
@@ -49,83 +49,97 @@ const Dashboard = ({
         <input type="range" min="1" max="10" value={brushWidth} onChange={changeBrushWidth} className="mt-2 mb-2" />
       </div>
       <div className={`${iconBlockClass}`}>
-        <IconButton
-          aria-label="undo"
-          className={`${iconClass}`}
-          icon="i-mdi-undo-variant"
-          size="2xl"
-          variant="plain"
-          hasPadding={false}
-          onClick={undo}
-          disabled={undoDisabled}
-        />
-        <IconButton
-          aria-label="redo"
-          className={`${iconClass}`}
-          icon="i-mdi-redo-variant"
-          size="2xl"
-          variant="plain"
-          hasPadding={false}
-          onClick={redo}
-          disabled={redoDisabled}
-        />
+        <SimpleTooltip message="Undo">
+          <IconButton
+            aria-label="undo"
+            className={`${iconClass}`}
+            icon="i-mdi-undo-variant"
+            size="2xl"
+            variant="plain"
+            hasPadding={false}
+            onClick={undo}
+            disabled={undoDisabled}
+          />
+        </SimpleTooltip>
+        <SimpleTooltip message="Redo">
+          <IconButton
+            aria-label="redo"
+            className={`${iconClass}`}
+            icon="i-mdi-redo-variant"
+            size="2xl"
+            variant="plain"
+            hasPadding={false}
+            onClick={redo}
+            disabled={redoDisabled}
+          />
+        </SimpleTooltip>
       </div>
       <div className={`${iconBlockClass}`}>
-        <IconButton
-          aria-label="eraser"
-          className={`${iconClass}`}
-          icon="i-mdi-eraser"
-          color="secondary"
-          size="2xl"
-          variant="plain"
-          hasPadding={false}
-          onClick={() => setIsEraser(true)}
-          disabled={isEraser}
-        />
-        <IconButton
-          aria-label="draw"
-          className={`${iconClass}`}
-          icon="i-mdi-draw"
-          color="secondary"
-          size="2xl"
-          variant="plain"
-          hasPadding={false}
-          onClick={() => setIsEraser(false)}
-          disabled={!isEraser}
-        />
+        <SimpleTooltip message="Eraser">
+          <IconButton
+            aria-label="eraser"
+            className={`${iconClass}`}
+            icon="i-mdi-eraser"
+            color="secondary"
+            size="2xl"
+            variant="plain"
+            hasPadding={false}
+            onClick={() => setIsEraser(true)}
+            disabled={isEraser}
+          />
+        </SimpleTooltip>
+        <SimpleTooltip message="Drawing Pen">
+          <IconButton
+            aria-label="draw"
+            className={`${iconClass}`}
+            icon="i-mdi-draw"
+            color="secondary"
+            size="2xl"
+            variant="plain"
+            hasPadding={false}
+            onClick={() => setIsEraser(false)}
+            disabled={!isEraser}
+          />
+        </SimpleTooltip>
       </div>
       <div className={`${iconBlockClass}`}>
-        <IconButton
-          aria-label="download-image"
-          className={`${iconClass}`}
-          icon="i-mdi-download"
-          color="secondary"
-          size="2xl"
-          variant="plain"
-          hasPadding={false}
-          onClick={downloadImage}
-        />
-        <IconButton
-          aria-label="image-delete"
-          className={`${iconClass}`}
-          icon="i-mdi-trash-can"
-          size="2xl"
-          variant="plain"
-          hasPadding={false}
-          onClick={clearCanvas}
-        />
+        <SimpleTooltip message="Save the image">
+          <IconButton
+            aria-label="download-image"
+            className={`${iconClass}`}
+            icon="i-mdi-download"
+            color="secondary"
+            size="2xl"
+            variant="plain"
+            hasPadding={false}
+            onClick={downloadImage}
+          />
+        </SimpleTooltip>
+        <SimpleTooltip message="Clear the drawing">
+          <IconButton
+            aria-label="image-delete"
+            className={`${iconClass}`}
+            icon="i-mdi-trash-can"
+            size="2xl"
+            variant="plain"
+            hasPadding={false}
+            onClick={clearCanvas}
+          />
+        </SimpleTooltip>
       </div>
       <div className={`${iconBlockClass}`}>
-        <IconButton
-          aria-label="save-json"
-          className={`${iconClass} mr-7`}
-          icon="i-mdi-content-save"
-          color="secondary"
-          size="2xl"
-          variant="plain"
-          hasPadding={false}
-          onClick={saveCanvasAsJson}
-        />
+        <SimpleTooltip message="Save as JSON(for dev)">
+          <IconButton
+            aria-label="save-json"
+            className={`${iconClass} mr-7`}
+            icon="i-mdi-content-save"
+            color="secondary"
+            size="2xl"
+            variant="plain"
+            hasPadding={false}
+            onClick={saveCanvasAsJson}
+          />
+        </SimpleTooltip>
       </div>
     </div>
   )
