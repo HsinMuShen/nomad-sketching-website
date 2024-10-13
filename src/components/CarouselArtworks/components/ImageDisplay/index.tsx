@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { IconButton } from '@ui'
+import { IconButton, SimpleTooltip } from '@ui'
 
 interface ImageDisplayProps {
   handleMouseDown: (e: React.MouseEvent<HTMLDivElement>) => void
@@ -48,7 +48,7 @@ const ImageDisplay = ({
       style={{ backgroundPosition: renderBackgroundPosition() }}
     >
       <div className="flex ml-auto">
-        <div className="relative group mr-1">
+        <SimpleTooltip message="Close image" className="mr-1">
           <IconButton
             size="xl"
             icon="i-mdi-close"
@@ -56,11 +56,8 @@ const ImageDisplay = ({
             hasPadding={false}
             onClick={() => (imgRef.current!.style.transform = 'scale(0.0, 0.0)')}
           />
-          <div className="z-3 absolute whitespace-nowrap top-full mt-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2">
-            Close image
-          </div>
-        </div>
-        <div className="relative group mr-1">
+        </SimpleTooltip>
+        <SimpleTooltip message="Change background size" className="mr-1">
           <IconButton
             size="xl"
             icon={isImageCover ? 'i-mdi-auto-fix' : 'i-mdi-selection-drag'}
@@ -69,11 +66,8 @@ const ImageDisplay = ({
             hasPadding={false}
             onClick={toggleBgSize}
           />
-          <div className="z-3 absolute whitespace-nowrap top-full mt-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2">
-            Change background size
-          </div>
-        </div>
-        <div className="relative group mr-1">
+        </SimpleTooltip>
+        <SimpleTooltip message="View artwork details" className="mr-1">
           <IconButton
             size="xl"
             icon="i-mdi-book-open"
@@ -82,10 +76,7 @@ const ImageDisplay = ({
             hasPadding={false}
             onClick={navigateToArtwork}
           />
-          <div className="z-3 absolute whitespace-nowrap top-full mt-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2">
-            View artwork details
-          </div>
-        </div>
+        </SimpleTooltip>
       </div>
       <div className="absolute font-bold -top-7 max-w-50 sm:max-w-md w-full break-words">{imageTitle}</div>
     </div>
