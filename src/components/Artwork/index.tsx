@@ -3,17 +3,20 @@ import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import DefaultImage from 'public/images/default.png'
-import { Button, Dialog } from 'components/common/ui'
+import { Button, Dialog } from '@ui'
+import LoadingState from 'components/common/LoadingState'
 import useGetArtwork from './hooks/use-get-artwork'
 import Content from './components/Content'
 
 const ArtworkComponent = () => {
   const [artwork, setArtwork] = useState<Artwork | null>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isImageDialogShowing, setIsImageDialogShowing] = useState(false)
   const { getArtwork } = useGetArtwork()
   const router = useRouter()
   const { id } = router.query
 
+  const shouldShowArtwork = artwork && !isLoading
   const shouldShowImageDialog = artwork && isImageDialogShowing
 
   const showImageDialog = () => {
@@ -26,10 +29,17 @@ const ArtworkComponent = () => {
 
   const fetchArticle = useCallback(
     async (id: string) => {
-      const data = await getArtwork(id)
-      console.log(data)
-      if (!data) return
-      setArtwork(data)
+      setIsLoading(true)
+      try {
+        const data = await getArtwork(id)
+        console.log(data)
+        if (!data) return
+        setArtwork(data)
+      } catch (error) {
+        console.error('Failed to fetch data:', error)
+      } finally {
+        setIsLoading(false)
+      }
     },
     [getArtwork],
   )
@@ -41,7 +51,7 @@ const ArtworkComponent = () => {
 
   return (
     <div className="mb-20">
-      {artwork && (
+      {shouldShowArtwork ? (
         <div className="my-5">
           <div className="font-bold mt-2 my-6 text-6">{artwork.name}</div>
           <div className="relative border-1 h-80 w-full cursor-pointer" onClick={showImageDialog}>
@@ -56,6 +66,8 @@ const ArtworkComponent = () => {
           </div>
           <Content content={artwork.content} />
         </div>
+      ) : (
+        <LoadingState />
       )}
       <Button variant="plain" color="secondary" onClick={() => router.push('/artworks')}>
         Back to artworks
