@@ -113,7 +113,6 @@ const useCanvas = ({ loadedJson }: Props) => {
 
     if (loadedJson) {
       canvas.loadFromJSON(loadedJson, () => {
-        console.log('Canvas loaded from JSON', loadedJson)
         canvas.renderAll()
         requestAnimationFrame(() => {
           canvas.isDrawingMode = true

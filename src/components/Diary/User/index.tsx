@@ -53,8 +53,15 @@ const DiaryComponent = () => {
       {shouldShowDiary ? (
         <div className="my-5">
           <div className="font-bold mt-2 my-6 text-6">{diary.title}</div>
-          <div className="relative border-1 h-80 w-full cursor-pointer" onClick={showImageDialog}>
-            <Image src={diary.drawingImage.src} alt={diary.title} fill priority className="object-cover" sizes="auto" />
+          <div className="relative border-1 h-80 w-full cursor-pointer sm:h-100" onClick={showImageDialog}>
+            <Image
+              src={diary.drawingImage.src}
+              alt={diary.title}
+              fill
+              priority
+              className="object-contain bg-white"
+              sizes="auto"
+            />
           </div>
           <Content content={diary.content} />
         </div>
@@ -65,7 +72,7 @@ const DiaryComponent = () => {
         Back to diaries
       </Button>
       {shouldShowImageDialog && (
-        <Dialog title={diary.title} size="lg" onClose={closeImageDialog}>
+        <Dialog title={diary.title} size="md" onClose={closeImageDialog}>
           <div className="relative h-full w-full">
             <Image
               src={diary.drawingImage.src}

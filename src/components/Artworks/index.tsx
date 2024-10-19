@@ -4,6 +4,7 @@ import Link from 'next/link'
 import DefaultImage from 'public/images/default.png'
 
 const Artworks = ({ artworks }: { artworks: Artwork[] }) => {
+  console.log('artworks: ', artworks)
   return (
     <div className="mb-10">
       <div className="grid gap-5 grid-cols-auto-fill-240 justify-center">
