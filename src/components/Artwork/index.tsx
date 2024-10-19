@@ -54,13 +54,13 @@ const ArtworkComponent = () => {
       {shouldShowArtwork ? (
         <div className="my-5">
           <div className="font-bold mt-2 my-6 text-6">{artwork.name}</div>
-          <div className="relative border-1 h-80 w-full cursor-pointer" onClick={showImageDialog}>
+          <div className="relative border-1 h-80 w-full cursor-pointer sm:h-100" onClick={showImageDialog}>
             <Image
               src={artwork.mainImage?.src || DefaultImage}
               alt={artwork.name}
               fill
               priority
-              className="object-cover"
+              className="object-contain bg-white"
               sizes="auto"
             />
           </div>
