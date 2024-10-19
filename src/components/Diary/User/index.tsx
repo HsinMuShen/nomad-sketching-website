@@ -65,7 +65,7 @@ const DiaryComponent = () => {
         Back to diaries
       </Button>
       {shouldShowImageDialog && (
-        <Dialog title={diary.title} size="lg" onClose={closeImageDialog}>
+        <Dialog title={diary.title} size="md" onClose={closeImageDialog}>
           <div className="relative h-full w-full">
             <Image
               src={diary.drawingImage.src}

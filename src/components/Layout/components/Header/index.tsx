@@ -50,7 +50,7 @@ const Header = ({ isAdminPage }: HeaderProps) => {
   }, [hasInitialized, isAdminPage, isLogin, router])
 
   return (
-    <div className="fixed w-full h-15 bg-white flex justify-between items-center border-b-2 top-0 z-10">
+    <div className="fixed w-full h-15 bg-white flex justify-between items-center border-b-2 top-0 z-2">
       <div className="flex items-center">
         <Link
           href="/"

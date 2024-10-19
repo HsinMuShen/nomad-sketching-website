@@ -73,7 +73,7 @@ const ArtworkComponent = () => {
         Back to artworks
       </Button>
       {shouldShowImageDialog && (
-        <Dialog title={artwork.name} size="lg" onClose={closeImageDialog}>
+        <Dialog title={artwork.name} size="md" onClose={closeImageDialog}>
           <div className="relative h-full w-full">
             <Image
               src={artwork.mainImage?.src || DefaultImage}
