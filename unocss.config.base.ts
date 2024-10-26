@@ -61,6 +61,14 @@ const config = {
         'auto-fit-100': 'repeat(auto-fit, minmax(100px, 1fr))',
       },
     },
+    breakpoints: {
+      xs: '500px',
+      ssm: '560px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+    },
   },
 } as UserConfig
 

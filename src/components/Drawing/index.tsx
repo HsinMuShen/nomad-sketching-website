@@ -31,11 +31,11 @@ const DrawingPanelWrap = ({ loadedJson }: DrawingPanelProps, ref: ForwardedRef<u
   }))
 
   return (
-    <div className="w-full flex items-center justify-center">
+    <div className="mt-[-120px] w-full flex items-center justify-center scale-50 xs:mt-0 xs:scale-70 ssm:scale-75 sm:scale-90 md:scale-100">
       <div className="mr-4">
         <canvas ref={canvasRef} className="border-2 border-solid border-gray-500" />
       </div>
-      <div className="flex flex-col items-center px-2">
+      <div className="ml-6 scale-170 xs:scale-130 ssm:scale-120 sm:scale-110 md:scale-100">
         <Dashboard
           fabricCanvasRef={fabricCanvasRef}
           brushWidth={brushWidth}
