@@ -1,6 +1,7 @@
 export const NAV_LINKS = [
   { href: '/artworks', label: 'Artworks' },
   { href: '/diaries', label: 'Diaries' },
+  { href: '/drawing', label: 'Drawing' },
 ]
 
 export const SIDEBAR_LINKS = [

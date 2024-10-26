@@ -22,7 +22,7 @@ const Header = ({ isAdminPage }: HeaderProps) => {
   }))
   const router = useRouter()
 
-  const desktopClass = 'mx-5 text-gray-800 hover:text-gray-400 hidden md:block'
+  const desktopClass = 'h-full items-center px-5 text-gray-600 hover:text-gray-900 hidden md:flex hover:bg-neutral-100'
 
   const onLinkClick = (value: string) => {
     sendGTMEvent({
@@ -51,10 +51,10 @@ const Header = ({ isAdminPage }: HeaderProps) => {
 
   return (
     <div className="fixed w-full h-15 bg-white flex justify-between items-center border-b-2 top-0 z-2">
-      <div className="flex items-center">
+      <div className="h-full flex items-center">
         <Link
           href="/"
-          className="flex items-center mx-5 text-gray-800 hover:text-gray-400 font-800"
+          className="h-full flex items-center mx-5 text-gray-800 hover:text-gray-400 font-800"
           onClick={() => {
             onLinkClick('index')
           }}
