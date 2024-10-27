@@ -11,7 +11,9 @@ const Artworks = ({ artworks }: { artworks: Artwork[] }) => {
         {artworks.map(({ name, id, mainImage }) => (
           <Link href={`/artwork/${id}`} key={id}>
             <div className="w-60 my-2">
-              <div className="text-4 font-bold mb-1">{name}</div>
+              <div className="text-4 font-bold mb-1 text-ellipsis whitespace-nowrap overflow-hidden h-7 max-w-60">
+                {name}
+              </div>
               <div className="relative border-1 h-40 w-full overflow-hidden">
                 <Image
                   src={mainImage?.src || DefaultImage}

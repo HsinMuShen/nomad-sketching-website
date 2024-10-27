@@ -10,9 +10,10 @@ type DiariesProps = {
 }
 
 const Diaries = ({ diaries, updateDiaries }: DiariesProps) => {
+  const sortedDiaries = diaries.sort((a, b) => Number(b.id) - Number(a.id))
   return (
     <div className="grid gap-5 grid-cols-auto-fill-240 justify-center">
-      {diaries.map((diary) => (
+      {sortedDiaries.map((diary) => (
         <Diary key={diary.id} diary={diary} updateDiaries={updateDiaries} />
       ))}
     </div>
@@ -45,7 +46,7 @@ const Diary = ({ diary, updateDiaries }: DiaryProps) => {
     <div className="w-60 my-2" key={id}>
       <div className="flex justify-between items-end mb-1">
         <Link href={`/admin/diary/update/${id}`}>
-          <div className="text-4 font-bold">{title}</div>
+          <div className="text-4 font-bold text-ellipsis whitespace-nowrap overflow-hidden h-7 max-w-35">{title}</div>
         </Link>
         <div className="flex items-end">
           <div className="text-3 mr-2">{createdAt && getCreatedTime(createdAt)}</div>

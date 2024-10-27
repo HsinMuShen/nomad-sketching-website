@@ -20,7 +20,9 @@ const Article = ({ article, removeArticle }: ArticleProps) => {
     <div className="w-60 h-auto">
       <Link href={`/admin/update/${article.id}`}>
         <div className="flex justify-between items-center mb-1">
-          <div className="text-4 font-bold">{article.name}</div>
+          <div className="text-4 font-bold text-ellipsis whitespace-nowrap overflow-hidden h-7 max-w-40">
+            {article.name}
+          </div>
           <IconButton
             aria-label="image-delete"
             icon="i-mdi-trash-can"
@@ -36,7 +38,7 @@ const Article = ({ article, removeArticle }: ArticleProps) => {
             alt={article.name}
             fill
             priority
-            className="object-cover"
+            className="h-full object-cover"
             sizes="auto"
           />
         </div>
