@@ -26,7 +26,6 @@ const Dashboard = ({
   redoDisabled,
   clearCanvas,
   downloadImage,
-  saveCanvasAsJson,
 }: DashboardProps) => {
   const iconClass = 'mt-1'
   const iconBlockClass = 'flex'
@@ -44,12 +43,12 @@ const Dashboard = ({
 
   return (
     <div className="flex flex-col items-center p-4 b-1 b-neutral-300 rounded-2 bg-neutral-200">
-      <div className="flex flex-col items-center">
+      <div className="width-range flex flex-col items-center">
         <div className="">{brushWidth}</div>
         <input type="range" min="1" max="10" value={brushWidth} onChange={changeBrushWidth} className="mt-2 mb-2" />
       </div>
       <div className={`${iconBlockClass}`}>
-        <SimpleTooltip message="Undo">
+        <SimpleTooltip message="Undo" className="icon-undo">
           <IconButton
             aria-label="undo"
             className={`${iconClass}`}
@@ -64,7 +63,7 @@ const Dashboard = ({
         <SimpleTooltip message="Redo">
           <IconButton
             aria-label="redo"
-            className={`${iconClass}`}
+            className={`icon-redo ${iconClass}`}
             icon="i-mdi-redo-variant"
             size="2xl"
             variant="plain"
@@ -78,7 +77,7 @@ const Dashboard = ({
         <SimpleTooltip message="Eraser">
           <IconButton
             aria-label="eraser"
-            className={`${iconClass}`}
+            className={`icon-eraser ${iconClass}`}
             icon="i-mdi-eraser"
             color="secondary"
             size="2xl"
@@ -91,7 +90,7 @@ const Dashboard = ({
         <SimpleTooltip message="Drawing Pen">
           <IconButton
             aria-label="draw"
-            className={`${iconClass}`}
+            className={`icon-pen ${iconClass}`}
             icon="i-mdi-draw"
             color="secondary"
             size="2xl"
@@ -106,7 +105,7 @@ const Dashboard = ({
         <SimpleTooltip message="Save the image">
           <IconButton
             aria-label="download-image"
-            className={`${iconClass}`}
+            className={`icon-download ${iconClass}`}
             icon="i-mdi-download"
             color="secondary"
             size="2xl"
@@ -117,8 +116,8 @@ const Dashboard = ({
         </SimpleTooltip>
         <SimpleTooltip message="Clear the drawing">
           <IconButton
-            aria-label="image-delete"
-            className={`${iconClass}`}
+            aria-label="image-trash"
+            className={`icon-trash ${iconClass}`}
             icon="i-mdi-trash-can"
             size="2xl"
             variant="plain"
@@ -127,7 +126,7 @@ const Dashboard = ({
           />
         </SimpleTooltip>
       </div>
-      <div className={`${iconBlockClass}`}>
+      {/* <div className={`${iconBlockClass}`}>
         <SimpleTooltip message="Save as JSON(for dev)">
           <IconButton
             aria-label="save-json"
@@ -140,7 +139,7 @@ const Dashboard = ({
             onClick={saveCanvasAsJson}
           />
         </SimpleTooltip>
-      </div>
+      </div> */}
     </div>
   )
 }

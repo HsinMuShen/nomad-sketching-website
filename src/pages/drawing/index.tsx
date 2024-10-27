@@ -4,7 +4,7 @@ import DrawingComponent from 'components/Drawing'
 const DrawingPage = () => {
   return (
     <Layout>
-      <DrawingComponent />
+      <DrawingComponent showingTour />
     </Layout>
   )
 }
