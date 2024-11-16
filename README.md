@@ -78,24 +78,24 @@ You can find the latest artwork updates and more information on my [instagram](h
 
 
 ## Demo
-1. **Homepage**
+1. **Homepage**:
 A stunning carousel displays featured artworks and invites users to explore more.
 
 <img alt="home1" src="https://github.com/user-attachments/assets/9ef58697-5455-4f8f-bf71-127bf1979171">
 <img alt="home2" src="https://github.com/user-attachments/assets/ef7ee6e4-eaba-41c9-94d6-667bf5472bb0">
 <img alt="home3" src="https://github.com/user-attachments/assets/ddc7ca3d-3acc-42f9-8fbf-be0cd9d52a97">
 
-2. **Online Drawing Panel**
+2. **Online Drawing Panel**:
 Draw and save your creations directly in the browser.
 
 <img alt="drawing" src="https://github.com/user-attachments/assets/7ba766da-cdc6-4f0f-8b0a-c5d4c89089e2">
 
-3. **Diary Management**
+3. **Diary Management**:
 Admins can create and manage diaries using a rich editor with integrated drawing tools, making it easy to add sketches directly.
 
 <img alt="diaryAdmin" src="https://github.com/user-attachments/assets/71e0258d-6530-4ba6-83b2-cc4fcd686243">
 
-4. **Artwork Uploads**
+4. **Artwork Uploads**:
 Admins can upload images and create detailed articles, seamlessly combining text and visuals.
 
 <img alt="artworksAdmin1" src="https://github.com/user-attachments/assets/0af6b31a-9741-4be5-930c-68cbb6f21d7d">
