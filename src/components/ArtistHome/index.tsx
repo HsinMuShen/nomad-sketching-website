@@ -7,7 +7,7 @@ import ImageDisplay from 'components/CarouselArtworks/components/ImageDisplay'
 
 const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
   const sectionRefs = useRef<Array<HTMLElement | null>>([])
-  const heroFadeTimeoutRef = useRef<ReturnType<typeof window.setTimeout> | null>(null)
+  const heroFadeTimeoutRef = useRef<number | null>(null)
   const [randomWorks, setRandomWorks] = useState<Artwork[]>([])
 
   const [isImageCover, setIsImageCover] = useState(false)
@@ -24,10 +24,7 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
   const [panelOpen, setPanelOpen] = useState(false)
   const [previewUrl, setPreviewUrl] = useState('')
 
-  const worksWithImage = useMemo(
-    () => artworks.filter((a) => a.mainImage?.src),
-    [artworks],
-  )
+  const worksWithImage = useMemo(() => artworks.filter((a) => a.mainImage?.src), [artworks])
 
   const marqueeItems = useMemo(() => {
     if (randomWorks.length > 0) return randomWorks
@@ -193,9 +190,7 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
           {heroArtwork ? (
             <button
               type="button"
-              onClick={() =>
-                pickImage(heroArtwork.mainImage!.src, heroArtwork.name, heroArtwork.id)
-              }
+              onClick={() => pickImage(heroArtwork.mainImage!.src, heroArtwork.name, heroArtwork.id)}
               className="relative w-full aspect-[4/5] max-h-[min(72vh,520px)] rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-gray-100 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
               aria-label={`開啟作品預覽：${heroArtwork.name}`}
             >
@@ -242,9 +237,7 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
                 <button
                   key={`${artwork.id}-${index}`}
                   type="button"
-                  onClick={() =>
-                    pickImage(artwork.mainImage!.src, artwork.name, artwork.id)
-                  }
+                  onClick={() => pickImage(artwork.mainImage!.src, artwork.name, artwork.id)}
                   className="relative w-44 h-56 sm:w-52 sm:h-64 shrink-0 rounded-lg overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
                   aria-label={`開啟作品預覽：${artwork.name}`}
                 >
@@ -280,7 +273,10 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
           </p>
           <p>隨著時間累積，這些作品逐漸形成一張屬於自己的地圖，一條由經驗與記憶構成的軌跡。</p>
         </div>
-        <Link href="/artworks" className="inline-flex items-center text-black font-medium border-b border-black pb-0.5 hover:text-gray-700 hover:border-gray-700 transition-colors">
+        <Link
+          href="/artworks"
+          className="inline-flex items-center text-black font-medium border-b border-black pb-0.5 hover:text-gray-700 hover:border-gray-700 transition-colors"
+        >
           前往作品庫
         </Link>
       </section>
@@ -303,7 +299,10 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
             這些零碎的速寫，慢慢累積成一種視覺日記。當我回頭翻看時，可以很快地回到當時的場景、情緒，甚至是那一天的節奏與狀態。
           </p>
         </div>
-        <Link href="/diaries" className="inline-flex items-center text-black font-medium border-b border-black pb-0.5 hover:text-gray-700 hover:border-gray-700 transition-colors">
+        <Link
+          href="/diaries"
+          className="inline-flex items-center text-black font-medium border-b border-black pb-0.5 hover:text-gray-700 hover:border-gray-700 transition-colors"
+        >
           前往日誌
         </Link>
       </section>
@@ -319,7 +318,10 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
         <p className="text-gray-600 leading-relaxed mb-4 sm:mb-6">
           在瀏覽器裡直接動筆，延續速寫的習慣。適合快速塗鴉、試構圖或打發移動中的零碎時間。
         </p>
-        <Link href="/drawing" className="inline-flex items-center text-black font-medium border-b border-black pb-0.5 hover:text-gray-700 hover:border-gray-700 transition-colors">
+        <Link
+          href="/drawing"
+          className="inline-flex items-center text-black font-medium border-b border-black pb-0.5 hover:text-gray-700 hover:border-gray-700 transition-colors"
+        >
           開啟繪圖
         </Link>
       </section>

@@ -17,10 +17,7 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
 
 let analytics: Analytics | null = null
 const canInitializeAnalytics =
-  app.name &&
-  typeof window !== 'undefined' &&
-  process.env.NODE_ENV === 'production' &&
-  navigator.onLine
+  app.name && typeof window !== 'undefined' && process.env.NODE_ENV === 'production' && navigator.onLine
 
 if (canInitializeAnalytics) {
   try {
