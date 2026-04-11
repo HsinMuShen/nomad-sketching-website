@@ -7,7 +7,6 @@ const ITEM_SHIFT = 100
 const useCarousel = (images: Artwork[]) => {
   const el = useRef<HTMLDivElement>(null)
   const animId = useRef<number>(0)
-  const img = useRef<HTMLDivElement>(null)
 
   let angleUnit: number, rotateAngle: number, viewAngle: number, mouseX: number, mouseY: number
 
@@ -85,7 +84,6 @@ const useCarousel = (images: Artwork[]) => {
 
   return {
     el,
-    img,
   }
 }
 

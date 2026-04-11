@@ -61,3 +61,60 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   margin-left: -7.5px;
 }
+
+.artist-reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition:
+    opacity 800ms ease,
+    transform 800ms ease;
+  will-change: opacity, transform;
+}
+
+.artist-reveal.artist-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 手機版：取消區塊捲動淡入，避免誤以為圖片在淡入淡出 */
+@media (max-width: 767px) {
+  .artist-reveal,
+  .artist-reveal.artist-reveal-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* 首頁精選作品：由左至右無限輪播（軌道寬度為兩份相同內容，translate -50% 無縫接續） */
+.artist-marquee-inner {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: artist-marquee-scroll 50s linear infinite;
+}
+
+.artist-marquee-inner:hover {
+  animation-play-state: paused;
+}
+
+@keyframes artist-marquee-scroll {
+  /* 由左至右無限循環：從 -50% 移回 0，與雙份內容無縫接續 */
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artist-marquee-inner {
+    animation: none;
+  }
+}
+
+/* 首頁 hero 作品輪播淡入淡出 */
+.artist-hero-fade {
+  transition: opacity 0.55s ease-in-out;
+}

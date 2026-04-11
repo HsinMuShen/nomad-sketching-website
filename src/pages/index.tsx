@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { logEvent } from 'libs/event-logger'
 import { readData } from 'utils/dataHandler/index'
 import Layout from 'components/Layout'
-import CarouselArtworks from 'components/CarouselArtworks'
+import ArtistHome from 'components/ArtistHome'
 import { DATA_BASE_NAMES } from 'constants/database'
 
 export async function getStaticProps() {
@@ -27,7 +27,7 @@ export default function Home({ artworks }: { artworks: Artwork[] }) {
 
   return (
     <Layout>
-      <CarouselArtworks images={artworks} />
+      <ArtistHome artworks={artworks} />
     </Layout>
   )
 }
