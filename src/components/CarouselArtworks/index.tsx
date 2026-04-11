@@ -11,8 +11,10 @@ const CarouselArtworks = ({ images }: { images: Artwork[] }) => {
   const [isImageCover, setIsImageCover] = useState(false)
   const [imageTitle, setImageTitle] = useState('')
   const [selectedArtworkId, setSelectedArtworkId] = useState('')
+  const [panelOpen, setPanelOpen] = useState(false)
+  const [previewUrl, setPreviewUrl] = useState('')
 
-  const { el, img } = useCarousel(images)
+  const { el } = useCarousel(images)
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true)
@@ -49,11 +51,17 @@ const CarouselArtworks = ({ images }: { images: Artwork[] }) => {
   }
 
   const pickImage = (imgUrl: string, name: string, id: string) => {
-    img.current!.style.backgroundImage = `url(${imgUrl})`
-    img.current!.style.transform = 'scale(1, 1)'
+    setPreviewUrl(imgUrl)
     setBackgroundPosition({ x: 0, y: 0 })
     setImageTitle(name)
     setSelectedArtworkId(id)
+    setPanelOpen(true)
+  }
+
+  const closePanel = () => {
+    setPanelOpen(false)
+    setIsImageCover(false)
+    setBackgroundPosition({ x: 0, y: 0 })
   }
 
   return (
@@ -64,18 +72,21 @@ const CarouselArtworks = ({ images }: { images: Artwork[] }) => {
             <CarouselItem key={id} url={mainImage?.src || ''} name={name} id={id} onClick={pickImage} />
           ))}
         </div>
-        <ImageDisplay
-          handleMouseDown={handleMouseDown}
-          handleMouseMove={handleMouseMove}
-          handleMouseUp={handleMouseUp}
-          isImageCover={isImageCover}
-          setIsImageCover={setIsImageCover}
-          renderBackgroundPosition={renderBackgroundPosition}
-          setBackgroundPosition={setBackgroundPosition}
-          imgRef={img}
-          imageTitle={imageTitle}
-          id={selectedArtworkId}
-        />
+        {panelOpen && (
+          <ImageDisplay
+            imageUrl={previewUrl}
+            onClose={closePanel}
+            handleMouseDown={handleMouseDown}
+            handleMouseMove={handleMouseMove}
+            handleMouseUp={handleMouseUp}
+            isImageCover={isImageCover}
+            setIsImageCover={setIsImageCover}
+            renderBackgroundPosition={renderBackgroundPosition}
+            setBackgroundPosition={setBackgroundPosition}
+            imageTitle={imageTitle}
+            id={selectedArtworkId}
+          />
+        )}
       </div>
     </div>
   )

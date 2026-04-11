@@ -15,9 +15,19 @@ const firebaseConfig = {
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
 
-let analytics: Analytics
-if (app.name && typeof window !== 'undefined') {
-  analytics = getAnalytics(app)
+let analytics: Analytics | null = null
+const canInitializeAnalytics =
+  app.name &&
+  typeof window !== 'undefined' &&
+  process.env.NODE_ENV === 'production' &&
+  navigator.onLine
+
+if (canInitializeAnalytics) {
+  try {
+    analytics = getAnalytics(app)
+  } catch {
+    analytics = null
+  }
 }
 const db = getFirestore(app)
 

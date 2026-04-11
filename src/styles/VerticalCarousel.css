@@ -17,7 +17,3 @@
     transition:0.5s all ease-out;
   }
   
-  .image-display {
-    transition:0.5s all ease-out;
-    transform:scale(0, 0);
-  }

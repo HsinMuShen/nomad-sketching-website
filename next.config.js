@@ -9,6 +9,9 @@ const nextConfig = {
     return config
   },
   images: {
+    // Use direct image URLs instead of `/_next/image` proxying.
+    // This avoids server-side fetch timeouts for Firebase Storage URLs.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
