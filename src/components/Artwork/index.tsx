@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import DefaultImage from 'public/images/default.png'
 import { Button, Dialog } from '@ui'
+import { useI18n } from 'libs/i18n'
 import LoadingState from 'components/common/LoadingState'
 import useGetArtwork from './hooks/use-get-artwork'
 import Content from './components/Content'
@@ -15,6 +16,7 @@ const ArtworkComponent = () => {
   const { getArtwork } = useGetArtwork()
   const router = useRouter()
   const { id } = router.query
+  const { t } = useI18n()
 
   const shouldShowArtwork = artwork && !isLoading
   const shouldShowImageDialog = artwork && isImageDialogShowing
@@ -70,7 +72,7 @@ const ArtworkComponent = () => {
         <LoadingState />
       )}
       <Button variant="plain" color="secondary" onClick={() => router.push('/artworks')}>
-        Back to artworks
+        {t('artwork.back')}
       </Button>
       {shouldShowImageDialog && (
         <Dialog title={artwork.name} size="md" onClose={closeImageDialog}>

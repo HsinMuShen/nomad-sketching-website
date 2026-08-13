@@ -6,6 +6,7 @@ import Underline from '@tiptap/extension-underline'
 import { ImageUploadButton, IconButton } from 'components/common/ui'
 import { uploadAttachment, deleteAttachment } from 'utils/attachment'
 import { generateFileWithUniqueName } from 'utils/generateFileWithUniqueName'
+import { useI18n } from 'libs/i18n'
 import { ATTACHMENT_UPLOAD_COUNT_LIMIT } from './constants'
 import CustomImage from './Editor/extensions/CustomImage'
 import Menu from './Menu'
@@ -21,14 +22,9 @@ const MessageInputWrap = (
   ref: ForwardedRef<unknown>,
 ): JSX.Element => {
   const [attachmentCount, setAttachmentCount] = useState(0)
+  const { t } = useI18n()
   const disableToUploadAttachment = attachmentCount >= ATTACHMENT_UPLOAD_COUNT_LIMIT
-  const defaultContent =
-    content ||
-    `
-    <p>
-      Start typing here...
-    </p>
-  `
+  const defaultContent = content || `<p>${t('editor.placeholder')}</p>`
 
   const uploadImage = useCallback(async (file: File) => {
     const url = await uploadAttachment(file)

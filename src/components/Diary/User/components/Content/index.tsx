@@ -2,6 +2,7 @@ import type { JSONContent } from '@tiptap/core'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
+import { useI18n } from 'libs/i18n'
 
 type EditorProps = {
   className?: string
@@ -9,13 +10,8 @@ type EditorProps = {
 }
 
 const Content = ({ className = '', content }: EditorProps): JSX.Element => {
-  const defaultContent =
-    content ||
-    `
-    <p>
-      Please wait for the content to be updated.
-    </p>
-    `
+  const { t } = useI18n()
+  const defaultContent = content || `<p>${t('artwork.defaultContent')}</p>`
 
   const extensions = [
     StarterKit.configure({

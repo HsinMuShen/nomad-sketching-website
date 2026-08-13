@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Icon } from 'src/components/common/ui'
+import { useI18n } from 'libs/i18n'
 import { SIDEBAR_LINKS } from 'components/Layout/components/Header/constants'
 
 type HeaderSidebarProps = {
@@ -12,6 +13,7 @@ type HeaderSidebarProps = {
 const Sidebar = ({ isSideBar, setIsSideBar, isLogin, openLoginPanel }: HeaderSidebarProps) => {
   const sideBarPosition = isSideBar ? 'right-0' : '-right-200'
   const sidebarTextClass = 'mx-5 my-1 text-white'
+  const { locale, t, toggleLocale } = useI18n()
 
   return (
     <div
@@ -22,13 +24,16 @@ const Sidebar = ({ isSideBar, setIsSideBar, isLogin, openLoginPanel }: HeaderSid
       </p>
       <div className="mt-20 flex flex-col">
         {SIDEBAR_LINKS.map((link) => (
-          <Link key={link.label} href={link.href} className={`${sidebarTextClass}`}>
-            {link.label}
+          <Link key={link.labelKey} href={link.href} className={`${sidebarTextClass}`}>
+            {t(link.labelKey)}
           </Link>
         ))}
+        <button type="button" className={`${sidebarTextClass} text-left`} onClick={toggleLocale}>
+          {locale === 'zh' ? t('header.switchToEnglish') : t('header.switchToChinese')}
+        </button>
         {isLogin ? (
           <Link href="/admin" className={`${sidebarTextClass}`}>
-            Admin
+            {t('common.admin')}
           </Link>
         ) : (
           <div
@@ -37,7 +42,7 @@ const Sidebar = ({ isSideBar, setIsSideBar, isLogin, openLoginPanel }: HeaderSid
               openLoginPanel()
             }}
           >
-            Login
+            {t('common.login')}
           </div>
         )}
       </div>

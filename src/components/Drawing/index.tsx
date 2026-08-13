@@ -1,9 +1,10 @@
 import { useState, ForwardedRef, forwardRef, useImperativeHandle, useEffect } from 'react'
 import Joyride from 'react-joyride'
+import { useI18n } from 'libs/i18n'
 import Dashboard from './components/Dashboard'
 // import Proportion from './components/Proportion'
 import useCanvas from './hooks/useCanvas'
-import { Steps } from './constants'
+import { getSteps } from './constants'
 
 type DrawingPanelProps = {
   showingTour?: boolean
@@ -14,6 +15,7 @@ const DrawingPanelWrap = ({ showingTour = false, loadedJson }: DrawingPanelProps
   const [isMounted, setIsMounted] = useState(false)
   const [isTourRunning, setIsTourRunning] = useState(true)
   const [tourWidth, setTourWidth] = useState(300)
+  const { t } = useI18n()
   const {
     canvasRef,
     fabricCanvasRef,
@@ -65,7 +67,7 @@ const DrawingPanelWrap = ({ showingTour = false, loadedJson }: DrawingPanelProps
     <div className="mt-[-120px] w-full flex items-center justify-center scale-50 xs:mt-0 xs:scale-70 ssm:scale-75 sm:scale-90 md:scale-100">
       {shouldShowTour && (
         <Joyride
-          steps={Steps}
+          steps={getSteps(t)}
           run={isTourRunning}
           hideCloseButton
           continuous

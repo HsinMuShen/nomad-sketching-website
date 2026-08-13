@@ -1,5 +1,6 @@
 import * as fabric from 'fabric'
 import { IconButton, SimpleTooltip } from '@ui'
+import { useI18n } from 'libs/i18n'
 
 type DashboardProps = {
   fabricCanvasRef: React.MutableRefObject<fabric.Canvas | null>
@@ -29,6 +30,7 @@ const Dashboard = ({
 }: DashboardProps) => {
   const iconClass = 'mt-1'
   const iconBlockClass = 'flex'
+  const { t } = useI18n()
 
   const changeBrushWidth = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBrushWidth(parseInt(e.target.value, 10))
@@ -48,7 +50,7 @@ const Dashboard = ({
         <input type="range" min="1" max="10" value={brushWidth} onChange={changeBrushWidth} className="mt-2 mb-2" />
       </div>
       <div className={`${iconBlockClass}`}>
-        <SimpleTooltip message="Undo" className="icon-undo">
+        <SimpleTooltip message={t('drawing.undo')} className="icon-undo">
           <IconButton
             aria-label="undo"
             className={`${iconClass}`}
@@ -60,7 +62,7 @@ const Dashboard = ({
             disabled={undoDisabled}
           />
         </SimpleTooltip>
-        <SimpleTooltip message="Redo">
+        <SimpleTooltip message={t('drawing.redo')}>
           <IconButton
             aria-label="redo"
             className={`icon-redo ${iconClass}`}
@@ -74,7 +76,7 @@ const Dashboard = ({
         </SimpleTooltip>
       </div>
       <div className={`${iconBlockClass}`}>
-        <SimpleTooltip message="Eraser">
+        <SimpleTooltip message={t('drawing.eraser')}>
           <IconButton
             aria-label="eraser"
             className={`icon-eraser ${iconClass}`}
@@ -87,7 +89,7 @@ const Dashboard = ({
             disabled={isEraser}
           />
         </SimpleTooltip>
-        <SimpleTooltip message="Drawing Pen">
+        <SimpleTooltip message={t('drawing.pen')}>
           <IconButton
             aria-label="draw"
             className={`icon-pen ${iconClass}`}
@@ -102,7 +104,7 @@ const Dashboard = ({
         </SimpleTooltip>
       </div>
       <div className={`${iconBlockClass}`}>
-        <SimpleTooltip message="Save the image">
+        <SimpleTooltip message={t('drawing.download')}>
           <IconButton
             aria-label="download-image"
             className={`icon-download ${iconClass}`}
@@ -114,7 +116,7 @@ const Dashboard = ({
             onClick={downloadImage}
           />
         </SimpleTooltip>
-        <SimpleTooltip message="Clear the drawing">
+        <SimpleTooltip message={t('drawing.clear')}>
           <IconButton
             aria-label="image-trash"
             className={`icon-trash ${iconClass}`}

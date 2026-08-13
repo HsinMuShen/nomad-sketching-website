@@ -3,6 +3,8 @@ import { useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { Input, Button } from 'components/common/ui'
 import ImageUploader, { CoverImageType, DEFAULT_IMAGE_ID } from 'components/common/ImageUploader'
+import SketchMetadataFields from 'components/common/SketchMetadataFields'
+import { useI18n } from 'libs/i18n'
 import useArticle from 'components/admin/hooks/use-article'
 import MessageInput from 'components/common/MessageInput'
 import DefaultImage from 'public/images/default.png'
@@ -11,7 +13,9 @@ const Update = () => {
   const messageInputRef = useRef<MessageInputRef | null>(null)
   const router = useRouter()
   const { id } = router.query
-  const { title, setTitle, coverImage, setCoverImage, content, fetchArticle, updateArticle } = useArticle()
+  const { title, setTitle, coverImage, setCoverImage, content, metadata, setMetadata, fetchArticle, updateArticle } =
+    useArticle()
+  const { t } = useI18n()
 
   const images = coverImage ? [coverImage] : [{ id: DEFAULT_IMAGE_ID, src: DefaultImage.src }]
 
@@ -20,7 +24,7 @@ const Update = () => {
     if (!content) return
     if (typeof id !== 'string') return
     updateArticle(id, content)
-    alert('Article updated successfully')
+    alert(t('admin.articleUpdated'))
     router.push('/admin')
   }, [updateArticle, id, router])
 
@@ -37,25 +41,26 @@ const Update = () => {
   return (
     <div className="p-4 mb-10">
       <div className="flex w-full justify-between items-center">
-        <h1 className="text-6 font-bold mb-4">Update Article</h1>
+        <h1 className="text-6 font-bold mb-4">{t('admin.updateArticleTitle')}</h1>
         <Button variant="plain" color="secondary" onClick={onUpdateArticle}>
-          Update
+          {t('common.update')}
         </Button>
       </div>
       <div className="py-3">
-        <div className="text-4 font-bold mb-2">Title</div>
+        <div className="text-4 font-bold mb-2">{t('admin.title')}</div>
         <Input value={title} onValueChange={setTitle} />
       </div>
       <div className="py-3">
-        <div className="text-4 font-bold my-2">Cover Image</div>
+        <div className="text-4 font-bold my-2">{t('admin.coverImage')}</div>
         <ImageUploader singleImage className="h-40 w-full" images={images} updateImages={updateCoverImage} />
       </div>
       <div className="py-3">
-        <div className="text-4 font-bold my-2">Content</div>
+        <div className="text-4 font-bold my-2">{t('admin.content')}</div>
         <MessageInput ref={messageInputRef} content={content} />
       </div>
+      <SketchMetadataFields value={metadata} onChange={setMetadata} />
       <Button variant="plain" color="secondary" onClick={() => router.push('/admin')}>
-        Back to admin
+        {t('common.backToAdmin')}
       </Button>
     </div>
   )

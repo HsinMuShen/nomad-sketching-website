@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { Button, Dialog } from '@ui'
+import { useI18n } from 'libs/i18n'
 import LoadingState from 'components/common/LoadingState'
 import useGetDiary from './hooks/use-get-diary'
 import Content from './components/Content'
@@ -14,6 +15,7 @@ const DiaryComponent = () => {
   const { getDiary } = useGetDiary()
   const router = useRouter()
   const { id } = router.query
+  const { t } = useI18n()
 
   const shouldShowDiary = diary && !isLoading
   const shouldShowImageDialog = diary && isImageDialogShowing
@@ -69,7 +71,7 @@ const DiaryComponent = () => {
         <LoadingState />
       )}
       <Button variant="plain" color="secondary" onClick={() => router.push('/diaries')}>
-        Back to diaries
+        {t('diary.back')}
       </Button>
       {shouldShowImageDialog && (
         <Dialog title={diary.title} size="md" onClose={closeImageDialog}>

@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 import { Button } from 'components/common/ui'
 import MessageInput from 'components/common/MessageInput'
 import Drawing from 'components/Drawing'
+import SketchMetadataFields from 'components/common/SketchMetadataFields'
+import { useI18n } from 'libs/i18n'
 import { getImageFileUrl } from 'utils/getImageFileUrl'
 import TitleInput from './components/TitleInput'
 import useDiary from './hooks/use-diary'
@@ -11,11 +13,13 @@ import useDiary from './hooks/use-diary'
 const DiaryCreateComponent: React.FC = () => {
   const router = useRouter()
   const messageInputRef = useRef<MessageInputRef | null>(null)
-  const drawingRef = useRef<{ getImageFile: () => Promise<File | null>; getCanvasJson: () => Promise<string | null> }>(
-    null,
-  )
+  const drawingRef = useRef<{
+    getImageFile: () => Promise<File | null>
+    getCanvasJson: () => Promise<string | null>
+  }>(null)
   const { diary, setDiary, onCreateDiary } = useDiary()
   const { title } = diary
+  const { t } = useI18n()
 
   const updateTitle = (newTitle: string) => {
     setDiary({ ...diary, title: newTitle })
@@ -28,10 +32,15 @@ const DiaryCreateComponent: React.FC = () => {
     if (!imageFile || !content || !canvasJson) return
 
     const drawingImage = await getImageFileUrl(imageFile)
-    const createdDiary = { ...diary, content, drawingImage, drawingJsonString: canvasJson }
+    const createdDiary = {
+      ...diary,
+      content,
+      drawingImage,
+      drawingJsonString: canvasJson,
+    }
 
     onCreateDiary(createdDiary)
-    alert('Diary created!')
+    alert(t('admin.diaryCreated'))
     router.push('/admin/diary')
   }
 
@@ -40,10 +49,11 @@ const DiaryCreateComponent: React.FC = () => {
       <div className="flex flex-col gap-5 mb-5">
         <TitleInput title={title} setTitle={updateTitle} />
         <Drawing ref={drawingRef} />
+        <SketchMetadataFields value={diary} onChange={(metadata) => setDiary({ ...diary, ...metadata })} />
         <MessageInput ref={messageInputRef} className="h-73" />
       </div>
       <Button variant="plain" color="secondary" onClick={createNewDiary}>
-        Create
+        {t('common.create')}
       </Button>
     </div>
   )

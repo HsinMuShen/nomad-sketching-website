@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { IconButton, SimpleTooltip } from '@ui'
+import { useI18n } from 'libs/i18n'
 
 interface ImageDisplayProps {
   imageUrl: string
@@ -31,6 +32,7 @@ const ImageDisplay = ({
 }: ImageDisplayProps) => {
   const router = useRouter()
   const panelRef = useRef<HTMLDivElement>(null)
+  const { t } = useI18n()
 
   const backgroundSize = isImageCover ? 'sm:bg-cover' : 'sm:bg-contain'
 
@@ -56,7 +58,7 @@ const ImageDisplay = ({
     <>
       <button
         type="button"
-        aria-label="關閉預覽背景"
+        aria-label={t('imageDisplay.closePreview')}
         className="fixed inset-0 z-[2990] bg-black/40"
         onClick={onClose}
       />
@@ -77,10 +79,10 @@ const ImageDisplay = ({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex ml-auto p-1">
-          <SimpleTooltip message="關閉" className="mr-1">
+          <SimpleTooltip message={t('common.close')} className="mr-1">
             <IconButton size="xl" icon="i-mdi-close" variant="plain" hasPadding={false} onClick={onClose} />
           </SimpleTooltip>
-          <SimpleTooltip message="切換顯示比例" className="mr-1">
+          <SimpleTooltip message={t('imageDisplay.toggleRatio')} className="mr-1">
             <IconButton
               size="xl"
               icon={isImageCover ? 'i-mdi-auto-fix' : 'i-mdi-selection-drag'}
@@ -90,7 +92,7 @@ const ImageDisplay = ({
               onClick={toggleBgSize}
             />
           </SimpleTooltip>
-          <SimpleTooltip message="查看作品頁" className="mr-1">
+          <SimpleTooltip message={t('imageDisplay.viewArtwork')} className="mr-1">
             <IconButton
               size="xl"
               icon="i-mdi-book-open"

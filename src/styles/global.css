@@ -32,19 +32,19 @@ img {
   height: auto;
 }
 
-input[type=range] {
+input[type='range'] {
   writing-mode: vertical-lr;
-  direction: rtl; 
+  direction: rtl;
   vertical-align: middle;
   height: 160px;
   width: 5px;
   -webkit-appearance: none;
   appearance: none;
 }
-input[type=range]:focus {
+input[type='range']:focus {
   outline: none;
 }
-input[type=range]::-webkit-slider-runnable-track {
+input[type='range']::-webkit-slider-runnable-track {
   width: 100%;
   cursor: pointer;
   box-shadow: 0px 0px 0px #000000;
@@ -52,7 +52,7 @@ input[type=range]::-webkit-slider-runnable-track {
   border-radius: 5px;
   border: 0px solid #010101;
 }
-input[type=range]::-webkit-slider-thumb {
+input[type='range']::-webkit-slider-thumb {
   height: 20px;
   width: 20px;
   border-radius: 15px;
@@ -117,4 +117,25 @@ input[type=range]::-webkit-slider-thumb {
 /* 首頁 hero 作品輪播淡入淡出 */
 .artist-hero-fade {
   transition: opacity 0.55s ease-in-out;
+}
+
+.journey-lottery-pulse {
+  animation: journey-lottery-pulse 420ms ease-in-out infinite alternate;
+}
+
+@keyframes journey-lottery-pulse {
+  0% {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  100% {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-lottery-pulse {
+    animation: none;
+  }
 }

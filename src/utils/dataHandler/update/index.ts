@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 import { doc, updateDoc, DocumentData, WithFieldValue } from 'firebase/firestore'
 import { db } from 'src/libs/firebase'
+import { removeUndefinedFields } from '../remove-undefined-fields'
 
 const useUpdateData = <T extends WithFieldValue<DocumentData>>() => {
   const [isLoading, setIsLoading] = useState(false)
@@ -10,7 +11,7 @@ const useUpdateData = <T extends WithFieldValue<DocumentData>>() => {
   const updateData = useCallback(async (databaseName: string, id: string, data: T) => {
     try {
       setIsLoading(true)
-      await updateDoc(doc(db, databaseName, id), data)
+      await updateDoc(doc(db, databaseName, id), removeUndefinedFields(data))
       setIsSuccess(true)
     } catch (e) {
       console.error('Error updating document: ', e)

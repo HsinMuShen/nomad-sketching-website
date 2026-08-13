@@ -9,4 +9,8 @@ export const DEFAULT_DIARY = {
   },
   createdAt: null,
   updatedAt: null,
+  location: {},
+  sketchDate: '',
+  tags: [],
+  isMapVisible: true,
 }

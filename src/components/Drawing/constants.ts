@@ -1,45 +1,45 @@
 import { Step } from 'react-joyride'
 
-export const Steps: Step[] = [
+export const getSteps = (t: (key: string) => string): Step[] => [
   {
     target: '.canvas-element',
-    content: 'Welcome to the drawing page. This is the main drawing canvas.',
+    content: t('drawing.tour.canvas'),
     disableBeacon: true,
     placement: 'bottom',
   },
   {
     target: '.width-range',
-    content: 'Adjust the width of the drawing pen or eraser.',
+    content: t('drawing.tour.width'),
     placement: 'left',
   },
   {
     target: '.icon-undo',
-    content: 'Click here to undo the last action.',
+    content: t('drawing.tour.undo'),
     placement: 'left',
   },
   {
     target: '.icon-redo',
-    content: 'Click here to redo the last undone action.',
+    content: t('drawing.tour.redo'),
     placement: 'left',
   },
   {
     target: '.icon-eraser',
-    content: 'Switch to the eraser tool.',
+    content: t('drawing.tour.eraser'),
     placement: 'left',
   },
   {
     target: '.icon-pen',
-    content: 'Switch to the drawing pen tool.',
+    content: t('drawing.tour.pen'),
     placement: 'left',
   },
   {
     target: '.icon-download',
-    content: 'Download your drawing as an image file.',
+    content: t('drawing.tour.download'),
     placement: 'left',
   },
   {
     target: '.icon-trash',
-    content: 'Clear the drawing canvas.',
+    content: t('drawing.tour.clear'),
     placement: 'left',
   },
 ]

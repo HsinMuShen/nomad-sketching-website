@@ -1,11 +1,13 @@
 export const NAV_LINKS = [
-  { href: '/artworks', label: 'Artworks' },
-  { href: '/diaries', label: 'Diaries' },
-  { href: '/drawing', label: 'Drawing' },
+  { href: '/artworks', labelKey: 'common.artworks' },
+  { href: '/diaries', labelKey: 'common.diaries' },
+  { href: '/map', labelKey: 'common.map' },
+  { href: '/journey', labelKey: 'common.journey' },
+  { href: '/drawing', labelKey: 'common.drawing' },
 ]
 
 export const SIDEBAR_LINKS = [
   ...NAV_LINKS,
-  { href: '/about', label: 'About Me' },
-  { href: '/special-thanks', label: 'Special Thanks' },
+  { href: '/about', labelKey: 'common.aboutMe' },
+  { href: '/special-thanks', labelKey: 'common.specialThanks' },
 ]

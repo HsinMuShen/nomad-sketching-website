@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Artwork } from 'types/artworks'
 import DefaultImage from 'public/images/default.png'
+import { useI18n } from 'libs/i18n'
 import ImageDisplay from 'components/CarouselArtworks/components/ImageDisplay'
 
 const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
@@ -23,6 +24,7 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
   const [isMobileViewport, setIsMobileViewport] = useState<boolean | null>(null)
   const [panelOpen, setPanelOpen] = useState(false)
   const [previewUrl, setPreviewUrl] = useState('')
+  const { t } = useI18n()
 
   const worksWithImage = useMemo(() => artworks.filter((a) => a.mainImage?.src), [artworks])
 
@@ -172,17 +174,13 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
         className="artist-reveal mb-10 sm:mb-16 lg:mb-24 pt-4 grid lg:grid-cols-[1fr_minmax(260px,420px)] gap-10 lg:gap-14 items-start max-w-6xl mx-auto"
       >
         <div className="max-w-3xl">
-          <p className="text-sm tracking-[0.2em] uppercase text-gray-500 mb-3">Nomad Sketching</p>
-          <h1 className="text-10 sm:text-14 leading-tight font-semibold mb-4">遊牧速寫</h1>
-          <p className="text-xl sm:text-2xl text-gray-800 font-medium mb-6 leading-snug">
-            透過速寫，放慢節奏、觀察，並記住那些正在消逝的瞬間
-          </p>
+          <p className="text-sm tracking-[0.2em] uppercase text-gray-500 mb-3">{t('home.eyebrow')}</p>
+          <h1 className="text-10 sm:text-14 leading-tight font-semibold mb-4">{t('home.title')}</h1>
+          <p className="text-xl sm:text-2xl text-gray-800 font-medium mb-6 leading-snug">{t('home.subtitle')}</p>
           <div className="text-gray-600 text-4 sm:text-5 leading-relaxed space-y-4">
-            <p>對我來說，速寫不只是畫畫，而是一種與時間相處的方式。</p>
-            <p>
-              在移動與生活之中，很多經驗很快就會流逝。但當我停下來，用雙手一筆一筆描繪眼前的空間時，那些原本會消失的細節，會慢慢變得清晰。光線、距離、聲音，還有當下的情緒，都被保留下來。
-            </p>
-            <p>這些速寫不只是畫面，而是我與一個地方產生連結的過程。</p>
+            <p>{t('home.intro1')}</p>
+            <p>{t('home.intro2')}</p>
+            <p>{t('home.intro3')}</p>
           </div>
         </div>
 
@@ -192,7 +190,7 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
               type="button"
               onClick={() => pickImage(heroArtwork.mainImage!.src, heroArtwork.name, heroArtwork.id)}
               className="relative w-full aspect-[4/5] max-h-[min(72vh,520px)] rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-gray-100 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
-              aria-label={`開啟作品預覽：${heroArtwork.name}`}
+              aria-label={`${t('imageDisplay.viewArtwork')}: ${heroArtwork.name}`}
             >
               <div
                 className={`absolute inset-0 ${heroDesktopFade ? `artist-hero-fade ${heroFading ? 'opacity-0' : 'opacity-100'}` : 'opacity-100'}`}
@@ -209,7 +207,7 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
             </button>
           ) : (
             <div className="relative w-full aspect-[4/5] rounded-2xl border border-dashed border-gray-300 bg-gray-50 flex items-center justify-center text-gray-500 text-sm">
-              尚無作品圖片
+              {t('home.noArtworkImage')}
             </div>
           )}
         </div>
@@ -223,14 +221,14 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
         className="artist-reveal mb-10 sm:mb-16 lg:mb-24 -mx-4 sm:-mx-6 lg:mx-0"
       >
         <div className="px-4 sm:px-6 lg:px-0 mb-4 flex items-end justify-between gap-4">
-          <h2 className="text-7 sm:text-9 font-semibold">精選作品</h2>
+          <h2 className="text-7 sm:text-9 font-semibold">{t('home.featuredWorks')}</h2>
           <Link href="/artworks" className="text-sm text-gray-600 hover:text-black shrink-0 transition-colors">
-            進入作品庫
+            {t('home.enterArtworks')}
           </Link>
         </div>
         <div className="overflow-hidden w-full py-2">
           {marqueeItems.length === 0 ? (
-            <p className="text-gray-500 text-center py-12 px-4">尚無作品圖片可展示。</p>
+            <p className="text-gray-500 text-center py-12 px-4">{t('home.noFeaturedWorks')}</p>
           ) : (
             <div className="artist-marquee-inner">
               {marqueeLoop.map((artwork, index) => (
@@ -239,7 +237,7 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
                   type="button"
                   onClick={() => pickImage(artwork.mainImage!.src, artwork.name, artwork.id)}
                   className="relative w-44 h-56 sm:w-52 sm:h-64 shrink-0 rounded-lg overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
-                  aria-label={`開啟作品預覽：${artwork.name}`}
+                  aria-label={`${t('imageDisplay.viewArtwork')}: ${artwork.name}`}
                 >
                   <Image
                     src={artwork.mainImage?.src || DefaultImage}
@@ -262,22 +260,18 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
         }}
         className="artist-reveal mb-10 sm:mb-14 lg:mb-20 max-w-3xl"
       >
-        <h2 className="text-7 sm:text-9 font-semibold mb-4">關於我的創作</h2>
+        <h2 className="text-7 sm:text-9 font-semibold mb-4">{t('home.aboutCreationTitle')}</h2>
         <div className="text-gray-600 leading-relaxed space-y-4 mb-6">
-          <p>我對速寫沒有太多規則，但有一個很重要的原則：只畫我真正去過的地方。</p>
-          <p>
-            那些實際走過、停留過、與之產生互動的空間，對我來說才有被畫下來的意義。速寫不是再現風景，而是重新經歷一段記憶。
-          </p>
-          <p>
-            在畫的過程中，我會慢慢回到當時的狀態，也會重新意識到那些原本容易被忽略的細節。很多重要的感受，其實就存在於這些看似平凡的瞬間裡。
-          </p>
-          <p>隨著時間累積，這些作品逐漸形成一張屬於自己的地圖，一條由經驗與記憶構成的軌跡。</p>
+          <p>{t('home.aboutCreation1')}</p>
+          <p>{t('home.aboutCreation2')}</p>
+          <p>{t('home.aboutCreation3')}</p>
+          <p>{t('home.aboutCreation4')}</p>
         </div>
         <Link
           href="/artworks"
           className="inline-flex items-center text-black font-medium border-b border-black pb-0.5 hover:text-gray-700 hover:border-gray-700 transition-colors"
         >
-          前往作品庫
+          {t('home.goArtworks')}
         </Link>
       </section>
 
@@ -288,22 +282,18 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
         }}
         className="artist-reveal mb-10 sm:mb-14 lg:mb-20 max-w-3xl"
       >
-        <h2 className="text-7 sm:text-9 font-semibold mb-4">日記與隨筆</h2>
+        <h2 className="text-7 sm:text-9 font-semibold mb-4">{t('home.diaryEssayTitle')}</h2>
         <div className="text-gray-600 leading-relaxed space-y-4 mb-6">
-          <p>有些速寫並不是完整的創作，而更接近一種日常的紀錄。</p>
-          <p>
-            可能是在旅途中短暫停留的片刻，或是在生活中某個突然想畫下來的角落。這些隨手的記錄，不追求完整或精細，而是保留當下最直接的感受。
-          </p>
-          <p>很多時候，真正重要的不是畫得多好，而是我有沒有在那一刻停下來，好好地看、去感受、去記住。</p>
-          <p>
-            這些零碎的速寫，慢慢累積成一種視覺日記。當我回頭翻看時，可以很快地回到當時的場景、情緒，甚至是那一天的節奏與狀態。
-          </p>
+          <p>{t('home.diaryEssay1')}</p>
+          <p>{t('home.diaryEssay2')}</p>
+          <p>{t('home.diaryEssay3')}</p>
+          <p>{t('home.diaryEssay4')}</p>
         </div>
         <Link
           href="/diaries"
           className="inline-flex items-center text-black font-medium border-b border-black pb-0.5 hover:text-gray-700 hover:border-gray-700 transition-colors"
         >
-          前往日誌
+          {t('home.goDiaries')}
         </Link>
       </section>
 
@@ -314,15 +304,13 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
         }}
         className="artist-reveal max-w-3xl mb-0 pb-0"
       >
-        <h2 className="text-7 sm:text-9 font-semibold mb-4">線上繪圖</h2>
-        <p className="text-gray-600 leading-relaxed mb-4 sm:mb-6">
-          在瀏覽器裡直接動筆，延續速寫的習慣。適合快速塗鴉、試構圖或打發移動中的零碎時間。
-        </p>
+        <h2 className="text-7 sm:text-9 font-semibold mb-4">{t('home.onlineDrawingTitle')}</h2>
+        <p className="text-gray-600 leading-relaxed mb-4 sm:mb-6">{t('home.onlineDrawingDescription')}</p>
         <Link
           href="/drawing"
           className="inline-flex items-center text-black font-medium border-b border-black pb-0.5 hover:text-gray-700 hover:border-gray-700 transition-colors"
         >
-          開啟繪圖
+          {t('home.openDrawing')}
         </Link>
       </section>
 

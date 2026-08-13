@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useBoundStore } from '@stores'
 import { Icon } from '@ui'
 import { checkIsAlreadyLogin } from 'libs/auth'
+import { useI18n } from 'libs/i18n'
 import LoginPanel from 'components/common/LoginPanel'
 import Sidebar from './components/SideBar'
 import { NAV_LINKS } from './constants'
@@ -20,6 +21,7 @@ const Header = ({ isAdminPage }: HeaderProps) => {
     isLogin: state.getIsLogin(),
     ...state,
   }))
+  const { t } = useI18n()
   const router = useRouter()
 
   const desktopClass = 'h-full items-center px-5 text-gray-600 hover:text-gray-900 hidden md:flex hover:bg-neutral-100'
@@ -60,11 +62,11 @@ const Header = ({ isAdminPage }: HeaderProps) => {
           }}
         >
           <Icon className="mr-2" icon="i-mdi-grease-pencil" size="xl" />
-          {'Nomad Sketching'}
+          {t('common.brand')}
         </Link>
         {NAV_LINKS.map((link) => (
-          <Link key={link.label} href={link.href} className={desktopClass}>
-            {link.label}
+          <Link key={link.labelKey} href={link.href} className={desktopClass}>
+            {t(link.labelKey)}
           </Link>
         ))}
       </div>
@@ -84,9 +86,18 @@ export default Header
 
 const IconsArea = ({ isLogin, openLoginPanel }: { isLogin: boolean; openLoginPanel: () => void }) => {
   const iconClass = 'mx-2 text-gray-800 hover:text-gray-400 hidden md:block'
+  const { locale, toggleLocale, t } = useI18n()
 
   return (
     <div className="flex mx-3">
+      <button
+        type="button"
+        aria-label={t('header.language')}
+        className="mx-2 text-sm font-bold text-gray-800 hover:text-gray-400 hidden md:block"
+        onClick={toggleLocale}
+      >
+        {locale === 'zh' ? t('header.switchToEnglish') : t('header.switchToChinese')}
+      </button>
       <Link href="/about" className={`${iconClass}`}>
         <Icon icon="i-mdi-information" size="xl" />
       </Link>

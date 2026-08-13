@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 import { collection, setDoc, doc, DocumentData, WithFieldValue } from 'firebase/firestore'
 import { db } from 'libs/firebase'
+import { removeUndefinedFields } from '../remove-undefined-fields'
 
 const useCreateDataWithId = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -12,7 +13,7 @@ const useCreateDataWithId = () => {
       try {
         setIsLoading(true)
         const docId = Date.now().toString()
-        await setDoc(doc(collection(db, databaseName), docId), data)
+        await setDoc(doc(collection(db, databaseName), docId), removeUndefinedFields(data))
         console.log('Document written with ID: ', docId)
         setIsSuccess(true)
       } catch (e) {
