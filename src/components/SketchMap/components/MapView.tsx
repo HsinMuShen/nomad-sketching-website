@@ -39,6 +39,13 @@ const getMarkerSubLabel = (item: SketchMapItem) => [item.placeName, item.country
 const isTaiwanItem = (item: SketchMapItem) =>
   item.country?.toLowerCase() === 'taiwan' ||
   (item.latitude >= 21.6 && item.latitude <= 25.6 && item.longitude >= 119.4 && item.longitude <= 122.4)
+const hasValidCoordinate = (item: SketchMapItem) =>
+  Number.isFinite(item.latitude) &&
+  Number.isFinite(item.longitude) &&
+  item.latitude >= -90 &&
+  item.latitude <= 90 &&
+  item.longitude >= -180 &&
+  item.longitude <= 180
 
 const latLngToVector = (latitude: number, longitude: number, radius = EARTH_RADIUS) => {
   const latitudeRadians = THREE.MathUtils.degToRad(latitude)
@@ -102,6 +109,7 @@ const createStyledEarthTexture = () => {
 }
 
 const MapView = ({ items, isFullscreen = false, onFullscreenChange }: MapViewProps) => {
+  const validItems = useMemo(() => items.filter(hasValidCoordinate), [items])
   const containerRef = useRef<HTMLDivElement>(null)
   const mountRef = useRef<HTMLDivElement>(null)
   const sceneRef = useRef<THREE.Scene | null>(null)
@@ -119,16 +127,16 @@ const MapView = ({ items, isFullscreen = false, onFullscreenChange }: MapViewPro
     rotationY: number
   } | null>(null)
 
-  const [selectedId, setSelectedId] = useState(() => getInitialItem(items)?.id)
+  const [selectedId, setSelectedId] = useState(() => getInitialItem(validItems)?.id)
   const [markerPositions, setMarkerPositions] = useState<MarkerPosition[]>([])
   const [viewMode, setViewMode] = useState<ViewMode>('taiwan')
   const { t } = useI18n()
   const layoutKey = isFullscreen ? 'fullscreen' : 'embedded'
   const selectedItem = useMemo(
-    () => items.find((item) => item.id === selectedId) || getInitialItem(items),
-    [items, selectedId],
+    () => validItems.find((item) => item.id === selectedId) || getInitialItem(validItems),
+    [validItems, selectedId],
   )
-  const taiwanItems = useMemo(() => items.filter(isTaiwanItem), [items])
+  const taiwanItems = useMemo(() => validItems.filter(isTaiwanItem), [validItems])
 
   useEffect(() => {
     const resize = () => {
@@ -188,6 +196,8 @@ const MapView = ({ items, isFullscreen = false, onFullscreenChange }: MapViewPro
   }, [])
 
   useEffect(() => {
+    if (viewMode !== 'earth') return undefined
+
     const mount = mountRef.current
     if (!mount) return
 
@@ -197,7 +207,12 @@ const MapView = ({ items, isFullscreen = false, onFullscreenChange }: MapViewPro
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100)
     camera.position.set(0, 0, INITIAL_CAMERA_Z)
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    let renderer: THREE.WebGLRenderer
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    } catch {
+      return undefined
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.outputColorSpace = THREE.SRGBColorSpace
     mount.appendChild(renderer.domElement)
@@ -229,7 +244,7 @@ const MapView = ({ items, isFullscreen = false, onFullscreenChange }: MapViewPro
     scene.add(atmosphere)
 
     const markerMaterial = new THREE.MeshBasicMaterial({ color: '#ff5f5f' })
-    markerRefs.current = items.map((item) => {
+    markerRefs.current = validItems.map((item) => {
       const position = latLngToVector(item.latitude, item.longitude, EARTH_RADIUS * 1.012)
       const marker = new THREE.Mesh(new THREE.SphereGeometry(0.026, 16, 16), markerMaterial)
       marker.position.copy(position)
@@ -287,7 +302,7 @@ const MapView = ({ items, isFullscreen = false, onFullscreenChange }: MapViewPro
       }
       scene.clear()
     }
-  }, [items, updateMarkerPositions, isFullscreen])
+  }, [validItems, updateMarkerPositions, isFullscreen, viewMode])
 
   const rotateToItem = (item: SketchMapItem) => {
     rotationRef.current = {
@@ -453,11 +468,11 @@ const MapView = ({ items, isFullscreen = false, onFullscreenChange }: MapViewPro
 
       <div className="absolute bottom-6 left-6 z-[900] flex items-center gap-2 rounded-full bg-white/78 px-4 py-2 text-xs text-gray-500 shadow-default backdrop-blur-sm">
         <span className="h-2 w-2 rounded-full bg-primary-500" />
-        <span>{viewMode === 'earth' ? items.length : taiwanItems.length} sketches</span>
+        <span>{viewMode === 'earth' ? validItems.length : taiwanItems.length} sketches</span>
       </div>
 
       {viewMode === 'earth' &&
-        items.map((item) => {
+        validItems.map((item) => {
           const position = markerPositions.find((marker) => marker.id === item.id)
           const isSelected = selectedItem?.id === item.id
           if (!position?.visible) return null

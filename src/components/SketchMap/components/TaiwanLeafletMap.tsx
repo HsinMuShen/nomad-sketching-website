@@ -23,8 +23,8 @@ const TILE_STYLES: Record<TileStyle, { labelKey: string; attribution: string; ur
   light: {
     labelKey: 'map.styleLight',
     attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+      '&copy; <a href="https://www.esri.com/">Esri</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
   },
   classic: {
     labelKey: 'map.styleClassic',
@@ -34,19 +34,26 @@ const TILE_STYLES: Record<TileStyle, { labelKey: string; attribution: string; ur
   voyager: {
     labelKey: 'map.styleVoyager',
     attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://hotosm.org/">HOT</a>',
+    url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
   },
 }
 
 const getMarkerLabel = (item: SketchMapItem) => item.city || item.placeName || item.country || item.title
 const getPlaceLine = (item: SketchMapItem) => [item.placeName, item.city, item.country].filter(Boolean).join(' · ')
+const hasValidCoordinate = (item: SketchMapItem) =>
+  Number.isFinite(item.latitude) &&
+  Number.isFinite(item.longitude) &&
+  item.latitude >= -90 &&
+  item.latitude <= 90 &&
+  item.longitude >= -180 &&
+  item.longitude <= 180
 
 const FlyToSelected = ({ item, onMoveStateChange }: FlyToSelectedProps) => {
   const map = useMap()
 
   useEffect(() => {
-    if (!item) return
+    if (!item || !hasValidCoordinate(item)) return
 
     onMoveStateChange(true)
     map.flyTo([item.latitude, item.longitude], Math.max(map.getZoom(), 13), {
@@ -93,7 +100,11 @@ const ResizeMap = ({ layoutKey }: { layoutKey: string }) => {
 const TaiwanLeafletMap = ({ items, selectedId, setSelectedId, t, layoutKey }: TaiwanLeafletMapProps) => {
   const [tileStyle, setTileStyle] = useState<TileStyle>('light')
   const [isMapMoving, setIsMapMoving] = useState(false)
-  const selectedItem = useMemo(() => items.find((item) => item.id === selectedId) || null, [items, selectedId])
+  const validItems = useMemo(() => items.filter(hasValidCoordinate), [items])
+  const selectedItem = useMemo(
+    () => validItems.find((item) => item.id === selectedId) || null,
+    [validItems, selectedId],
+  )
   const currentTileStyle = TILE_STYLES[tileStyle]
 
   return (
@@ -108,10 +119,15 @@ const TaiwanLeafletMap = ({ items, selectedId, setSelectedId, t, layoutKey }: Ta
         className="h-full w-full"
         zoomControl
       >
-        <TileLayer key={tileStyle} attribution={currentTileStyle.attribution} url={currentTileStyle.url} />
+        <TileLayer
+          key={tileStyle}
+          attribution={currentTileStyle.attribution}
+          url={currentTileStyle.url}
+          className="map-tiles-muted"
+        />
         <ResizeMap layoutKey={layoutKey} />
         <FlyToSelected item={selectedItem} onMoveStateChange={setIsMapMoving} />
-        {items.map((item) => {
+        {validItems.map((item) => {
           const isSelected = selectedId === item.id
           return (
             <CircleMarker
@@ -145,7 +161,7 @@ const TaiwanLeafletMap = ({ items, selectedId, setSelectedId, t, layoutKey }: Ta
       </MapContainer>
 
       <div className="absolute left-6 top-22 z-[650] max-w-74 rounded-2 bg-white/86 px-4 py-3 text-sm leading-relaxed text-gray-600 shadow-default backdrop-blur-sm">
-        {items.length > 0 ? t('map.taiwanNote') : t('map.noTaiwanItems')}
+        {validItems.length > 0 ? t('map.taiwanNote') : t('map.noTaiwanItems')}
       </div>
       <div className="absolute left-6 bottom-18 z-[650] rounded-2 bg-white/86 p-2 shadow-default backdrop-blur-sm">
         <div className="px-2 pb-1 text-xs font-bold tracking-0.16em text-gray-500">{t('map.style')}</div>

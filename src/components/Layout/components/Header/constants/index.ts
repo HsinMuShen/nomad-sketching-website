@@ -3,6 +3,7 @@ export const NAV_LINKS = [
   { href: '/diaries', labelKey: 'common.diaries' },
   { href: '/map', labelKey: 'common.map' },
   { href: '/journey', labelKey: 'common.journey' },
+  { href: '/project', labelKey: 'common.project' },
   { href: '/drawing', labelKey: 'common.drawing' },
 ]
 

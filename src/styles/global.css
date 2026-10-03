@@ -27,6 +27,10 @@ body {
   box-sizing: border-box;
 }
 
+.map-tiles-muted {
+  filter: grayscale(1) brightness(1.08) contrast(0.9);
+}
+
 img {
   max-width: 100%;
   height: auto;
