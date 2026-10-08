@@ -8,6 +8,7 @@ import { useI18n } from 'libs/i18n'
 import { DATA_BASE_NAMES } from 'constants/database'
 import { readData } from 'utils/dataHandler'
 import { normalizeSketchMapItems } from 'utils/sketchMap'
+import { getArtworkName } from 'utils/localization/artwork'
 
 type ProjectProps = {
   featuredArtwork: Artwork | null
@@ -49,7 +50,8 @@ export async function getServerSideProps() {
 }
 
 const ProjectPage = ({ featuredArtwork, artworkCount, diaryCount, mappedCount, cityCount }: ProjectProps) => {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
+  const featuredArtworkName = featuredArtwork ? getArtworkName(featuredArtwork, locale) : ''
   const place = [
     featuredArtwork?.location?.placeName,
     featuredArtwork?.location?.city,
@@ -182,7 +184,7 @@ const ProjectPage = ({ featuredArtwork, artworkCount, diaryCount, mappedCount, c
             <div className="relative min-h-72 bg-neutral-100 sm:min-h-100">
               <Image
                 src={featuredArtwork?.mainImage?.src || DefaultImage}
-                alt={featuredArtwork?.name || t('project.recordPlaceholder')}
+                alt={featuredArtworkName || t('project.recordPlaceholder')}
                 fill
                 className="object-contain"
                 sizes="(max-width: 640px) 90vw, 55vw"
@@ -194,7 +196,7 @@ const ProjectPage = ({ featuredArtwork, artworkCount, diaryCount, mappedCount, c
                 <>
                   <div>
                     <p className="mb-2 text-xs uppercase tracking-0.15em text-gray-500">{t('project.recordSource')}</p>
-                    <h3 className="mb-6 text-6 font-semibold leading-snug sm:text-8">{featuredArtwork.name}</h3>
+                    <h3 className="mb-6 text-6 font-semibold leading-snug sm:text-8">{featuredArtworkName}</h3>
                     <dl className="space-y-4 text-sm">
                       <div>
                         <dt className="mb-1 text-xs uppercase tracking-0.15em text-gray-500">

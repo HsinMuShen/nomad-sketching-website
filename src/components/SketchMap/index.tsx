@@ -11,7 +11,7 @@ type SketchMapProps = {
 const SketchMap = ({ items }: SketchMapProps) => {
   const hasItems = items.length > 0
   const [isMapFullscreen, setIsMapFullscreen] = useState(false)
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
 
   useEffect(() => {
     if (!isMapFullscreen) return undefined
@@ -51,7 +51,7 @@ const SketchMap = ({ items }: SketchMapProps) => {
                 className="rounded-2 border border-neutral-200 p-4 transition-shadow hover:shadow-hover"
               >
                 <div className="mb-1 text-xs uppercase tracking-0.2em text-gray-500">{item.type}</div>
-                <div className="font-bold">{item.title}</div>
+                <div className="font-bold">{locale === 'en' && item.titleEn ? item.titleEn : item.title}</div>
                 <div className="mt-1 text-sm text-gray-500">
                   {[item.placeName, item.city, item.country].filter(Boolean).join(' · ')}
                 </div>

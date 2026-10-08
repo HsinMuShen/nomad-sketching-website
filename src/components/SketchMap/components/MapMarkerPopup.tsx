@@ -11,16 +11,17 @@ type MapMarkerPopupProps = {
 const getPlaceLine = (item: SketchMapItem) => [item.city, item.country].filter(Boolean).join(', ')
 
 const MapMarkerPopup = ({ item }: MapMarkerPopupProps) => {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
+  const title = locale === 'en' && item.titleEn ? item.titleEn : item.title
 
   return (
     <div className="w-full overflow-hidden rounded-2 border border-neutral-200 bg-white shadow-dialog">
       <div className="relative h-44 w-full bg-neutral-100">
-        <Image src={item.imageUrl || DefaultImage} alt={item.title} fill className="object-cover" sizes="320px" />
+        <Image src={item.imageUrl || DefaultImage} alt={title} fill className="object-cover" sizes="320px" />
       </div>
       <div className="p-4">
         <div className="mb-1 text-xs uppercase tracking-0.2em text-gray-500">{item.type}</div>
-        <h3 className="mb-2 text-5 font-bold leading-snug">{item.title}</h3>
+        <h3 className="mb-2 text-5 font-bold leading-snug">{title}</h3>
         {item.placeName && <div className="text-sm font-bold text-gray-700">{item.placeName}</div>}
         {getPlaceLine(item) && <div className="text-sm text-gray-500">{getPlaceLine(item)}</div>}
         {item.locationNote && (

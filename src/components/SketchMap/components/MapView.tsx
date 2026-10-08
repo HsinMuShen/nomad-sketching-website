@@ -34,7 +34,8 @@ const INITIAL_ROTATION = {
 }
 
 const getInitialItem = (items: SketchMapItem[]) => items[0] || null
-const getMarkerLabel = (item: SketchMapItem) => item.city || item.placeName || item.country || item.title
+const getMarkerLabel = (item: SketchMapItem, locale: 'zh' | 'en') =>
+  locale === 'en' && item.titleEn ? item.titleEn : item.city || item.placeName || item.country || item.title
 const getMarkerSubLabel = (item: SketchMapItem) => [item.placeName, item.country].filter(Boolean).join(' · ')
 const isTaiwanItem = (item: SketchMapItem) =>
   item.country?.toLowerCase() === 'taiwan' ||
@@ -130,7 +131,7 @@ const MapView = ({ items, isFullscreen = false, onFullscreenChange }: MapViewPro
   const [selectedId, setSelectedId] = useState(() => getInitialItem(validItems)?.id)
   const [markerPositions, setMarkerPositions] = useState<MarkerPosition[]>([])
   const [viewMode, setViewMode] = useState<ViewMode>('taiwan')
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const layoutKey = isFullscreen ? 'fullscreen' : 'embedded'
   const selectedItem = useMemo(
     () => validItems.find((item) => item.id === selectedId) || getInitialItem(validItems),
@@ -403,6 +404,7 @@ const MapView = ({ items, isFullscreen = false, onFullscreenChange }: MapViewPro
           selectedId={selectedId}
           setSelectedId={setSelectedId}
           t={t}
+          locale={locale}
           layoutKey={layoutKey}
         />
       )}
@@ -498,7 +500,7 @@ const MapView = ({ items, isFullscreen = false, onFullscreenChange }: MapViewPro
                 <span className="absolute left-1/2 top-[18px] h-3 w-0.5 -translate-x-1/2 bg-gray-500/40" />
               </span>
               <span className="min-w-0">
-                <span className="block truncate text-sm font-bold text-gray-800">{getMarkerLabel(item)}</span>
+                <span className="block truncate text-sm font-bold text-gray-800">{getMarkerLabel(item, locale)}</span>
                 {getMarkerSubLabel(item) && (
                   <span className="block truncate text-xs leading-snug text-gray-500">{getMarkerSubLabel(item)}</span>
                 )}

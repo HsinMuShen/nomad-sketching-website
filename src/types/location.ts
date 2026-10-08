@@ -11,6 +11,7 @@ export type SketchMapItem = {
   id: string
   type: 'artwork' | 'diary'
   title: string
+  titleEn?: string
   imageUrl: string
   country?: string
   city?: string

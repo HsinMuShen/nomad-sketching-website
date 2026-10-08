@@ -7,6 +7,7 @@ type TaiwanLeafletMapProps = {
   selectedId?: string
   setSelectedId: (id: string) => void
   t: (key: string) => string
+  locale: 'zh' | 'en'
   layoutKey: string
 }
 
@@ -39,7 +40,8 @@ const TILE_STYLES: Record<TileStyle, { labelKey: string; attribution: string; ur
   },
 }
 
-const getMarkerLabel = (item: SketchMapItem) => item.city || item.placeName || item.country || item.title
+const getMarkerLabel = (item: SketchMapItem, locale: 'zh' | 'en') =>
+  locale === 'en' && item.titleEn ? item.titleEn : item.city || item.placeName || item.country || item.title
 const getPlaceLine = (item: SketchMapItem) => [item.placeName, item.city, item.country].filter(Boolean).join(' · ')
 const hasValidCoordinate = (item: SketchMapItem) =>
   Number.isFinite(item.latitude) &&
@@ -97,7 +99,7 @@ const ResizeMap = ({ layoutKey }: { layoutKey: string }) => {
   return null
 }
 
-const TaiwanLeafletMap = ({ items, selectedId, setSelectedId, t, layoutKey }: TaiwanLeafletMapProps) => {
+const TaiwanLeafletMap = ({ items, selectedId, setSelectedId, t, locale, layoutKey }: TaiwanLeafletMapProps) => {
   const [tileStyle, setTileStyle] = useState<TileStyle>('light')
   const [isMapMoving, setIsMapMoving] = useState(false)
   const validItems = useMemo(() => items.filter(hasValidCoordinate), [items])
@@ -148,7 +150,7 @@ const TaiwanLeafletMap = ({ items, selectedId, setSelectedId, t, layoutKey }: Ta
               <Popup>
                 <div className="min-w-44">
                   <div className="text-xs uppercase tracking-0.18em text-gray-500">{item.type}</div>
-                  <div className="mt-1 font-bold text-gray-800">{getMarkerLabel(item)}</div>
+                  <div className="mt-1 font-bold text-gray-800">{getMarkerLabel(item, locale)}</div>
                   {getPlaceLine(item) && <div className="mt-1 text-xs text-gray-500">{getPlaceLine(item)}</div>}
                   {item.locationNote && (
                     <div className="mt-2 text-xs leading-relaxed text-gray-600">{item.locationNote}</div>

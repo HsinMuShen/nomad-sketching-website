@@ -6,6 +6,7 @@ import DefaultImage from 'public/images/default.png'
 import { Button, Dialog } from '@ui'
 import { useI18n } from 'libs/i18n'
 import LoadingState from 'components/common/LoadingState'
+import { getArtworkContent, getArtworkName } from 'utils/localization/artwork'
 import useGetArtwork from './hooks/use-get-artwork'
 import Content from './components/Content'
 
@@ -16,10 +17,12 @@ const ArtworkComponent = () => {
   const { getArtwork } = useGetArtwork()
   const router = useRouter()
   const { id } = router.query
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
 
   const shouldShowArtwork = artwork && !isLoading
   const shouldShowImageDialog = artwork && isImageDialogShowing
+  const artworkName = artwork ? getArtworkName(artwork, locale) : ''
+  const artworkContent = artwork ? getArtworkContent(artwork, locale) : null
 
   const showImageDialog = () => {
     setIsImageDialogShowing(true)
@@ -55,18 +58,18 @@ const ArtworkComponent = () => {
     <div className="mb-20">
       {shouldShowArtwork ? (
         <div className="my-5">
-          <div className="font-bold mt-2 my-6 text-6">{artwork.name}</div>
+          <div className="font-bold mt-2 my-6 text-6">{artworkName}</div>
           <div className="relative border-1 h-80 w-full cursor-pointer sm:h-100" onClick={showImageDialog}>
             <Image
               src={artwork.mainImage?.src || DefaultImage}
-              alt={artwork.name}
+              alt={artworkName}
               fill
               priority
               className="object-contain bg-white"
               sizes="auto"
             />
           </div>
-          <Content content={artwork.content} />
+          <Content content={artworkContent} />
         </div>
       ) : (
         <LoadingState />
@@ -75,11 +78,11 @@ const ArtworkComponent = () => {
         {t('artwork.back')}
       </Button>
       {shouldShowImageDialog && (
-        <Dialog title={artwork.name} size="md" onClose={closeImageDialog}>
+        <Dialog title={artworkName} size="md" onClose={closeImageDialog}>
           <div className="relative h-full w-full">
             <Image
               src={artwork.mainImage?.src || DefaultImage}
-              alt={artwork.name}
+              alt={artworkName}
               fill
               priority
               className="object-contain"

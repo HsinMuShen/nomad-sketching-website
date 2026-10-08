@@ -6,7 +6,9 @@ export type CreateArtworkType = {
   id?: string
   mainImage: CoverImageType | null
   name: string
+  nameEn?: string
   content: JSONContent
+  contentEn?: JSONContent
   createdAt?: string
   updatedAt?: string
   location?: LocationMetadata
@@ -20,7 +22,9 @@ export type Artwork = {
   id: string
   mainImage: CoverImageType | null
   name: string
+  nameEn?: string
   content: JSONContent
+  contentEn?: JSONContent
   createdAt?: string
   updatedAt?: string
   location?: LocationMetadata

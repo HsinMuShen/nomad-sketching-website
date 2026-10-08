@@ -37,6 +37,7 @@ export const normalizeArtworksForMap = (artworks: Artwork[]): SketchMapItem[] =>
           id: artwork.id,
           type: 'artwork',
           title: artwork.name,
+          ...(artwork.nameEn ? { titleEn: artwork.nameEn } : {}),
           imageUrl: artwork.mainImage?.src || '',
           latitude: artwork.location!.latitude!,
           longitude: artwork.location!.longitude!,

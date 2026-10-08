@@ -3,6 +3,8 @@ import { useState } from 'react'
 import CarouselItem from './components/CarouselItem'
 import ImageDisplay from './components/ImageDisplay'
 import useCarousel from './hooks/use-carousel'
+import { useI18n } from 'libs/i18n'
+import { getArtworkName } from 'utils/localization/artwork'
 
 const CarouselArtworks = ({ images }: { images: Artwork[] }) => {
   const [isDragging, setIsDragging] = useState(false)
@@ -13,6 +15,7 @@ const CarouselArtworks = ({ images }: { images: Artwork[] }) => {
   const [selectedArtworkId, setSelectedArtworkId] = useState('')
   const [panelOpen, setPanelOpen] = useState(false)
   const [previewUrl, setPreviewUrl] = useState('')
+  const { locale } = useI18n()
 
   const { el } = useCarousel(images)
 
@@ -68,8 +71,14 @@ const CarouselArtworks = ({ images }: { images: Artwork[] }) => {
     <div className="w-80vw h-80vh sm:h-90vh p-2 flex flex-col items-center overflow-hidden">
       <div className="carousel-container relative w-full max-w-full h-200 mx-auto my-0 overflow-hidden">
         <div className="vertical-carousel absolute top-1/2 left-1/2 cursor-pointer" ref={el}>
-          {images.map(({ mainImage, name, id }) => (
-            <CarouselItem key={id} url={mainImage?.src || ''} name={name} id={id} onClick={pickImage} />
+          {images.map((artwork) => (
+            <CarouselItem
+              key={artwork.id}
+              url={artwork.mainImage?.src || ''}
+              name={getArtworkName(artwork, locale)}
+              id={artwork.id}
+              onClick={pickImage}
+            />
           ))}
         </div>
         {panelOpen && (

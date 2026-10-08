@@ -5,6 +5,7 @@ import type { Artwork } from 'types/artworks'
 import DefaultImage from 'public/images/default.png'
 import { useI18n } from 'libs/i18n'
 import ImageDisplay from 'components/CarouselArtworks/components/ImageDisplay'
+import { getArtworkName } from 'utils/localization/artwork'
 
 const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
   const sectionRefs = useRef<Array<HTMLElement | null>>([])
@@ -24,7 +25,7 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
   const [isMobileViewport, setIsMobileViewport] = useState<boolean | null>(null)
   const [panelOpen, setPanelOpen] = useState(false)
   const [previewUrl, setPreviewUrl] = useState('')
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
 
   const worksWithImage = useMemo(() => artworks.filter((a) => a.mainImage?.src), [artworks])
 
@@ -161,6 +162,7 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
 
   const marqueeLoop = [...marqueeItems, ...marqueeItems]
   const heroArtwork = marqueeItems[heroIndex]
+  const heroArtworkName = heroArtwork ? getArtworkName(heroArtwork, locale) : ''
 
   const heroDesktopFade = isMobileViewport === false
 
@@ -188,16 +190,16 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
           {heroArtwork ? (
             <button
               type="button"
-              onClick={() => pickImage(heroArtwork.mainImage!.src, heroArtwork.name, heroArtwork.id)}
+              onClick={() => pickImage(heroArtwork.mainImage!.src, heroArtworkName, heroArtwork.id)}
               className="relative w-full aspect-[4/5] max-h-[min(72vh,520px)] rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-gray-100 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
-              aria-label={`${t('imageDisplay.viewArtwork')}: ${heroArtwork.name}`}
+              aria-label={`${t('imageDisplay.viewArtwork')}: ${heroArtworkName}`}
             >
               <div
                 className={`absolute inset-0 ${heroDesktopFade ? `artist-hero-fade ${heroFading ? 'opacity-0' : 'opacity-100'}` : 'opacity-100'}`}
               >
                 <Image
                   src={heroArtwork.mainImage?.src || DefaultImage}
-                  alt={heroArtwork.name}
+                  alt={heroArtworkName}
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 420px"
@@ -235,13 +237,13 @@ const ArtistHome = ({ artworks }: { artworks: Artwork[] }) => {
                 <button
                   key={`${artwork.id}-${index}`}
                   type="button"
-                  onClick={() => pickImage(artwork.mainImage!.src, artwork.name, artwork.id)}
+                  onClick={() => pickImage(artwork.mainImage!.src, getArtworkName(artwork, locale), artwork.id)}
                   className="relative w-44 h-56 sm:w-52 sm:h-64 shrink-0 rounded-lg overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
-                  aria-label={`${t('imageDisplay.viewArtwork')}: ${artwork.name}`}
+                  aria-label={`${t('imageDisplay.viewArtwork')}: ${getArtworkName(artwork, locale)}`}
                 >
                   <Image
                     src={artwork.mainImage?.src || DefaultImage}
-                    alt={artwork.name || '作品'}
+                    alt={getArtworkName(artwork, locale) || '作品'}
                     fill
                     className="object-cover pointer-events-none"
                     sizes="208px"
