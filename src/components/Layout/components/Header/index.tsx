@@ -23,8 +23,11 @@ const Header = ({ isAdminPage }: HeaderProps) => {
   }))
   const { t } = useI18n()
   const router = useRouter()
+  const isHomePage = router.pathname === '/'
 
-  const desktopClass = 'h-full items-center px-5 text-gray-600 hover:text-gray-900 hidden md:flex hover:bg-neutral-100'
+  const desktopClass = `h-full items-center px-5 text-gray-700 hover:text-black hidden md:flex transition-colors ${
+    isHomePage ? 'hover:bg-black/5' : 'hover:bg-neutral-100'
+  }`
 
   const onLinkClick = (value: string) => {
     sendGTMEvent({
@@ -52,16 +55,22 @@ const Header = ({ isAdminPage }: HeaderProps) => {
   }, [hasInitialized, isAdminPage, isLogin, router])
 
   return (
-    <div className="fixed w-full h-15 bg-white flex justify-between items-center border-b-2 top-0 z-2">
+    <div
+      className={`fixed top-0 z-[1000] flex h-15 w-full items-center justify-between ${
+        isHomePage ? 'border-b border-black/10 bg-white/88 backdrop-blur-md' : 'border-b-2 bg-white'
+      }`}
+    >
       <div className="h-full flex items-center">
         <Link
           href="/"
-          className="h-full flex items-center mx-5 text-gray-800 hover:text-gray-400 font-800"
+          className={`mx-5 flex h-full items-center text-gray-900 transition-colors hover:text-gray-500 ${
+            isHomePage ? 'text-4 font-700 tracking-[-0.025em]' : 'font-800'
+          }`}
           onClick={() => {
             onLinkClick('index')
           }}
         >
-          <Icon className="mr-2" icon="i-mdi-grease-pencil" size="xl" />
+          {!isHomePage && <Icon className="mr-2" icon="i-mdi-grease-pencil" size="xl" />}
           {t('common.brand')}
         </Link>
         {NAV_LINKS.map((link) => (
