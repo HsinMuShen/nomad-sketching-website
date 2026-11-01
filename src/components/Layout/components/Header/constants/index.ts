@@ -5,6 +5,7 @@ export const NAV_LINKS = [
   { href: '/journey', labelKey: 'common.journey' },
   { href: '/project', labelKey: 'common.project' },
   { href: '/drawing', labelKey: 'common.drawing' },
+  { href: '/collage', labelKey: 'common.collage' },
 ]
 
 export const SIDEBAR_LINKS = [

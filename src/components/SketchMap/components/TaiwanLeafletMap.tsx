@@ -25,7 +25,9 @@ const TILE_STYLES: Record<TileStyle, { labelKey: string; attribution: string; ur
     labelKey: 'map.styleLight',
     attribution:
       '&copy; <a href="https://www.esri.com/">Esri</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+    // OSM's public raster tiles include street level detail at high zoom. The
+    // previous Esri light basemap ran out of detail when users zoomed in.
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   },
   classic: {
     labelKey: 'map.styleClassic',
